@@ -8,14 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+#import "NSMutableArray+Additions.h"
+#import "GridItem.h"
+
 
 @interface Grid : NSObject {
     
-    int _lines;
-    int _columns;
+    int _width;
+    int _height;
+    
+    NSMutableArray *_items;
 }
 
-@property (nonatomic, assign) int lines;
-@property (nonatomic, assign) int columns;
+@property (nonatomic, readonly) int width;
+@property (nonatomic, readonly) int height;
+
+- (id)initWithWidth:(int)width height:(int)height;
+
+- (GridItem *)itemAtLine:(int)line column:(int)column;
+- (void)setItem:(GridItem *)item atLine:(int)line column:(int)column;
 
 @end

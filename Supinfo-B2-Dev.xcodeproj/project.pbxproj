@@ -15,6 +15,7 @@
 		9581E44913671FB70053D07A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9581E44713671FB70053D07A /* MainMenu.xib */; };
 		9581E452136721E80053D07A /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E451136721E80053D07A /* Grid.m */; };
 		9581E455136721FA0053D07A /* GridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E454136721FA0053D07A /* GridItem.m */; };
+		9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E458136728C30053D07A /* NSMutableArray+Additions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		9581E451136721E80053D07A /* Grid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grid.m; sourceTree = "<group>"; };
 		9581E453136721FA0053D07A /* GridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridItem.h; sourceTree = "<group>"; };
 		9581E454136721FA0053D07A /* GridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridItem.m; sourceTree = "<group>"; };
+		9581E457136728C30053D07A /* NSMutableArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Additions.h"; sourceTree = "<group>"; };
+		9581E458136728C30053D07A /* NSMutableArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,7 @@
 		9581E43813671FB60053D07A /* Supinfo-B2-Dev */ = {
 			isa = PBXGroup;
 			children = (
+				9581E456136728980053D07A /* Additions */,
 				9581E44F136721C50053D07A /* Model */,
 				9581E44413671FB70053D07A /* Supinfo_B2_DevAppDelegate.h */,
 				9581E44513671FB70053D07A /* Supinfo_B2_DevAppDelegate.m */,
@@ -118,6 +122,15 @@
 				9581E454136721FA0053D07A /* GridItem.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		9581E456136728980053D07A /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				9581E457136728C30053D07A /* NSMutableArray+Additions.h */,
+				9581E458136728C30053D07A /* NSMutableArray+Additions.m */,
+			);
+			name = Additions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +200,7 @@
 				9581E44613671FB70053D07A /* Supinfo_B2_DevAppDelegate.m in Sources */,
 				9581E452136721E80053D07A /* Grid.m in Sources */,
 				9581E455136721FA0053D07A /* GridItem.m in Sources */,
+				9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
