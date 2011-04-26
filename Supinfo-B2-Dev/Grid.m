@@ -11,7 +11,8 @@
 
 @interface Grid (Private)
 
-- (int)indexForLine:(int)line column:(int)column;
+- (int)indexForPosition:(ABPoint)position;
+- (BOOL)indexAvailableForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
 
@@ -51,27 +52,39 @@
 
 #pragma mark -
 
-- (GridItem *)itemAtLine:(int)line column:(int)column
+- (GridItem *)itemAtPosition:(ABPoint)position;
 {
-    id item = [_items objectAtIndex:[self indexForLine:line column:column]];
+    id item = [_items objectAtIndex:[self indexForPosition:position]];
     
     return (item != [NSNull null]) ? (GridItem *)item : nil;
 }
 
-- (void)setItem:(GridItem *)item atLine:(int)line column:(int)column
+- (void)setItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    if (!item) [NSException raise:@"GridItemError" format:@"You cannot set a nil object."];
+    if (!item)
+        [NSException raise:@"GridItemError" format:@"You cannot set a nil object."];
     
-    [_items replaceObjectAtIndex:[self indexForLine:line column:column]
+    if (![self indexAvailableForItem:item atPosition:position])
+        [NSException raise:@"GridItemError" format:@"You cannot set this at this position."]
+    
+    [_items replaceObjectAtIndex:[self indexForPosition:position]
                       withObject:item];
 }
 
 
 #pragma mark - Private
 
-- (int)indexForLine:(int)line column:(int)column
+- (int)indexForPosition:(ABPoint)position
 {
-    return line * _width + column;
+    return position.y * _width + position.x;
+}
+
+- (BOOL)indexAvailableForItem:(GridItem *)item atPosition:(ABPoint)position;
+{
+    int itemMaxColumn = position.x + item.width;
+    int itemMaxLine = position.y + item.height;
+    
+    return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
 
 @end

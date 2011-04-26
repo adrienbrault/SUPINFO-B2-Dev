@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "NSMutableArray+Additions.h"
+#import "ABPoint.h"
 #import "GridItem.h"
 
 
@@ -25,7 +26,7 @@
 
 - (id)initWithWidth:(int)width height:(int)height;
 
-- (GridItem *)itemAtLine:(int)line column:(int)column;
-- (void)setItem:(GridItem *)item atLine:(int)line column:(int)column;
+- (GridItem *)itemAtPosition:(ABPoint)position;
+- (void)setItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
