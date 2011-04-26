@@ -12,7 +12,7 @@
 @interface Grid (Private)
 
 - (int)indexForPosition:(ABPoint)position;
-- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
 
@@ -73,7 +73,7 @@
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    NSArray *itemPositions = [self positionsForItem:item atPosition:position];
+    NSSet *itemPositions = [self positionsForItem:item atPosition:position];
     for (NSValue *value in itemPositions) {
         ABPoint position = ABPointFromValue(value);
         
@@ -99,18 +99,18 @@
     return position.y * _width + position.x;
 }
 
-- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
+- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    NSMutableArray *array = [NSMutableArray array];
+    NSMutableSet *set = [NSMutableSet set];
     for (int i=0; i<(item.width * item.height); i++) {
         ABPoint position = ABPointMake(i % item.width + position.x,
                                        i % item.height + position.y);
         
         // The best way to store a struct into a NSArray is to convert it to a NSValue.
         NSValue *value = ABPointToValue(position);
-        [array addObject:value];
+        [set addObject:value];
     }
-    return array;
+    return set;
 }
 
 @end
