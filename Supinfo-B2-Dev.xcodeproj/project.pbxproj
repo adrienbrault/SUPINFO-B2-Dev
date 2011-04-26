@@ -121,10 +121,8 @@
 		9581E44F136721C50053D07A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9581E450136721E80053D07A /* Grid.h */,
-				9581E451136721E80053D07A /* Grid.m */,
-				9581E453136721FA0053D07A /* GridItem.h */,
-				9581E454136721FA0053D07A /* GridItem.m */,
+				9581E461136742A80053D07A /* Class */,
+				9581E4601367429F0053D07A /* Type */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -142,10 +140,28 @@
 			isa = PBXGroup;
 			children = (
 				9581E45C136733AC0053D07A /* ABPoint.h */,
+			);
+			name = Type;
+			sourceTree = "<group>";
+		};
+		9581E4601367429F0053D07A /* Type */ = {
+			isa = PBXGroup;
+			children = (
 				9581E45D1367410F0053D07A /* GridItemType.h */,
 				9581E45E1367411A0053D07A /* GridItemType.c */,
 			);
 			name = Type;
+			sourceTree = "<group>";
+		};
+		9581E461136742A80053D07A /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				9581E450136721E80053D07A /* Grid.h */,
+				9581E451136721E80053D07A /* Grid.m */,
+				9581E453136721FA0053D07A /* GridItem.h */,
+				9581E454136721FA0053D07A /* GridItem.m */,
+			);
+			name = Class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
