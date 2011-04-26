@@ -70,6 +70,10 @@
         [_items replaceObjectAtIndex:[self indexForPosition:position]
                           withObject:[NSNull null]];
     } else {
+        if ([self indexForItem:item] != NSNotFound) {
+            [self removeItem:item];
+        }
+        
         NSSet *itemPositions = [self positionsForItemType:item.type atPosition:position];
         for (NSValue *value in itemPositions) {
             ABPoint position = ABPointFromValue(value);
