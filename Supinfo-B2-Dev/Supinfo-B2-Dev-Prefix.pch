@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Supinfo-B2-Dev' target in the 'Supinfo-B2-Dev' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
