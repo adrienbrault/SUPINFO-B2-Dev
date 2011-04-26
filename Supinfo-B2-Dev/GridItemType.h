@@ -11,7 +11,8 @@ typedef enum {
     GridItemWater,
     GridItemWall,
     GridItemCastel,
-    GridItemAreaCaptured
+    GridItemAreaCaptured,
+    GridItemTower
 } GridItemType;
 
 int GetGridItemTypeWidth(GridItemType type);
