@@ -15,13 +15,28 @@
 
 @synthesize type = _type;
 
+- (int)width
+{
+    return (_type == GridItemCastel) ? 2 : 1;
+}
+
+- (int)height
+{
+    return (_type == GridItemCastel) ? 2 : 1;
+}
+
 
 #pragma mark - Object lifecyle
 
 - (id)init
 {
+    return [self initWithType:GridItemEarth];
+}
+
+- (id)initWithType:(GridItemType)type
+{
     if ((self = [super init])) {
-        
+        _type = type;
     }
     return self;
 }

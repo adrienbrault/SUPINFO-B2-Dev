@@ -23,6 +23,10 @@ typedef enum {
     GridItemType _type;
 }
 
-@property (nonatomic, assign) GridItemType type;
+@property (nonatomic, readonly) GridItemType type;
+@property (nonatomic, readonly) int width;
+@property (nonatomic, readonly) int height;
+
+- (id)initWithType:(GridItemType)type;
 
 @end
