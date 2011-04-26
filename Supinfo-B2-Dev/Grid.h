@@ -29,4 +29,6 @@
 - (GridItem *)itemAtPosition:(ABPoint)position;
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position;
 
+- (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item;
+
 @end
