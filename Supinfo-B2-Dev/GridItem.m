@@ -17,12 +17,12 @@
 
 - (int)width
 {
-    return (_type == GridItemCastel) ? 2 : 1;
+    return GetGridItemTypeWidth(_type);
 }
 
 - (int)height
 {
-    return (_type == GridItemCastel) ? 2 : 1;
+    return GetGridItemTypeHeight(_type);
 }
 
 

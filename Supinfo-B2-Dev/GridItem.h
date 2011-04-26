@@ -8,14 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
-typedef enum {
-    GridItemEarth = 0,
-    GridItemWater,
-    GridItemWall,
-    GridItemCastel,
-    GridItemAreaCaptured
-} GridItemType;
+#import "GridItemType.h"
 
 
 @interface GridItem : NSObject {

@@ -12,7 +12,7 @@
 @interface Grid (Private)
 
 - (int)indexForPosition:(ABPoint)position;
-- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (NSSet *)positionsForItemType:(GridItemType)itemType atPosition:(ABPoint)position;
 
 @end
 
@@ -64,29 +64,29 @@
     if (!item)
         [NSException raise:@"GridItemError" format:@"You cannot set a nil object."];
     
-    if (![self position:position existsForItem:item])
+    if (![self position:position existsForItemType:item.type])
         [NSException raise:@"GridItemError" format:@"You cannot set this at this position."];
     
     [_items replaceObjectAtIndex:[self indexForPosition:position]
                       withObject:item];
 }
 
-- (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
+- (BOOL)position:(ABPoint)position availableForItemType:(GridItemType)itemType
 {
-    NSSet *itemPositions = [self positionsForItem:item atPosition:position];
+    NSSet *itemPositions = [self positionsForItemType:itemType atPosition:position];
     for (NSValue *value in itemPositions) {
         ABPoint position = ABPointFromValue(value);
         
-        if (!([self position:position existsForItem:item] && ![self itemAtPosition:position]))
+        if (!([self position:position existsForItemType:itemType] && ![self itemAtPosition:position]))
             return NO;
     }
     return YES;
 }
 
-- (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item
+- (BOOL)position:(ABPoint)position existsForItemType:(GridItemType)itemType
 {
-    int itemMaxColumn = position.x + item.width;
-    int itemMaxLine = position.y + item.height;
+    int itemMaxColumn = position.x + GetGridItemTypeWidth(itemType);
+    int itemMaxLine = position.y + GetGridItemTypeHeight(itemType);
     
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }

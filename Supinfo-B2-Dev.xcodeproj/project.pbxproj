@@ -16,6 +16,7 @@
 		9581E452136721E80053D07A /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E451136721E80053D07A /* Grid.m */; };
 		9581E455136721FA0053D07A /* GridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E454136721FA0053D07A /* GridItem.m */; };
 		9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E458136728C30053D07A /* NSMutableArray+Additions.m */; };
+		9581E45F1367411A0053D07A /* GridItemType.c in Sources */ = {isa = PBXBuildFile; fileRef = 9581E45E1367411A0053D07A /* GridItemType.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		9581E457136728C30053D07A /* NSMutableArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Additions.h"; sourceTree = "<group>"; };
 		9581E458136728C30053D07A /* NSMutableArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Additions.m"; sourceTree = "<group>"; };
 		9581E45C136733AC0053D07A /* ABPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPoint.h; sourceTree = "<group>"; };
+		9581E45D1367410F0053D07A /* GridItemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridItemType.h; sourceTree = "<group>"; };
+		9581E45E1367411A0053D07A /* GridItemType.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GridItemType.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				9581E45C136733AC0053D07A /* ABPoint.h */,
+				9581E45D1367410F0053D07A /* GridItemType.h */,
+				9581E45E1367411A0053D07A /* GridItemType.c */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				9581E452136721E80053D07A /* Grid.m in Sources */,
 				9581E455136721FA0053D07A /* GridItem.m in Sources */,
 				9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */,
+				9581E45F1367411A0053D07A /* GridItemType.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
