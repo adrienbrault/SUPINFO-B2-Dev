@@ -12,6 +12,7 @@
 @interface Grid (Private)
 
 - (int)indexForPosition:(ABPoint)position;
+- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
 
@@ -49,7 +50,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Grid
 
 - (GridItem *)itemAtPosition:(ABPoint)position;
 {
@@ -63,7 +64,7 @@
     if (!item)
         [NSException raise:@"GridItemError" format:@"You cannot set a nil object."];
     
-    if (![self position:position availableForItem:item])
+    if (![self position:position existsForItem:item])
         [NSException raise:@"GridItemError" format:@"You cannot set this at this position."];
     
     [_items replaceObjectAtIndex:[self indexForPosition:position]
@@ -71,6 +72,18 @@
 }
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
+{
+    NSArray *itemPositions = [self positionsForItem:item atPosition:position];
+    for (NSValue *value in itemPositions) {
+        ABPoint position = ABPointFromValue(value);
+        
+        if (!([self position:position existsForItem:item] && ![self itemAtPosition:position]))
+            return NO;
+    }
+    return YES;
+}
+
+- (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item
 {
     int itemMaxColumn = position.x + item.width;
     int itemMaxLine = position.y + item.height;
@@ -84,6 +97,20 @@
 - (int)indexForPosition:(ABPoint)position
 {
     return position.y * _width + position.x;
+}
+
+- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<(item.width * item.height); i++) {
+        ABPoint position = ABPointMake(i % item.width + position.x,
+                                       i % item.height + position.y);
+        
+        // The best way to store a struct into a NSArray is to convert it to a NSValue.
+        NSValue *value = ABPointToValue(position);
+        [array addObject:value];
+    }
+    return array;
 }
 
 @end

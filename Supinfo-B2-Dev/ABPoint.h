@@ -19,3 +19,17 @@ ABPointMake(int x, int y)
     point.y = y;
     return point;
 }
+
+NSValue *
+ABPointToValue(ABPoint point)
+{
+    return [NSValue valueWithBytes:&point objCType:@encode(ABPoint)];
+}
+
+ABPoint
+ABPointFromValue(NSValue *value)
+{
+    ABPoint point;
+    [value getValue:&point];
+    return point;
+}
