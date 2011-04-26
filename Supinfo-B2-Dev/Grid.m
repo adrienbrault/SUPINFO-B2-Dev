@@ -12,6 +12,8 @@
 @interface Grid (Private)
 
 - (int)indexForPosition:(ABPoint)position;
+- (int)indexForItem:(GridItem *)item;
+- (ABPoint)positionForIndex:(int)index;
 - (NSSet *)positionsForItemType:(GridItemType)itemType atPosition:(ABPoint)position;
 
 @end
@@ -61,15 +63,39 @@
 
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    if (!item)
-        [NSException raise:@"GridItemError" format:@"You cannot set a nil object."];
+    if (![self position:position availableForItemType:item.type])
+        [NSException raise:@"GridError" format:@"Trying to set an item to a wrong position."];
     
-    if (![self position:position existsForItemType:item.type])
-        [NSException raise:@"GridItemError" format:@"You cannot set this at this position."];
-    
-    [_items replaceObjectAtIndex:[self indexForPosition:position]
-                      withObject:item];
+    if (!item) {
+        [_items replaceObjectAtIndex:[self indexForPosition:position]
+                          withObject:[NSNull null]];
+    } else {
+        NSSet *itemPositions = [self positionsForItemType:item.type atPosition:position];
+        for (NSValue *value in itemPositions) {
+            ABPoint position = ABPointFromValue(value);
+            int positionIndex = [self indexForPosition:position];
+            
+            [_items replaceObjectAtIndex:positionIndex
+                              withObject:item];
+        }
+    }
 }
+
+- (void)removeItem:(GridItem *)item
+{
+    int index = [self indexForItem:item];
+    if (index != NSNotFound) {
+        NSSet *itemPositions = [self positionsForItemType:item.type atPosition:[self positionForIndex:index]];
+        for (NSValue *value in itemPositions) {
+            ABPoint position = ABPointFromValue(value);
+            int positionIndex = [self indexForPosition:position];
+            
+            [_items replaceObjectAtIndex:positionIndex
+                              withObject:[NSNull null]];
+        }
+    }
+}
+
 
 - (BOOL)position:(ABPoint)position availableForItemType:(GridItemType)itemType
 {
@@ -97,6 +123,21 @@
 - (int)indexForPosition:(ABPoint)position
 {
     return position.y * _width + position.x;
+}
+
+- (int)indexForItem:(GridItem *)item
+{
+    return (int)[_items indexOfObject:item];
+}
+
+- (ABPoint)positionForIndex:(int)index
+{
+    if (index < (_width * _height)) {
+        [NSException raise:@"GridError" format:@"Trying to get a non existing position."];
+    }
+    
+    return ABPointMake(index % _width,
+                       index % _height);
 }
 
 - (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
