@@ -21,12 +21,12 @@
 		9581E43513671FB60053D07A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9581E43613671FB60053D07A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9581E43713671FB60053D07A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		9581E43A13671FB60053D07A /* Supinfo-B2-Dev-Info.plist */ = {isa = PBXFileReference; path = "Supinfo-B2-Dev-Info.plist"; sourceTree = "<group>"; };
+		9581E43A13671FB60053D07A /* Supinfo-B2-Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Supinfo-B2-Dev-Info.plist"; sourceTree = "<group>"; };
 		9581E43C13671FB60053D07A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9581E43E13671FB60053D07A /* Supinfo-B2-Dev-Prefix.pch */ = {isa = PBXFileReference; path = "Supinfo-B2-Dev-Prefix.pch"; sourceTree = "<group>"; };
+		9581E43E13671FB60053D07A /* Supinfo-B2-Dev-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Supinfo-B2-Dev-Prefix.pch"; sourceTree = "<group>"; };
 		9581E43F13671FB60053D07A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9581E44213671FB60053D07A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		9581E44413671FB70053D07A /* Supinfo_B2_DevAppDelegate.h */ = {isa = PBXFileReference; path = Supinfo_B2_DevAppDelegate.h; sourceTree = "<group>"; };
+		9581E44413671FB70053D07A /* Supinfo_B2_DevAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Supinfo_B2_DevAppDelegate.h; sourceTree = "<group>"; };
 		9581E44513671FB70053D07A /* Supinfo_B2_DevAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Supinfo_B2_DevAppDelegate.m; sourceTree = "<group>"; };
 		9581E44813671FB70053D07A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
