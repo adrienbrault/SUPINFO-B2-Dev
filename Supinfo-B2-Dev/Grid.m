@@ -28,6 +28,11 @@
 @synthesize width = _width;
 @synthesize items = _items;
 
+- (NSSet *)uniqueItems
+{
+    return [NSSet setWithArray:self.items];
+}
+
 
 #pragma mark - Object lifecyle
 
@@ -103,14 +108,14 @@
     }
 }
 
-
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
     NSSet *itemPositions = [self positionsForItem:item atPosition:position];
     for (NSValue *value in itemPositions) {
         ABPoint itemPosition = ABPointFromValue(value);
         
-        if (!([self position:itemPosition existsForItem:item] || ![self itemAtPosition:itemPosition]))
+        if ([self position:itemPosition existsForItem:item] && [self itemAtPosition:itemPosition]
+            || ![self position:itemPosition existsForItem:item])
             return NO;
     }
     return YES;
@@ -118,8 +123,8 @@
 
 - (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item
 {
-    int itemMaxColumn = position.x + GetGridItemTypeWidth(item.type);
-    int itemMaxLine = position.y + GetGridItemTypeHeight(item.type);
+    int itemMaxColumn = position.x + GetGridItemTypeWidth(item.type) - 1;
+    int itemMaxLine = position.y + GetGridItemTypeHeight(item.type) - 1;
     
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
@@ -157,7 +162,7 @@
     NSMutableSet *set = [NSMutableSet set];
     for (int i=0; i<(item.width * item.height); i++) {
         ABPoint itemPosition = ABPointMake(i % item.width + position.x,
-                                           i % item.height + position.y);
+                                           ceil(i / item.height) + position.y);
         
         // The best way to store a struct into a NSArray is to convert it to a NSValue.
         NSValue *value = ABPointToValue(itemPosition);

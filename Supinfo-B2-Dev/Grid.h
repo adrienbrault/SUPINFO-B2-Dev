@@ -24,6 +24,7 @@
 @property (nonatomic, readonly) int width;
 @property (nonatomic, readonly) int height;
 @property (nonatomic, readonly) NSArray *items;
+@property (nonatomic, readonly) NSSet *uniqueItems;
 
 - (id)initWithWidth:(int)width height:(int)height;
 
