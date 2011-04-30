@@ -8,6 +8,12 @@
 
 #import "GridViewController.h"
 
+@interface GridViewController (Private)
+
+- (void)loadDefaultMap;
+
+@end
+
 
 @implementation GridViewController
 
@@ -64,8 +70,27 @@
     _territoryGridView.grid = _territoryGrid;
     _buildingsGridView.grid = _buildingsGrid;
     
-    [_mapGrid setItem:[GridItem itemWithType:GridItemEarth] atPosition:ABPointMake(10, 10)];
-    [self.view setNeedsDisplay:YES];
+    [self loadDefaultMap];
+}
+
+- (void)loadDefaultMap
+{
+    int totalItems = _gridWidth*_gridHeight;
+    for (int i=0; i<totalItems; i++) {
+        GridItemType itemType;
+        
+        // Weird condition that make the map look cool.
+        if (i < ceil(totalItems/2)
+            || (i % _gridWidth) < (_gridHeight - i / _gridHeight) * 2) {
+            itemType = GridItemEarth;
+        } else {
+            itemType = GridItemWater;
+        }
+        
+        [_mapGrid setItem:[GridItem itemWithType:itemType]
+               atPosition:ABPointMake(i % _gridWidth, ceil(i / _gridHeight))];
+    }
+    [_mapGridView setNeedsDisplay:YES];
 }
 
 @end
