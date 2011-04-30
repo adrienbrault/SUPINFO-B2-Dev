@@ -20,6 +20,18 @@
     Grid *_mapGrid;
     Grid *_territoryGrid;
     Grid *_buildingsGrid;
+    
+    int _gridWidth;
+    int _gridHeight;
 }
+
+@property (nonatomic, retain) IBOutlet GridView *mapGridView;
+@property (nonatomic, retain) IBOutlet GridView *territoryGridView;
+@property (nonatomic, retain) IBOutlet GridView *buildingsGridView;
+
+@property (nonatomic, readonly) int gridWidth;
+@property (nonatomic, readonly) int gridHeight;
+
+- (void)setWidth:(int)width height:(int)height;
 
 @end

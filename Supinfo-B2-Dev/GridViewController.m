@@ -13,6 +13,13 @@
 
 #pragma mark - Properties
 
+@synthesize mapGridView = _mapGridView;
+@synthesize territoryGridView = _territoryGridView;
+@synthesize buildingsGridView = _buildingsGridView;
+
+@synthesize gridWidth = _gridWidth;
+@synthesize gridHeight = _gridHeight;
+
 
 #pragma mark - Object lifecycle
 
@@ -35,6 +42,30 @@
     [_buildingsGridView release];
     
     [super dealloc];
+}
+
+
+#pragma mark -
+
+- (void)setWidth:(int)width height:(int)height
+{NSLog(@"hey");
+    if (!(width > 0 && height > 0)) {
+        [NSException raise:@"GridViewControllerException" format:@"Exception: Width and height must be greater than 0."];
+    }
+    
+    _gridWidth = width;
+    _gridHeight = height;
+    
+    _mapGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
+    _territoryGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
+    _buildingsGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
+    
+    _mapGridView.grid = _mapGrid;
+    _territoryGridView.grid = _territoryGrid;
+    _buildingsGridView.grid = _buildingsGrid;
+    
+    [_mapGrid setItem:[GridItem itemWithType:GridItemEarth] atPosition:ABPointMake(10, 10)];
+    [self.view setNeedsDisplay:YES];
 }
 
 @end
