@@ -30,7 +30,9 @@
 
 - (NSSet *)uniqueItems
 {
-    return [NSSet setWithArray:self.items];
+    NSMutableSet *set = [NSMutableSet setWithArray:self.items];
+    [set removeObject:[NSNull null]];
+    return set;
 }
 
 
