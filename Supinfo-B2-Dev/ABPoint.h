@@ -11,11 +11,7 @@ typedef struct {
     int y;
 } ABPoint;
 
-ABPoint
-ABPointMake(int x, int y);
+ABPoint ABPointMake(int x, int y);
 
-NSValue *
-ABPointToValue(ABPoint point);
-
-ABPoint
-ABPointFromValue(NSValue *value);
+NSValue * ABPointToValue(ABPoint point);
+ABPoint ABPointFromValue(NSValue *value);
