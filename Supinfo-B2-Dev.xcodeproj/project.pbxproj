@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		950BF934136CB4B600D42E0C /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 950BF932136CB4B600D42E0C /* GridViewController.m */; };
 		95624F60136C7C5A001B96F1 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F5F136C7C5A001B96F1 /* GridView.m */; };
 		95624F64136C7F28001B96F1 /* ABPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F63136C7F28001B96F1 /* ABPoint.m */; };
 		9581E43313671FB60053D07A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9581E43213671FB60053D07A /* Cocoa.framework */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		950BF931136CB4B600D42E0C /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
+		950BF932136CB4B600D42E0C /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
 		95624F5E136C7C5A001B96F1 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		95624F5F136C7C5A001B96F1 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		95624F63136C7F28001B96F1 /* ABPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPoint.m; sourceTree = "<group>"; };
@@ -61,6 +64,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		950BF929136CB46600D42E0C /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				9581E45A136732450053D07A /* Type */,
+				9581E456136728980053D07A /* Additions */,
+			);
+			name = Src;
+			sourceTree = "<group>";
+		};
+		950BF92B136CB47D00D42E0C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				950BF931136CB4B600D42E0C /* GridViewController.h */,
+				950BF932136CB4B600D42E0C /* GridViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		95624F5C136C7C40001B96F1 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,8 +130,8 @@
 		9581E43813671FB60053D07A /* Supinfo-B2-Dev */ = {
 			isa = PBXGroup;
 			children = (
-				9581E45A136732450053D07A /* Type */,
-				9581E456136728980053D07A /* Additions */,
+				950BF929136CB46600D42E0C /* Src */,
+				950BF92B136CB47D00D42E0C /* Controller */,
 				9581E44F136721C50053D07A /* Model */,
 				95624F5C136C7C40001B96F1 /* View */,
 				9581E44413671FB70053D07A /* Supinfo_B2_DevAppDelegate.h */,
@@ -251,6 +272,7 @@
 				9581E45F1367411A0053D07A /* GridItemType.m in Sources */,
 				95624F60136C7C5A001B96F1 /* GridView.m in Sources */,
 				95624F64136C7F28001B96F1 /* ABPoint.m in Sources */,
+				950BF934136CB4B600D42E0C /* GridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
