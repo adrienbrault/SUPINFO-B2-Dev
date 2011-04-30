@@ -121,4 +121,15 @@
     CGContextFillRect(context, itemRect);
 }
 
+
+#pragma mark - NSResponder
+
+/*
+ *  This method is required in order to receive mouseMoved events.
+ */
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
 @end

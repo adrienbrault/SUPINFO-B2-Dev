@@ -70,6 +70,16 @@
     _territoryGridView.grid = _territoryGrid;
     _buildingsGridView.grid = _buildingsGrid;
     
+    // Enable mouseMoved events
+    [self.view.window setAcceptsMouseMovedEvents:YES];
+    
+    // I want to receive mouse events.
+    [self.view setNextResponder:self];
+    [self setNextResponder:self.view.superview];
+    
+    // Enable mouseMoved now (If we don't do this, the user has to clic to enable mouseMoved).
+    [self.view.window makeFirstResponder:self.view];
+    
     [self loadDefaultMap];
 }
 
@@ -91,6 +101,23 @@
                atPosition:ABPointMake(i % _gridWidth, ceil(i / _gridHeight))];
     }
     [_mapGridView setNeedsDisplay:YES];
+}
+
+
+#pragma mark - Mouse events
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    NSLog(@"%@", theEvent);
+    
+    //[self.nextResponder mouseMoved:theEvent];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    NSLog(@"%@", theEvent);
+    
+    [self.nextResponder mouseDown:theEvent];
 }
 
 @end
