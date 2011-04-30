@@ -65,7 +65,7 @@
 - (CGPoint)screenPositionForItem:(GridItem *)item atPosition:(ABPoint)position
 {
     return CGPointMake(position.x * _itemSize.width,
-                       position.y * _itemSize.height + self.frame.size.height - _itemSize.height * item.height);
+                       position.y * _itemSize.height);
 }
 
 
@@ -75,6 +75,10 @@
 {
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
+    
+    // Set the origin of the coordinate system in the upper left corner instead of the lower left corner.
+    CGContextConcatCTM(context,
+                       CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, self.frame.size.height));
     
     NSSet *items = [self.grid.uniqueItems retain];
     for (GridItem *item in items) {
