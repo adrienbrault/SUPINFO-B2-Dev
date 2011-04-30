@@ -36,5 +36,6 @@
 - (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item;
 
 - (ABPoint)firstItemPosition:(GridItem *)item;
+- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end

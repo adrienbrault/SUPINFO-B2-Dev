@@ -23,6 +23,8 @@
     
     int _gridWidth;
     int _gridHeight;
+    
+    NSTrackingArea *_trackingArea;
 }
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;

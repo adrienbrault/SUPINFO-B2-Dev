@@ -14,7 +14,6 @@
 - (int)indexForPosition:(ABPoint)position;
 - (int)indexForItem:(GridItem *)item;
 - (ABPoint)positionForIndex:(int)index;
-- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
 
