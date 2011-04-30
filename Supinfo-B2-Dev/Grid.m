@@ -124,6 +124,11 @@
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
 
+- (ABPoint)firstItemPosition:(GridItem *)item
+{
+    return [self positionForIndex:[self indexForItem:item]];
+}
+
 
 #pragma mark - Private
 
@@ -139,12 +144,12 @@
 
 - (ABPoint)positionForIndex:(int)index
 {
-    if (index < (_width * _height)) {
+    if (index < 0 || index > (_width * _height)) {
         [NSException raise:@"GridError" format:@"Trying to get a non existing position."];
     }
     
     return ABPointMake(index % _width,
-                       index % _height);
+                       ceil(index / _height));
 }
 
 - (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
