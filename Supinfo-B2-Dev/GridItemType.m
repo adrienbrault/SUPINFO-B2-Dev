@@ -1,12 +1,12 @@
 //
-//  GridItemType.c
+//  GridItemType.m
 //  Supinfo-B2-Dev
 //
 //  Created by Adrien Brault on 26/04/11.
 //  Copyright 2011 Adrien Brault. All rights reserved.
 //
 
-#include "GridItemType.h"
+#import "GridItemType.h"
 
 int GetGridItemTypeWidth(GridItemType type)
 {
