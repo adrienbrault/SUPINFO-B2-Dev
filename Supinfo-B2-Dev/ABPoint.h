@@ -12,24 +12,10 @@ typedef struct {
 } ABPoint;
 
 ABPoint
-ABPointMake(int x, int y)
-{
-    ABPoint point;
-    point.x = x;
-    point.y = y;
-    return point;
-}
+ABPointMake(int x, int y);
 
 NSValue *
-ABPointToValue(ABPoint point)
-{
-    return [NSValue valueWithBytes:&point objCType:@encode(ABPoint)];
-}
+ABPointToValue(ABPoint point);
 
 ABPoint
-ABPointFromValue(NSValue *value)
-{
-    ABPoint point;
-    [value getValue:&point];
-    return point;
-}
+ABPointFromValue(NSValue *value);
