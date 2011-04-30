@@ -14,7 +14,7 @@
 - (int)indexForPosition:(ABPoint)position;
 - (int)indexForItem:(GridItem *)item;
 - (ABPoint)positionForIndex:(int)index;
-- (NSSet *)positionsForItemType:(GridItemType)itemType atPosition:(ABPoint)position;
+- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 @end
 
@@ -40,6 +40,8 @@
 {
     if ((self = [super init])) {
         int capacity = width * height;
+        _width = width;
+        _height = height;
         
         _items = [[NSMutableArray alloc] initWithNullCapacity:capacity];
     }
@@ -64,18 +66,18 @@
 
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    if (![self position:position availableForItemType:item.type])
+    if (![self position:position availableForItem:item])
         [NSException raise:@"GridError" format:@"Trying to set an item to a wrong position."];
     
     if (!item) {
         [_items replaceObjectAtIndex:[self indexForPosition:position]
                           withObject:[NSNull null]];
     } else {
-        if ([self indexForItem:item] != NSNotFound) {
+        if ([self indexForItem:item] != (int)NSNotFound) {
             [self removeItem:item];
         }
         
-        NSSet *itemPositions = [self positionsForItemType:item.type atPosition:position];
+        NSSet *itemPositions = [self positionsForItem:item atPosition:position];
         for (NSValue *value in itemPositions) {
             ABPoint position = ABPointFromValue(value);
             int positionIndex = [self indexForPosition:position];
@@ -90,7 +92,7 @@
 {
     int index = [self indexForItem:item];
     if (index != NSNotFound) {
-        NSSet *itemPositions = [self positionsForItemType:item.type atPosition:[self positionForIndex:index]];
+        NSSet *itemPositions = [self positionsForItem:item atPosition:[self positionForIndex:index]];
         for (NSValue *value in itemPositions) {
             ABPoint position = ABPointFromValue(value);
             int positionIndex = [self indexForPosition:position];
@@ -102,22 +104,22 @@
 }
 
 
-- (BOOL)position:(ABPoint)position availableForItemType:(GridItemType)itemType
+- (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    NSSet *itemPositions = [self positionsForItemType:itemType atPosition:position];
+    NSSet *itemPositions = [self positionsForItem:item atPosition:position];
     for (NSValue *value in itemPositions) {
-        ABPoint position = ABPointFromValue(value);
+        ABPoint itemPosition = ABPointFromValue(value);
         
-        if (!([self position:position existsForItemType:itemType] && ![self itemAtPosition:position]))
+        if (!([self position:itemPosition existsForItem:item] || ![self itemAtPosition:itemPosition]))
             return NO;
     }
     return YES;
 }
 
-- (BOOL)position:(ABPoint)position existsForItemType:(GridItemType)itemType
+- (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item
 {
-    int itemMaxColumn = position.x + GetGridItemTypeWidth(itemType);
-    int itemMaxLine = position.y + GetGridItemTypeHeight(itemType);
+    int itemMaxColumn = position.x + GetGridItemTypeWidth(item.type);
+    int itemMaxLine = position.y + GetGridItemTypeHeight(item.type);
     
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
@@ -149,11 +151,11 @@
 {
     NSMutableSet *set = [NSMutableSet set];
     for (int i=0; i<(item.width * item.height); i++) {
-        ABPoint position = ABPointMake(i % item.width + position.x,
-                                       i % item.height + position.y);
+        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
+                                           i % item.height + position.y);
         
         // The best way to store a struct into a NSArray is to convert it to a NSValue.
-        NSValue *value = ABPointToValue(position);
+        NSValue *value = ABPointToValue(itemPosition);
         [set addObject:value];
     }
     return set;

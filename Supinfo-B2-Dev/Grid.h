@@ -31,7 +31,7 @@
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position;
 - (void)removeItem:(GridItem *)item;
 
-- (BOOL)position:(ABPoint)position availableForItemType:(GridItemType)itemType;
-- (BOOL)position:(ABPoint)position existsForItemType:(GridItemType)itemType;
+- (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item;
+- (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item;
 
 @end
