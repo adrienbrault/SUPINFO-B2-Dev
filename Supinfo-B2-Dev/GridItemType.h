@@ -15,7 +15,7 @@ typedef enum {
     GridItemTower
 } GridItemType;
 
-NSString * const GridItemType_toString[] = {
+static NSString * const GridItemType_toString[] = {
     @"GridItemEarth",
     @"GridItemWater",
     @"GridItemWall",
