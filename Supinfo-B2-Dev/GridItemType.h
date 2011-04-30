@@ -15,5 +15,15 @@ typedef enum {
     GridItemTower
 } GridItemType;
 
+NSString * const GridItemType_toString[] = {
+    @"GridItemEarth",
+    @"GridItemWater",
+    @"GridItemWall",
+    @"GridItemCastel",
+    @"GridItemAreaCaptured",
+    @"GridItemTower"
+};
+
 int GetGridItemTypeWidth(GridItemType type);
 int GetGridItemTypeHeight(GridItemType type);
+NSString * GetGridItemTypeString(GridItemType type);

@@ -26,6 +26,7 @@
 
 @synthesize height = _height;
 @synthesize width = _width;
+@synthesize items = _items;
 
 
 #pragma mark - Object lifecyle

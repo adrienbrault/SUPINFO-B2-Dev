@@ -47,6 +47,14 @@
 }
 
 
+#pragma mark -
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Type: %@; Width: %d; Height: %d;", GetGridItemTypeString(self.type), self.width, self.height];
+}
+
+
 #pragma mark - Class
 
 + (id)itemWithType:(GridItemType)type

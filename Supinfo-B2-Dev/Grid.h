@@ -23,6 +23,7 @@
 
 @property (nonatomic, readonly) int width;
 @property (nonatomic, readonly) int height;
+@property (nonatomic, readonly) NSArray *items;
 
 - (id)initWithWidth:(int)width height:(int)height;
 
