@@ -22,4 +22,6 @@
 
 - (id)initWithType:(GridItemType)type;
 
++ (id)itemWithType:(GridItemType)type;
+
 @end

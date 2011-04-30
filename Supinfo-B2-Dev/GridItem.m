@@ -46,4 +46,12 @@
     [super dealloc];
 }
 
+
+#pragma mark - Class
+
++ (id)itemWithType:(GridItemType)type
+{
+    return [[[GridItem alloc] initWithType:type] autorelease];
+}
+
 @end
