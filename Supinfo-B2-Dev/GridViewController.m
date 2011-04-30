@@ -54,7 +54,7 @@
 #pragma mark -
 
 - (void)setWidth:(int)width height:(int)height
-{NSLog(@"hey");
+{
     if (!(width > 0 && height > 0)) {
         [NSException raise:@"GridViewControllerException" format:@"Exception: Width and height must be greater than 0."];
     }
