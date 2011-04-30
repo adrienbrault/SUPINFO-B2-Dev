@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95624F60136C7C5A001B96F1 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F5F136C7C5A001B96F1 /* GridView.m */; };
+		95624F64136C7F28001B96F1 /* ABPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F63136C7F28001B96F1 /* ABPoint.m */; };
 		9581E43313671FB60053D07A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9581E43213671FB60053D07A /* Cocoa.framework */; };
 		9581E43D13671FB60053D07A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9581E43B13671FB60053D07A /* InfoPlist.strings */; };
 		9581E44013671FB60053D07A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E43F13671FB60053D07A /* main.m */; };
@@ -16,10 +18,13 @@
 		9581E452136721E80053D07A /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E451136721E80053D07A /* Grid.m */; };
 		9581E455136721FA0053D07A /* GridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E454136721FA0053D07A /* GridItem.m */; };
 		9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E458136728C30053D07A /* NSMutableArray+Additions.m */; };
-		9581E45F1367411A0053D07A /* GridItemType.c in Sources */ = {isa = PBXBuildFile; fileRef = 9581E45E1367411A0053D07A /* GridItemType.c */; };
+		9581E45F1367411A0053D07A /* GridItemType.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E45E1367411A0053D07A /* GridItemType.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		95624F5E136C7C5A001B96F1 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
+		95624F5F136C7C5A001B96F1 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+		95624F63136C7F28001B96F1 /* ABPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPoint.m; sourceTree = "<group>"; };
 		9581E42E13671FB60053D07A /* Supinfo-B2-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Supinfo-B2-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9581E43213671FB60053D07A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9581E43513671FB60053D07A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -41,7 +46,7 @@
 		9581E458136728C30053D07A /* NSMutableArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Additions.m"; sourceTree = "<group>"; };
 		9581E45C136733AC0053D07A /* ABPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPoint.h; sourceTree = "<group>"; };
 		9581E45D1367410F0053D07A /* GridItemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridItemType.h; sourceTree = "<group>"; };
-		9581E45E1367411A0053D07A /* GridItemType.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = GridItemType.c; sourceTree = "<group>"; };
+		9581E45E1367411A0053D07A /* GridItemType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridItemType.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95624F5C136C7C40001B96F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				95624F5E136C7C5A001B96F1 /* GridView.h */,
+				95624F5F136C7C5A001B96F1 /* GridView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		9581E42313671FB60053D07A = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +112,7 @@
 				9581E45A136732450053D07A /* Type */,
 				9581E456136728980053D07A /* Additions */,
 				9581E44F136721C50053D07A /* Model */,
+				95624F5C136C7C40001B96F1 /* View */,
 				9581E44413671FB70053D07A /* Supinfo_B2_DevAppDelegate.h */,
 				9581E44513671FB70053D07A /* Supinfo_B2_DevAppDelegate.m */,
 				9581E44713671FB70053D07A /* MainMenu.xib */,
@@ -140,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				9581E45C136733AC0053D07A /* ABPoint.h */,
+				95624F63136C7F28001B96F1 /* ABPoint.m */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -148,7 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				9581E45D1367410F0053D07A /* GridItemType.h */,
-				9581E45E1367411A0053D07A /* GridItemType.c */,
+				9581E45E1367411A0053D07A /* GridItemType.m */,
 			);
 			name = Type;
 			sourceTree = "<group>";
@@ -232,7 +248,9 @@
 				9581E452136721E80053D07A /* Grid.m in Sources */,
 				9581E455136721FA0053D07A /* GridItem.m in Sources */,
 				9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */,
-				9581E45F1367411A0053D07A /* GridItemType.c in Sources */,
+				9581E45F1367411A0053D07A /* GridItemType.m in Sources */,
+				95624F60136C7C5A001B96F1 /* GridView.m in Sources */,
+				95624F64136C7F28001B96F1 /* ABPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +365,7 @@
 				9581E44E13671FB70053D07A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
