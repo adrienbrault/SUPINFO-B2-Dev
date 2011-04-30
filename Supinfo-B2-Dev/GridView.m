@@ -107,8 +107,13 @@
         case GridItemCastel:
             [[NSColor grayColor] set];
             break;
+        
+        case GridItemWater:
+            [[NSColor blueColor] set];
+            break;
             
         default:
+            [[NSColor blackColor] set];
             break;
     }
     
