@@ -105,6 +105,9 @@
             break;
         
         case GridItemCastel:
+            [[NSColor purpleColor] set];
+            break;
+            
         case GridItemWall:
             [[NSColor grayColor] set];
             break;
