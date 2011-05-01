@@ -38,4 +38,7 @@
 - (ABPoint)firstItemPosition:(GridItem *)item;
 - (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
+- (GridItem *)itemAtIndex:(int)index;
+- (void)setItem:(GridItem *)item atIndex:(int)index;
+
 @end
