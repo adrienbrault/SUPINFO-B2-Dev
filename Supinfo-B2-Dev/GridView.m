@@ -39,6 +39,8 @@
     }
 }
 
+@synthesize delegate = _delegate;
+
 
 #pragma mark - Object lifecycle
 
@@ -117,6 +119,8 @@
                  atPosition:[self itemFramePosition:item]];
     }
     [items release];
+    
+    [self.delegate gridViewDidDraw:self];
 }
 
 - (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;

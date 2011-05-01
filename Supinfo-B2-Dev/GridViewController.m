@@ -18,6 +18,8 @@
 - (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation;
 - (ABPoint)positionAtEventMouseLocation:(NSEvent *)theEvent;
 
+- (void)setTrackingArea;
+
 @end
 
 
@@ -78,15 +80,8 @@
     _territoryGridView.grid = _territoryGrid;
     _buildingsGridView.grid = _buildingsGrid;
     
-    // Mouse tracking (mouseMoved and mouseEntered + mouseExited)
-    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.view.frame
-                                                 options:( NSTrackingMouseEnteredAndExited
-                                                          | NSTrackingMouseMoved
-                                                          | NSTrackingActiveInKeyWindow )
-                                                   owner:self
-                                                userInfo:nil];
-    
-    [self.view addTrackingArea:_trackingArea];
+    _mapGridView.delegate = self;
+    [self setTrackingArea];
     
     // Mouse down event.
     [self setNextResponder:self.view.nextResponder];
@@ -233,6 +228,32 @@
     mouseLocation = [self.view convertPoint:mouseLocation fromView:nil];
     
     return [self positionAtMouseLocation:mouseLocation];
+}
+
+- (void)setTrackingArea
+{
+    [self.view removeTrackingArea:_trackingArea];
+    [_trackingArea release];
+    
+    // Mouse tracking (mouseMoved and mouseEntered + mouseExited)
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.view.frame
+                                                 options:( NSTrackingMouseEnteredAndExited
+                                                          | NSTrackingMouseMoved
+                                                          | NSTrackingActiveInKeyWindow )
+                                                   owner:self
+                                                userInfo:nil];
+    
+    [self.view addTrackingArea:_trackingArea];
+}
+
+
+#pragma mark - GridViewDelegate
+
+- (void)gridViewDidDraw:(GridView *)gridView
+{
+    if (!CGRectEqualToRect(gridView.frame, _trackingArea.rect)) {
+        [self setTrackingArea];
+    }
 }
 
 @end

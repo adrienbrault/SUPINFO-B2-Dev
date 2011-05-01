@@ -10,13 +10,23 @@
 
 #import "Grid.h"
 
+@class GridView;
+@protocol GridViewDelegate <NSObject>
+
+- (void)gridViewDidDraw:(GridView *)gridView;
+
+@end
+
 @interface GridView : NSView {
     
     Grid *_grid;
     
     CGSize _itemSize;
+    
+    id <GridViewDelegate> _delegate;
 }
 
 @property (nonatomic, retain) Grid *grid;
+@property (nonatomic, assign) id <GridViewDelegate> delegate;
 
 @end
