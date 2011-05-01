@@ -11,9 +11,19 @@
 
 @interface Grid (Private)
 
+- (GridItem *)itemAtIndex:(int)index;
+- (void)setItem:(GridItem *)item atIndex:(int)index;
+
+- (BOOL)index:(int)index existsForItem:(GridItem *)item;
+- (BOOL)index:(int)index availableForItem:(GridItem *)item;
+
+- (NSSet *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (NSSet *)indexesForItem:(GridItem *)item atIndex:(int)index;
+
 - (int)indexForPosition:(ABPoint)position;
-- (int)indexForItem:(GridItem *)item;
 - (ABPoint)positionForIndex:(int)index;
+
+- (int)indexForItem:(GridItem *)item;
 
 @end
 
@@ -63,30 +73,29 @@
 
 #pragma mark - Grid
 
-- (GridItem *)itemAtPosition:(ABPoint)position;
+- (GridItem *)itemAtIndex:(int)index
 {
-    id item = [_items objectAtIndex:[self indexForPosition:position]];
+    id item = [_items objectAtIndex:index];
     
     return (item != [NSNull null]) ? (GridItem *)item : nil;
 }
 
-- (void)setItem:(GridItem *)item atPosition:(ABPoint)position
+- (void)setItem:(GridItem *)item atIndex:(int)index
 {
-    if (![self position:position availableForItem:item])
-        [NSException raise:@"GridError" format:@"Exception: Trying to set an item to a wrong position. (%d, %d)", position.x, position.y];
+    if (![self index:index availableForItem:item])
+        [NSException raise:@"GridError" format:@"Exception: Trying to set an item to a wrong index. (%d)", index];
     
     if (!item) {
-        [_items replaceObjectAtIndex:[self indexForPosition:position]
+        [_items replaceObjectAtIndex:index
                           withObject:[NSNull null]];
     } else {
         if ([self indexForItem:item] != (int)NSNotFound) {
             [self removeItem:item];
         }
         
-        NSSet *itemPositions = [self positionsForItem:item atPosition:position];
-        for (NSValue *value in itemPositions) {
-            ABPoint position = ABPointFromValue(value);
-            int positionIndex = [self indexForPosition:position];
+        NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
+        for (NSNumber *number in itemIndexes) {
+            int positionIndex = [number intValue];
             
             [_items replaceObjectAtIndex:positionIndex
                               withObject:item];
@@ -99,16 +108,53 @@
 {
     int index = [self indexForItem:item];
     if (index != NSNotFound) {
-        NSSet *itemPositions = [self positionsForItem:item atPosition:[self positionForIndex:index]];
-        for (NSValue *value in itemPositions) {
-            ABPoint position = ABPointFromValue(value);
-            int positionIndex = [self indexForPosition:position];
+        NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
+        for (NSNumber *number in itemIndexes) {
+            int positionIndex = [number intValue];
             
             [_items replaceObjectAtIndex:positionIndex
                               withObject:[NSNull null]];
         }
     }
 }
+
+
+#pragma mark - Grid @position
+
+- (GridItem *)itemAtPosition:(ABPoint)position;
+{
+    return [self itemAtIndex:[self indexForPosition:position]];
+}
+
+- (void)setItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    return [self setItem:item atIndex:[self indexForPosition:position]];
+}
+
+
+#pragma mark - Grid tests
+
+- (BOOL)index:(int)index availableForItem:(GridItem *)item
+{
+    NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
+    for (NSNumber *number in itemIndexes) {
+        int itemIndex = [number intValue];
+        
+        if ([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex]
+            || ![self index:itemIndex existsForItem:item])
+            return NO;
+    }
+    return YES;
+}
+
+- (BOOL)index:(int)index existsForItem:(GridItem *)item
+{
+    return [self position:[self positionForIndex:index]
+            existsForItem:item];
+}
+
+
+#pragma mark - Grid tests @position
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
@@ -131,22 +177,20 @@
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
 
+
+#pragma mark -
+
 - (ABPoint)firstItemPosition:(GridItem *)item
 {
     return [self positionForIndex:[self indexForItem:item]];
 }
 
 
-#pragma mark - Private
+#pragma mark - Position, index helpers
 
 - (int)indexForPosition:(ABPoint)position
 {
     return position.y * _width + position.x;
-}
-
-- (int)indexForItem:(GridItem *)item
-{
-    return (int)[_items indexOfObject:item];
 }
 
 - (ABPoint)positionForIndex:(int)index
@@ -157,6 +201,30 @@
     
     return ABPointMake(index % _width,
                        ceil(index / _width));
+}
+
+- (int)indexForItem:(GridItem *)item
+{
+    return (int)[_items indexOfObject:item];
+}
+
+- (NSSet *)indexesForItem:(GridItem *)item atIndex:(int)index
+{
+    return [self indexesForItem:item atPosition:[self positionForIndex:index]];
+}
+
+- (NSSet *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    NSMutableSet *set = [NSMutableSet set];
+    for (int i=0; i<(item.width * item.height); i++) {
+        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
+                                           ceil(i / item.height) + position.y);
+        
+        int itemIndex = [self indexForPosition:itemPosition];
+        
+        [set addObject:[NSNumber numberWithInt:itemIndex]];
+    }
+    return set;
 }
 
 - (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
