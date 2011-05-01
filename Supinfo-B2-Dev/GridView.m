@@ -8,12 +8,17 @@
 
 #import "GridView.h"
 
+#define BORDER_SIZE_SCALE 15.0
+
 
 @interface GridView (Private)
 
 - (void)calculateItemSize;
 - (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
+- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position extraSize:(CGSize)extraSize color:(NSColor *)color;
 - (CGPoint)screenPositionForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (CGPoint)itemFramePosition:(GridItem *)item;
+- (CGSize)borderSize;
 
 @end
 
@@ -68,6 +73,17 @@
                        position.y * _itemSize.height);
 }
 
+- (CGPoint)itemFramePosition:(GridItem *)item
+{
+    return [self screenPositionForItem:item atPosition:[self.grid firstItemPosition:item]];
+}
+
+- (CGSize)borderSize
+{
+    return CGSizeMake(ceil(_itemSize.width / BORDER_SIZE_SCALE),
+                      ceil(_itemSize.height / BORDER_SIZE_SCALE));
+}
+
 
 #pragma mark - Drawing
 
@@ -82,37 +98,71 @@
     
     NSSet *items = [self.grid.uniqueItems retain];
     
+    // Dessin du contour noir des murs.
     for (GridItem *item in items) {
-        ABPoint itemPosition = [self.grid firstItemPosition:item];
-        CGPoint itemScreenPosition = [self screenPositionForItem:item atPosition:itemPosition];
-        
+        if (item.type == GridItemWall) {
+            CGSize borderSize = [self borderSize];
+            
+            [self drawInContext:context
+                           item:item
+                     atPosition:[self itemFramePosition:item]
+                      extraSize:CGSizeMake(borderSize.width * 2.0, borderSize.height * 2.0)
+                          color:[NSColor blackColor]];
+        }
+    }
+    
+    for (GridItem *item in items) {
         [self drawInContext:context
                        item:item
-                 atPosition:itemScreenPosition];
+                 atPosition:[self itemFramePosition:item]];
     }
     [items release];
 }
 
 - (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
 {
-    CGRect itemRect = CGRectMake(floor(position.x),
-                                 floor(position.y),
-                                 ceil(item.width * _itemSize.width),
-                                 ceil(item.height * _itemSize.height));
+    [self drawInContext:context
+                   item:item
+             atPosition:position
+              extraSize:CGSizeMake(0.0, 0.0)
+                  color:nil];
+}
+
+- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position extraSize:(CGSize)extraSize color:(NSColor *)color
+{
+    CGRect itemRect = CGRectMake(floor(position.x - extraSize.width / 2),
+                                 floor(position.y - extraSize.height / 2),
+                                 ceil(item.width * _itemSize.width + extraSize.width),
+                                 ceil(item.height * _itemSize.height + extraSize.height));
     
     switch (item.type) {
         case GridItemEarth:
             [[NSColor greenColor] set];
             break;
-        
+            
         case GridItemCastel:
+            [[NSColor blackColor] set];
+            CGSize borderSize = [self borderSize];
+            CGRect castelBackgroundRect = CGRectMake(itemRect.origin.x + borderSize.width * 2.0,
+                                           itemRect.origin.y + borderSize.height * 2.0,
+                                           itemRect.size.width - borderSize.width * 4.0,
+                                           itemRect.size.height - borderSize.height * 4.0);
+            CGContextFillRect(context, castelBackgroundRect);
+            
             [[NSColor purpleColor] set];
+            CGRect castelRect = CGRectMake(itemRect.origin.x + borderSize.width * 3.0,
+                                           itemRect.origin.y + borderSize.height * 3.0,
+                                           itemRect.size.width - borderSize.width * 6.0,
+                                           itemRect.size.height - borderSize.height * 6.0);
+            CGContextFillRect(context, castelRect);
+            
+            return;
             break;
             
         case GridItemWall:
             [[NSColor grayColor] set];
             break;
-        
+            
         case GridItemWater:
             [[NSColor blueColor] set];
             break;
@@ -121,6 +171,8 @@
             [[NSColor blackColor] set];
             break;
     }
+    
+    [color set];
     
     CGContextFillRect(context, itemRect);
 }
