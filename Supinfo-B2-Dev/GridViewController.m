@@ -80,7 +80,7 @@
     _territoryGridView.grid = _territoryGrid;
     _buildingsGridView.grid = _buildingsGrid;
     
-    _mapGridView.delegate = self;
+    self.view.window.delegate = self;
     [self setTrackingArea];
     
     // Mouse down event.
@@ -247,13 +247,11 @@
 }
 
 
-#pragma mark - GridViewDelegate
+#pragma mark - NSWindowDelegate
 
-- (void)gridViewDidDraw:(GridView *)gridView
+- (void)windowDidEndLiveResize:(NSNotification *)notification
 {
-    if (!CGRectEqualToRect(gridView.frame, _trackingArea.rect)) {
-        [self setTrackingArea];
-    }
+    [self setTrackingArea];
 }
 
 @end

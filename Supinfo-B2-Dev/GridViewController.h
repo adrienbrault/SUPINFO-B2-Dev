@@ -11,7 +11,7 @@
 #import "Grid.h"
 #import "GridView.h"
 
-@interface GridViewController : NSViewController <GridViewDelegate> {
+@interface GridViewController : NSViewController <NSWindowDelegate> {
     
     GridView *_mapGridView;
     GridView *_territoryGridView;
