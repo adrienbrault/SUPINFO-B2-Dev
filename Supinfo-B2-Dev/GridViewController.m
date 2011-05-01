@@ -428,7 +428,7 @@
 - (IBAction)testAlgo:(id)sender
 {
     [_territoryGrid setTerritoryIndexesStatus:[self capturedTeritoryIndexes]];
-    //[_territoryGridView setNeedsDisplay:YES];
+    [_territoryGridView setNeedsDisplay:YES];
 }
 
 @end

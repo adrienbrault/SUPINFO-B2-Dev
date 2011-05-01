@@ -248,12 +248,13 @@
         
         if (isOccupied) {
             item = [GridItem itemWithType:GridItemAreaCaptured];
+            ((GridItem *)item).cachePosition = [self positionForIndex:index];
         } else {
             item = [NSNull null];
         }
         
         [_items replaceObjectAtIndex:index withObject:item];
-    }NSLog(@"%@", _items);
+    }
 }
 
 @end

@@ -92,7 +92,7 @@
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
     
-    NSSet *items = [self.grid.uniqueItems retain];
+    NSSet *items = self.grid.uniqueItems;
     
     // Dessin du contour noir des murs.
     for (GridItem *item in items) {
@@ -107,13 +107,12 @@
         }
     }
     
+    // Dessin de tous les items.
     for (GridItem *item in items) {
         [self drawInContext:context
                        item:item
                  atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
     }
-    
-    [items release];
 }
 
 - (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
@@ -162,6 +161,10 @@
             
         case GridItemWater:
             [[NSColor blueColor] set];
+            break;
+        
+        case GridItemAreaCaptured:
+            [[NSColor orangeColor] set];
             break;
             
         default:
