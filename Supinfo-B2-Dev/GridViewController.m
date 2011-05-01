@@ -188,6 +188,18 @@
     [self.nextResponder mouseDown:theEvent];
 }
 
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+    NSLog(@"%@", theEvent);
+    
+    ABPoint position = [self positionAtEventMouseLocation:theEvent];
+    
+    [self setItem:[GridItem itemWithType:GridItemWall]
+       atPosition:position];
+    
+    [self.nextResponder mouseDown:theEvent];
+}
+
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     NSLog(@"%@", theEvent);
