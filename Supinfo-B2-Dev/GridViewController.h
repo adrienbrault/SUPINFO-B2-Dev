@@ -43,6 +43,4 @@
 
 - (void)setWidth:(int)width height:(int)height;
 
-- (IBAction)testAlgo:(id)sender;
-
 @end

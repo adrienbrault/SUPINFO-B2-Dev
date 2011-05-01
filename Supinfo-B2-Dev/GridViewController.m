@@ -20,6 +20,8 @@
 
 - (void)setTrackingArea;
 
+- (void)refreshTerritoryMap;
+
 
 - (NSArray *)capturedTeritoryIndexes;
 - (BOOL)checkIndexes;
@@ -203,6 +205,8 @@
     [self setItem:[GridItem itemWithType:GridItemWall]
        atPosition:position];
     
+    [self refreshTerritoryMap];
+    
     [self.nextResponder mouseDown:theEvent];
 }
 
@@ -214,6 +218,8 @@
     NSLog(@"%d %d", position.x, position.y);
     [self setItem:[GridItem itemWithType:GridItemWall]
        atPosition:position];
+    
+    [self refreshTerritoryMap];
     
     [self.nextResponder mouseDown:theEvent];
 }
@@ -279,6 +285,15 @@
 - (void)windowDidUpdate:(NSNotification *)notification
 {
     [self setTrackingArea];
+}
+
+
+#pragma mark - TerritoryMap
+
+- (void)refreshTerritoryMap
+{
+    [_territoryGrid setTerritoryIndexesStatus:[self capturedTeritoryIndexes]];
+    [_territoryGridView setNeedsDisplay:YES];
 }
 
 
@@ -421,14 +436,6 @@
     }
     
     return NO;
-}
-
-#pragma mark - IBActions
-
-- (IBAction)testAlgo:(id)sender
-{
-    [_territoryGrid setTerritoryIndexesStatus:[self capturedTeritoryIndexes]];
-    [_territoryGridView setNeedsDisplay:YES];
 }
 
 @end
