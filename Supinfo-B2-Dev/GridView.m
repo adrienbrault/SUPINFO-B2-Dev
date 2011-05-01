@@ -81,6 +81,7 @@
                        CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, self.frame.size.height));
     
     NSSet *items = [self.grid.uniqueItems retain];
+    
     for (GridItem *item in items) {
         ABPoint itemPosition = [self.grid firstItemPosition:item];
         CGPoint itemScreenPosition = [self screenPositionForItem:item atPosition:itemPosition];
@@ -94,10 +95,10 @@
 
 - (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
 {
-    CGRect itemRect = CGRectMake(position.x,
-                                 position.y,
-                                 item.width * _itemSize.width,
-                                 item.height * _itemSize.height);
+    CGRect itemRect = CGRectMake(floor(position.x),
+                                 floor(position.y),
+                                 ceil(item.width * _itemSize.width),
+                                 ceil(item.height * _itemSize.height));
     
     switch (item.type) {
         case GridItemEarth:
