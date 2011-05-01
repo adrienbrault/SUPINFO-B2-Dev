@@ -12,7 +12,10 @@
 
 - (void)loadDefaultMap;
 
+- (void)setItem:(GridItem *)item atPosition:(ABPoint)position;
 - (BOOL)item:(GridItem *)item canBePositionedAt:(ABPoint)position;
+
+- (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation;
 
 @end
 
@@ -96,6 +99,7 @@
     int totalItems = _gridWidth*_gridHeight;
     for (int i=0; i<totalItems; i++) {
         GridItemType itemType;
+        ABPoint position = ABPointMake(i % _gridWidth, ceil(i / _gridHeight));
         
         // Weird condition that make the map look cool.
         if (i < ceil(totalItems/2)
@@ -105,14 +109,41 @@
             itemType = GridItemWater;
         }
         
-        [_mapGrid setItem:[GridItem itemWithType:itemType]
-               atPosition:ABPointMake(i % _gridWidth, ceil(i / _gridHeight))];
+        [self setItem:[GridItem itemWithType:itemType]
+               atPosition:position];
     }
+    
+    [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(3*_gridWidth/4, _gridHeight/4)];
+    [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(2*_gridWidth/4, 2*_gridHeight/4)];
+    [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/4, _gridHeight/4)];
+    
     [_mapGridView setNeedsDisplay:YES];
 }
 
 
 #pragma mark -
+
+- (void)setItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    if ([self item:item canBePositionedAt:position]) {
+        switch (item.type) {
+            case GridItemWall:
+            case GridItemCastel:
+            case GridItemTower:
+                [_buildingsGrid setItem:item atPosition:position];
+                break;
+            
+            case GridItemAreaCaptured:
+                [_territoryGrid setItem:item atPosition:position];
+                break;
+            
+            case GridItemEarth:
+            case GridItemWater:
+                [_mapGrid setItem:item atPosition:position];
+                break;
+        }
+    }
+}
 
 - (BOOL)item:(GridItem *)item canBePositionedAt:(ABPoint)position
 {
@@ -137,9 +168,12 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    NSPoint mouseLocation = [NSEvent mouseLocation];
+    NSPoint mouseLocation = [theEvent locationInWindow];
+    mouseLocation = [self.view convertPoint:mouseLocation fromView:nil];
     
-    NSLog(@"%f %f", mouseLocation.x, mouseLocation.y);
+    ABPoint position = [self positionAtMouseLocation:mouseLocation];
+    
+    NSLog(@"%f %f - %d %d", mouseLocation.x, mouseLocation.y, position.x, position.y);
     
     //[self.nextResponder mouseMoved:theEvent];
 }
@@ -163,6 +197,15 @@
     NSLog(@"%@", theEvent);
     
     [self.nextResponder mouseDown:theEvent];
+}
+
+
+#pragma mark - Mouse stuff
+
+- (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation
+{
+    return ABPointMake(ceil((mouseLocation.x + 1.0) / (self.view.frame.size.width / _gridWidth)) - 1,
+                       ceil((self.view.frame.size.height - mouseLocation.y + 1.0) / (self.view.frame.size.height / _gridHeight)) - 1);
 }
 
 @end
