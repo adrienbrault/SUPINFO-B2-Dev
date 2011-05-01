@@ -86,15 +86,11 @@
 #pragma mark - Drawing
 
 - (void)drawRect:(NSRect)dirtyRect
-{
+{NSLog(@"draw");
     [self calculateItemSize];
     
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
-    
-    // Set the origin of the coordinate system in the upper left corner instead of the lower left corner.
-    CGContextConcatCTM(context,
-                       CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, self.frame.size.height));
     
     NSSet *items = [self.grid.uniqueItems retain];
     
@@ -175,6 +171,14 @@
     [color set];
     
     CGContextFillRect(context, itemRect);
+}
+
+
+#pragma mark - NSView
+
+- (BOOL)isFlipped
+{
+    return YES;
 }
 
 @end
