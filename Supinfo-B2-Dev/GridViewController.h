@@ -25,7 +25,6 @@
     int _gridHeight;
     
     NSTrackingArea *_trackingArea;
-    BOOL _mouseIsInside;
 }
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;

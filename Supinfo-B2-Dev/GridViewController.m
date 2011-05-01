@@ -87,15 +87,23 @@
     [self setNextResponder:self.view.nextResponder];
     [self.view setNextResponder:self];
     
-    _mouseIsInside = YES;
-    
     [self loadDefaultMap];
 }
 
 - (void)loadDefaultMap
 {
+    NSLog(@"Loading default map");
+    
+    NSAutoreleasePool *pool = nil;
+    
     int totalItems = _gridWidth * _gridHeight;
     for (int i=0; i<totalItems; i++) {
+        if (i % 10000 == 0) {
+            [pool drain];
+            pool = [[NSAutoreleasePool alloc] init];
+        }
+        
+        
         GridItemType itemType;
         ABPoint position = ABPointMake(i % _gridWidth, floor(i / _gridWidth));
         
@@ -116,6 +124,8 @@
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/4, _gridHeight/4)];
     
     [_mapGridView setNeedsDisplay:YES];
+    
+    NSLog(@"Default map loaded");
 }
 
 
@@ -187,28 +197,12 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    if (_mouseIsInside) {
-        //NSLog(@"%@", theEvent);
-        
-        ABPoint position = [self positionAtEventMouseLocation:theEvent];
-        NSLog(@"%d %d", position.x, position.y);
-        [self setItem:[GridItem itemWithType:GridItemWall]
-           atPosition:position];
-    }
+    //NSLog(@"%@", theEvent);
     
-    [self.nextResponder mouseDown:theEvent];
-}
-
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-    _mouseIsInside = YES;
-    
-    [self.nextResponder mouseDown:theEvent];
-}
-
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    _mouseIsInside = NO;
+    ABPoint position = [self positionAtEventMouseLocation:theEvent];
+    NSLog(@"%d %d", position.x, position.y);
+    [self setItem:[GridItem itemWithType:GridItemWall]
+       atPosition:position];
     
     [self.nextResponder mouseDown:theEvent];
 }
@@ -218,14 +212,31 @@
 
 - (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation
 {
-    return ABPointMake(ceil((mouseLocation.x + 1.0) / (self.view.frame.size.width / _gridWidth)) - 1,
+    ABPoint position = ABPointMake(ceil((mouseLocation.x + 1.0) / (self.view.frame.size.width / _gridWidth)) - 1,
                        ceil((self.view.frame.size.height - mouseLocation.y + 1.0) / (self.view.frame.size.height / _gridHeight)) - 1);
+    
+    // We make sure that the position is correct.
+    if (position.x >= _gridWidth) {
+        position.x = _gridWidth - 1;
+    }
+    if (position.y >= _gridHeight) {
+        position.y = _gridHeight - 1;
+    }
+    
+    if (position.x < 0) {
+        position.x = 0;
+    }
+    if (position.y < 0) {
+        position.y = 0;
+    }
+    
+    return position;
 }
 
 - (ABPoint)positionAtEventMouseLocation:(NSEvent *)theEvent
 {
     NSPoint mouseLocation = [theEvent locationInWindow];
-    mouseLocation = [self.view convertPoint:mouseLocation fromView:nil];
+    mouseLocation = [self.view convertPoint:mouseLocation fromView:self.view];
     
     return [self positionAtMouseLocation:mouseLocation];
 }
@@ -250,6 +261,11 @@
 #pragma mark - NSWindowDelegate
 
 - (void)windowDidEndLiveResize:(NSNotification *)notification
+{
+    [self setTrackingArea];
+}
+
+- (void)windowDidUpdate:(NSNotification *)notification
 {
     [self setTrackingArea];
 }
