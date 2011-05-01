@@ -240,7 +240,7 @@
 
 - (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus
 {
-    for (int index; index<[indexesStatus count]; index++) {
+    for (int index = 0; index<[indexesStatus count]; index++) {
         NSNumber *boolNumber = [indexesStatus objectAtIndex:index];
         BOOL isOccupied = [boolNumber boolValue];
         
