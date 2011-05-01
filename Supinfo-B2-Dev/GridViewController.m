@@ -97,14 +97,14 @@
 
 - (void)loadDefaultMap
 {
-    int totalItems = _gridWidth*_gridHeight;
+    int totalItems = _gridWidth * _gridHeight;
     for (int i=0; i<totalItems; i++) {
         GridItemType itemType;
-        ABPoint position = ABPointMake(i % _gridWidth, ceil(i / _gridHeight));
+        ABPoint position = ABPointMake(i % _gridWidth, floor(i / _gridWidth));
         
         // Weird condition that make the map look cool.
-        if (i < ceil(totalItems/2)
-            || (i % _gridWidth) < (_gridHeight - i / _gridHeight) * 2) {
+        if ((i / _gridWidth) < _gridHeight / 2
+            || (i % _gridWidth) < (_gridHeight - i / _gridWidth)) {
             itemType = GridItemEarth;
         } else {
             itemType = GridItemWater;

@@ -73,7 +73,7 @@
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position
 {
     if (![self position:position availableForItem:item])
-        [NSException raise:@"GridError" format:@"Exception: Trying to set an item to a wrong position."];
+        [NSException raise:@"GridError" format:@"Exception: Trying to set an item to a wrong position. (%d, %d)", position.x, position.y];
     
     if (!item) {
         [_items replaceObjectAtIndex:[self indexForPosition:position]
@@ -155,7 +155,7 @@
     }
     
     return ABPointMake(index % _width,
-                       ceil(index / _height));
+                       ceil(index / _width));
 }
 
 - (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
