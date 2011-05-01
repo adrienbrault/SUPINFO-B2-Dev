@@ -20,7 +20,6 @@
 
 @end
 
-// Test
 
 @implementation GridViewController
 
