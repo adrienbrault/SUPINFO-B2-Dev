@@ -92,6 +92,8 @@
     [self setNextResponder:self.view.nextResponder];
     [self.view setNextResponder:self];
     
+    _mouseIsInside = YES;
+    
     [self loadDefaultMap];
 }
 
@@ -190,26 +192,28 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    NSLog(@"%@", theEvent);
-    
-    ABPoint position = [self positionAtEventMouseLocation:theEvent];
-    
-    [self setItem:[GridItem itemWithType:GridItemWall]
-       atPosition:position];
+    if (_mouseIsInside) {
+        //NSLog(@"%@", theEvent);
+        
+        ABPoint position = [self positionAtEventMouseLocation:theEvent];
+        NSLog(@"%d %d", position.x, position.y);
+        [self setItem:[GridItem itemWithType:GridItemWall]
+           atPosition:position];
+    }
     
     [self.nextResponder mouseDown:theEvent];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-    NSLog(@"%@", theEvent);
+    _mouseIsInside = YES;
     
     [self.nextResponder mouseDown:theEvent];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-    NSLog(@"%@", theEvent);
+    _mouseIsInside = NO;
     
     [self.nextResponder mouseDown:theEvent];
 }
