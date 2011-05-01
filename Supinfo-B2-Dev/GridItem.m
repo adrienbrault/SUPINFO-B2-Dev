@@ -14,6 +14,7 @@
 #pragma mark - Properties
 
 @synthesize type = _type;
+@synthesize cachePosition = _cachePosition;
 
 - (int)width
 {

@@ -91,6 +91,7 @@
             [_items replaceObjectAtIndex:positionIndex
                               withObject:item];
         }
+        item.cachePosition = [self firstItemPosition:item];
     }
 }
 

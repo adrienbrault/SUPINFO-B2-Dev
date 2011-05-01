@@ -86,7 +86,7 @@
 #pragma mark - Drawing
 
 - (void)drawRect:(NSRect)dirtyRect
-{NSLog(@"draw");
+{
     [self calculateItemSize];
     
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
@@ -110,8 +110,9 @@
     for (GridItem *item in items) {
         [self drawInContext:context
                        item:item
-                 atPosition:[self itemFramePosition:item]];
+                 atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
     }
+    
     [items release];
 }
 
