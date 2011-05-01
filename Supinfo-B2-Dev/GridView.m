@@ -35,8 +35,6 @@
         [_grid release];
         _grid = [grid retain];
         
-        [self calculateItemSize];
-        
         [self setNeedsDisplay:YES];
     }
 }
@@ -89,6 +87,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [self calculateItemSize];
+    
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
     
