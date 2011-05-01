@@ -41,4 +41,10 @@
 - (GridItem *)itemAtIndex:(int)index;
 - (void)setItem:(GridItem *)item atIndex:(int)index;
 
+- (ABPoint)positionForIndex:(int)index;
+- (int)indexForPosition:(ABPoint)position;
+
+
+- (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus;
+
 @end

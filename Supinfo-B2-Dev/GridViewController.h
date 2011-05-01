@@ -23,8 +23,14 @@
     
     int _gridWidth;
     int _gridHeight;
+    int _gridTotalIndex;
     
     NSTrackingArea *_trackingArea;
+    
+    // Algorithm part
+    char *_indexesStatus;
+    BOOL *_indexesDone;
+    NSMutableSet *_indexesToProcess;
 }
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;
@@ -33,7 +39,10 @@
 
 @property (nonatomic, readonly) int gridWidth;
 @property (nonatomic, readonly) int gridHeight;
+@property (nonatomic, readonly) int gridTotalIndex;
 
 - (void)setWidth:(int)width height:(int)height;
+
+- (IBAction)testAlgo:(id)sender;
 
 @end

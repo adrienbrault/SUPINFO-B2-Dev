@@ -11,17 +11,11 @@
 
 @interface Grid (Private)
 
-- (GridItem *)itemAtIndex:(int)index;
-- (void)setItem:(GridItem *)item atIndex:(int)index;
-
 - (BOOL)index:(int)index existsForItem:(GridItem *)item;
 - (BOOL)index:(int)index availableForItem:(GridItem *)item;
 
 - (NSSet *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
 - (NSSet *)indexesForItem:(GridItem *)item atIndex:(int)index;
-
-- (int)indexForPosition:(ABPoint)position;
-- (ABPoint)positionForIndex:(int)index;
 
 - (int)indexForItem:(GridItem *)item;
 
@@ -239,6 +233,27 @@
         [set addObject:value];
     }
     return set;
+}
+
+
+#pragma mark - Territory grid
+
+- (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus
+{
+    for (int index; index<[indexesStatus count]; index++) {
+        NSNumber *boolNumber = [indexesStatus objectAtIndex:index];
+        BOOL isOccupied = [boolNumber boolValue];
+        
+        id item;
+        
+        if (isOccupied) {
+            item = [GridItem itemWithType:GridItemAreaCaptured];
+        } else {
+            item = [NSNull null];
+        }
+        
+        [_items replaceObjectAtIndex:index withObject:item];
+    }NSLog(@"%@", _items);
 }
 
 @end

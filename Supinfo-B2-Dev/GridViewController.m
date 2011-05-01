@@ -20,6 +20,13 @@
 
 - (void)setTrackingArea;
 
+
+- (NSArray *)capturedTeritoryIndexes;
+- (BOOL)checkIndexes;
+- (void)findNextIndexes;
+- (BOOL)isIndexAWall:(int)index;
+- (NSMutableSet *)borderIndexes;
+
 @end
 
 
@@ -33,6 +40,7 @@
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
+@synthesize gridTotalIndex = _gridTotalIndex;
 
 
 #pragma mark - Object lifecycle
@@ -71,6 +79,7 @@
     
     _gridWidth = width;
     _gridHeight = height;
+    _gridTotalIndex = _gridWidth * _gridHeight;
     
     _mapGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
     _territoryGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
@@ -119,9 +128,11 @@
                atPosition:position];
     }
     
+    /*
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(3*_gridWidth/4, 1*_gridHeight/7)];
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/6, 2*_gridHeight/4)];
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/4, _gridHeight/4)];
+     */
     
     [_mapGridView setNeedsDisplay:YES];
     
@@ -268,6 +279,156 @@
 - (void)windowDidUpdate:(NSNotification *)notification
 {
     [self setTrackingArea];
+}
+
+
+#pragma mark - Algorithms
+
+- (NSArray *)capturedTeritoryIndexes
+{
+    // Calloc init all values to 0.
+    _indexesStatus = calloc(self.gridTotalIndex, sizeof(char)); /*** 1: Free || 2: Occupied ***/
+    _indexesDone = calloc(self.gridTotalIndex, sizeof(BOOL));
+    
+    // We start from borders.
+    _indexesToProcess = [self borderIndexes];
+    
+    BOOL anIndexIsCorrect = [self checkIndexes];
+    
+    while (anIndexIsCorrect) {
+        [self findNextIndexes];
+        anIndexIsCorrect = [self checkIndexes];
+    }
+    
+    NSMutableArray *positionsStatus = [NSMutableArray arrayWithCapacity:self.gridTotalIndex];
+    for (int i=0; i<self.gridTotalIndex; i++) {
+        char status = _indexesStatus[i];
+        BOOL isOccupied = (status != 1) ? YES : NO;
+        [positionsStatus addObject:[NSNumber numberWithBool:isOccupied]];
+    }
+    
+    free(_indexesStatus);
+    free(_indexesDone);
+    
+    return positionsStatus;
+}
+
+- (BOOL)checkIndexes
+{
+    BOOL anIndexIsCorrect = NO;
+    NSMutableSet *numbersToRemove = [NSMutableSet set];
+    
+    for (NSNumber *number in _indexesToProcess) {
+        int currentIndex = [number intValue];
+        
+        if ([self isIndexAWall:currentIndex]) {
+            _indexesStatus[currentIndex] = 2;
+            [numbersToRemove addObject:number];
+        } else {
+            _indexesStatus[currentIndex] = 1;
+            anIndexIsCorrect = YES;
+        }
+        
+        _indexesDone[currentIndex] = YES;
+    }
+    
+    for (NSNumber *number in numbersToRemove) {
+        [_indexesToProcess removeObject:number];
+    }
+    
+    return anIndexIsCorrect;
+}
+
+- (void)findNextIndexes
+{
+    NSMutableSet *newIndexesToProcess = [NSMutableSet set];
+    
+    for (NSNumber *number in _indexesToProcess) {
+        int index = [number intValue];
+        ABPoint indexPosition = [_mapGrid positionForIndex:index];
+        
+        int positionNextToCurrentIndex[8] = {
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y - 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y - 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y - 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 0)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y + 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 1)],
+            [_mapGrid indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 0)]
+        };
+        
+        for (int i=0; i<8; i++) {
+            int currentPossibleIndex = positionNextToCurrentIndex[i];
+            
+            if (currentPossibleIndex > 0 && currentPossibleIndex < self.gridTotalIndex
+                && !_indexesDone[currentPossibleIndex]) {
+                [newIndexesToProcess addObject:[NSNumber numberWithInt:currentPossibleIndex]];
+            }
+        }
+    }
+    
+    _indexesToProcess = newIndexesToProcess;
+}
+
+- (NSMutableSet *)borderIndexes
+{
+    int totalIndex = _gridWidth * _gridHeight;
+    
+    NSMutableSet *borderIndexes = [NSMutableArray array];
+    
+    // Top border.
+    for (int i = 0;
+         i<_gridWidth;
+         i++)
+    {
+        [borderIndexes addObject:[NSNumber numberWithInt:i]];
+    }
+    
+    // Right border.
+    for (int i = _gridWidth * 2.0 - 1;
+         (i + 1) % _gridWidth == 0 && i < totalIndex;
+         i += _gridWidth)
+    {
+        [borderIndexes addObject:[NSNumber numberWithInt:i]];
+    }
+    
+    // Left border.
+    for (int i = _gridWidth;
+         i % _gridWidth == 0 && i < totalIndex;
+         i += _gridWidth)
+    {
+        [borderIndexes addObject:[NSNumber numberWithInt:i]];
+    }
+    
+    // Bottom border.
+    for (int i = totalIndex - _gridWidth;
+         i < totalIndex - 1;
+         i++)
+    {
+        [borderIndexes addObject:[NSNumber numberWithInt:i]];
+    }
+    
+    return borderIndexes;
+}
+
+- (BOOL)isIndexAWall:(int)index
+{
+    GridItem *item = [_buildingsGrid itemAtIndex:index];
+    
+    if (item && item.type == GridItemWall) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+#pragma mark - IBActions
+
+- (IBAction)testAlgo:(id)sender
+{
+    [_territoryGrid setTerritoryIndexesStatus:[self capturedTeritoryIndexes]];
+    //[_territoryGridView setNeedsDisplay:YES];
 }
 
 @end
