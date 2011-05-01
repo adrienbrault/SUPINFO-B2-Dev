@@ -16,6 +16,7 @@
 - (BOOL)item:(GridItem *)item canBePositionedAt:(ABPoint)position;
 
 - (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation;
+- (ABPoint)positionAtEventMouseLocation:(NSEvent *)theEvent;
 
 @end
 
@@ -131,15 +132,18 @@
             case GridItemCastel:
             case GridItemTower:
                 [_buildingsGrid setItem:item atPosition:position];
+                [_buildingsGridView setNeedsDisplay:YES];
                 break;
             
             case GridItemAreaCaptured:
                 [_territoryGrid setItem:item atPosition:position];
+                [_territoryGridView setNeedsDisplay:YES];
                 break;
             
             case GridItemEarth:
             case GridItemWater:
                 [_mapGrid setItem:item atPosition:position];
+                [_mapGridView setNeedsDisplay:YES];
                 break;
         }
     }
@@ -154,7 +158,7 @@
         NSSet *positions = [_mapGrid positionsForItem:item atPosition:position];
         for (NSValue *value in positions) {
             ABPoint position = ABPointFromValue(value);
-            if ([_mapGrid itemAtPosition:position].type != GridItemEarth) {
+            if ([_mapGrid itemAtPosition:position].type != GridItemEarth || [_buildingsGrid itemAtPosition:position]) {
                 return NO;
             }
         }
@@ -168,12 +172,6 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    NSPoint mouseLocation = [theEvent locationInWindow];
-    mouseLocation = [self.view convertPoint:mouseLocation fromView:nil];
-    
-    ABPoint position = [self positionAtMouseLocation:mouseLocation];
-    
-    NSLog(@"%f %f - %d %d", mouseLocation.x, mouseLocation.y, position.x, position.y);
     
     //[self.nextResponder mouseMoved:theEvent];
 }
@@ -181,6 +179,11 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     NSLog(@"%@", theEvent);
+    
+    ABPoint position = [self positionAtEventMouseLocation:theEvent];
+    
+    [self setItem:[GridItem itemWithType:GridItemWall]
+       atPosition:position];
     
     [self.nextResponder mouseDown:theEvent];
 }
@@ -206,6 +209,14 @@
 {
     return ABPointMake(ceil((mouseLocation.x + 1.0) / (self.view.frame.size.width / _gridWidth)) - 1,
                        ceil((self.view.frame.size.height - mouseLocation.y + 1.0) / (self.view.frame.size.height / _gridHeight)) - 1);
+}
+
+- (ABPoint)positionAtEventMouseLocation:(NSEvent *)theEvent
+{
+    NSPoint mouseLocation = [theEvent locationInWindow];
+    mouseLocation = [self.view convertPoint:mouseLocation fromView:nil];
+    
+    return [self positionAtMouseLocation:mouseLocation];
 }
 
 @end
