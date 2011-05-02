@@ -84,7 +84,7 @@
     _gridTotalIndex = _gridWidth * _gridHeight;
     
     _mapGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
-    _territoryGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
+    _territoryGrid = [[TerritoryGrid alloc] initWithWidth:_gridWidth height:_gridHeight];
     _buildingsGrid = [[AdvancedGrid alloc] initWithWidth:_gridWidth height:_gridHeight];
     
     _mapGridView.grid = _mapGrid;

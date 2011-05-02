@@ -10,6 +10,8 @@
 
 #import "Grid.h"
 #import "AdvancedGrid.h"
+#import "TerritoryGrid.h"
+
 #import "GridView.h"
 
 @interface GridViewController : NSViewController <NSWindowDelegate> {
@@ -19,7 +21,7 @@
     GridView *_buildingsGridView;
     
     Grid *_mapGrid;
-    Grid *_territoryGrid;
+    TerritoryGrid *_territoryGrid;
     AdvancedGrid *_buildingsGrid;
     
     NSInteger _gridWidth;
