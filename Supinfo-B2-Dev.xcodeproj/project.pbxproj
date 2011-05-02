@@ -36,7 +36,7 @@
 		95815C4F136F225900F9D793 /* AdvancedGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedGrid.m; sourceTree = "<group>"; };
 		95815C54136F2E6700F9D793 /* TerritoryGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerritoryGrid.h; sourceTree = "<group>"; };
 		95815C55136F2E6700F9D793 /* TerritoryGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerritoryGrid.m; sourceTree = "<group>"; };
-		95815C57136F2F0500F9D793 /* BuildingsGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BuildingsGrid.h; sourceTree = "<group>"; };
+		95815C57136F2F0500F9D793 /* BuildingsGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingsGrid.h; sourceTree = "<group>"; };
 		95815C58136F2F0500F9D793 /* BuildingsGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingsGrid.m; sourceTree = "<group>"; };
 		9581E42E13671FB60053D07A /* Supinfo-B2-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Supinfo-B2-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9581E43213671FB60053D07A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -123,6 +123,15 @@
 				95815C55136F2E6700F9D793 /* TerritoryGrid.m */,
 			);
 			name = "Specific Grid";
+			sourceTree = "<group>";
+		};
+		95815C66136F3B0300F9D793 /* Grid */ = {
+			isa = PBXGroup;
+			children = (
+				95815C52136F2E3100F9D793 /* Base Grid */,
+				95815C53136F2E3A00F9D793 /* Specific Grid */,
+			);
+			name = Grid;
 			sourceTree = "<group>";
 		};
 		9581E42313671FB60053D07A = {
@@ -227,8 +236,7 @@
 		9581E461136742A80053D07A /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				95815C52136F2E3100F9D793 /* Base Grid */,
-				95815C53136F2E3A00F9D793 /* Specific Grid */,
+				95815C66136F3B0300F9D793 /* Grid */,
 				9581E453136721FA0053D07A /* GridItem.h */,
 				9581E454136721FA0053D07A /* GridItem.m */,
 			);
