@@ -8,13 +8,13 @@
 
 #import "GridItemType.h"
 
-int
+NSInteger
 GetGridItemTypeWidth(GridItemType type)
 {
     return (type == GridItemCastel) ? 2 : 1;
 }
 
-int
+NSInteger
 GetGridItemTypeHeight(GridItemType type)
 {
     return (type == GridItemCastel) ? 2 : 1;

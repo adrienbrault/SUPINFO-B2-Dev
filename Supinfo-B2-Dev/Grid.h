@@ -15,18 +15,18 @@
 
 @interface Grid : NSObject {
     
-    int _width;
-    int _height;
+    NSInteger _width;
+    NSInteger _height;
     
     NSMutableArray *_items;
 }
 
-@property (nonatomic, readonly) int width;
-@property (nonatomic, readonly) int height;
+@property (nonatomic, readonly) NSInteger width;
+@property (nonatomic, readonly) NSInteger height;
 @property (nonatomic, readonly) NSArray *items;
 @property (nonatomic, readonly) NSSet *uniqueItems;
 
-- (id)initWithWidth:(int)width height:(int)height;
+- (id)initWithWidth:(NSInteger)width height:(NSInteger)height;
 
 - (GridItem *)itemAtPosition:(ABPoint)position;
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position;
@@ -38,11 +38,11 @@
 - (ABPoint)firstItemPosition:(GridItem *)item;
 - (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
-- (GridItem *)itemAtIndex:(int)index;
-- (void)setItem:(GridItem *)item atIndex:(int)index;
+- (GridItem *)itemAtIndex:(NSInteger)index;
+- (void)setItem:(GridItem *)item atIndex:(NSInteger)index;
 
-- (ABPoint)positionForIndex:(int)index;
-- (int)indexForPosition:(ABPoint)position;
+- (ABPoint)positionForIndex:(NSInteger)index;
+- (NSInteger)indexForPosition:(ABPoint)position;
 
 
 - (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus;

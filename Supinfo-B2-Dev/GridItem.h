@@ -20,8 +20,8 @@
 }
 
 @property (nonatomic, readonly) GridItemType type;
-@property (nonatomic, readonly) int width;
-@property (nonatomic, readonly) int height;
+@property (nonatomic, readonly) NSInteger width;
+@property (nonatomic, readonly) NSInteger height;
 
 @property (nonatomic, assign) ABPoint cachePosition;
 

@@ -16,12 +16,12 @@
 @synthesize type = _type;
 @synthesize cachePosition = _cachePosition;
 
-- (int)width
+- (NSInteger)width
 {
     return GetGridItemTypeWidth(_type);
 }
 
-- (int)height
+- (NSInteger)height
 {
     return GetGridItemTypeHeight(_type);
 }

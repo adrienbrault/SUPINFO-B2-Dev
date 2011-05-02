@@ -9,7 +9,7 @@
 #import "ABPoint.h"
 
 ABPoint
-ABPointMake(int x, int y)
+ABPointMake(NSInteger x, NSInteger y)
 {
     ABPoint point;
     point.x = x;

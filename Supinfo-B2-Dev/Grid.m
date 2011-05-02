@@ -11,13 +11,13 @@
 
 @interface Grid (Private)
 
-- (BOOL)index:(int)index existsForItem:(GridItem *)item;
-- (BOOL)index:(int)index availableForItem:(GridItem *)item;
+- (BOOL)index:(NSInteger)index existsForItem:(GridItem *)item;
+- (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item;
 
 - (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(int)index;
+- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
 
-- (int)indexForItem:(GridItem *)item;
+- (NSInteger)indexForItem:(GridItem *)item;
 
 @end
 
@@ -46,10 +46,10 @@
     return [self initWithWidth:1 height:1];
 }
 
-- (id)initWithWidth:(int)width height:(int)height;
+- (id)initWithWidth:(NSInteger)width height:(NSInteger)height;
 {
     if ((self = [super init])) {
-        int capacity = width * height;
+        NSInteger capacity = width * height;
         _width = width;
         _height = height;
         
@@ -67,14 +67,14 @@
 
 #pragma mark - Grid
 
-- (GridItem *)itemAtIndex:(int)index
+- (GridItem *)itemAtIndex:(NSInteger)index
 {
     id item = [_items objectAtIndex:index];
     
     return (item != [NSNull null]) ? (GridItem *)item : nil;
 }
 
-- (void)setItem:(GridItem *)item atIndex:(int)index
+- (void)setItem:(GridItem *)item atIndex:(NSInteger)index
 {
     if (![self index:index availableForItem:item])
         [NSException raise:@"GridError" format:@"Exception: Trying to set an item to a wrong index. (%d)", index];
@@ -86,7 +86,7 @@
         NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
         for (int i=0; i<[itemIndexes count]; i++) {
             NSNumber *number = [itemIndexes objectAtIndex:i];
-            int positionIndex = [number intValue];
+            NSInteger positionIndex = [number integerValue];
             
             [_items replaceObjectAtIndex:positionIndex
                               withObject:item];
@@ -100,7 +100,7 @@
 
 - (void)removeItem:(GridItem *)item
 {
-    int index = [self indexForItem:item];
+    NSInteger index = [self indexForItem:item];
     if (index != NSNotFound) {
         NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
         for (NSNumber *number in itemIndexes) {
@@ -128,11 +128,11 @@
 
 #pragma mark - Grid tests
 
-- (BOOL)index:(int)index availableForItem:(GridItem *)item
+- (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item
 {
     NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
     for (NSNumber *number in itemIndexes) {
-        int itemIndex = [number intValue];
+        NSInteger itemIndex = [number intValue];
         
         if ([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex]
             || ![self index:itemIndex existsForItem:item])
@@ -141,7 +141,7 @@
     return YES;
 }
 
-- (BOOL)index:(int)index existsForItem:(GridItem *)item
+- (BOOL)index:(NSInteger)index existsForItem:(GridItem *)item
 {
     return [self position:[self positionForIndex:index]
             existsForItem:item];
@@ -165,8 +165,8 @@
 
 - (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item
 {
-    int itemMaxColumn = position.x + GetGridItemTypeWidth(item.type) - 1;
-    int itemMaxLine = position.y + GetGridItemTypeHeight(item.type) - 1;
+    NSInteger itemMaxColumn = position.x + GetGridItemTypeWidth(item.type) - 1;
+    NSInteger itemMaxLine = position.y + GetGridItemTypeHeight(item.type) - 1;
     
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
@@ -182,12 +182,12 @@
 
 #pragma mark - Position, index helpers
 
-- (int)indexForPosition:(ABPoint)position
+- (NSInteger)indexForPosition:(ABPoint)position
 {
     return position.y * _width + position.x;
 }
 
-- (ABPoint)positionForIndex:(int)index
+- (ABPoint)positionForIndex:(NSInteger)index
 {
     if (index < 0 || index > (_width * _height)) {
         [NSException raise:@"GridError" format:@"Exception: Trying to get a non existing position."];
@@ -214,9 +214,9 @@
         ABPoint itemPosition = ABPointMake(i % item.width + position.x,
                                            ceil(i / item.height) + position.y);
         
-        int itemIndex = [self indexForPosition:itemPosition];
+        NSInteger itemIndex = [self indexForPosition:itemPosition];
         
-        [array addObject:[NSNumber numberWithInt:itemIndex]];
+        [array addObject:[NSNumber numberWithInteger:itemIndex]];
     }
     return array;
 }
