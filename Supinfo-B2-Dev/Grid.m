@@ -136,6 +136,11 @@
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
 
+- (BOOL)item:(GridItem *)item atPosition:(ABPoint)position isOnlyOnTopOf:(GridItemType)type
+{
+    return [self itemAtPosition:position].type == type;
+}
+
 
 #pragma mark - Position, index helpers
 

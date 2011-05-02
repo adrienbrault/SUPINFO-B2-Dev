@@ -49,6 +49,8 @@
 
 - (NSInteger)indexForItem:(GridItem *)item;
 
+- (BOOL)item:(GridItem *)item atPosition:(ABPoint)position isOnlyOnTopOf:(GridItemType)type;
+
 
 - (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 - (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;

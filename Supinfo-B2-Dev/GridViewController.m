@@ -178,12 +178,8 @@
                 return NO;
             }
             
-            NSArray *positions = [_mapGrid positionsForItem:item atPosition:position];
-            for (NSValue *value in positions) {
-                ABPoint currentPosition = ABPointFromValue(value);
-                if ([_mapGrid itemAtPosition:currentPosition].type != GridItemEarth) {
-                    return NO;
-                }
+            if (![_mapGrid item:item atPosition:position isOnlyOnTopOf:GridItemEarth]) {
+                return NO;
             }
             
             break;

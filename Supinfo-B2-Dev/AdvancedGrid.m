@@ -80,4 +80,17 @@
     return YES;
 }
 
+- (BOOL)item:(GridItem *)item atPosition:(ABPoint)position isOnlyOnTopOf:(GridItemType)type
+{
+    NSArray *positions = [self positionsForItem:item atPosition:position];
+    for (NSValue *value in positions) {
+        ABPoint currentPosition = ABPointFromValue(value);
+        if ([self itemAtPosition:currentPosition].type != type) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end
