@@ -125,6 +125,7 @@
         [self setItem:[GridItem itemWithType:itemType]
                atPosition:position];
     }
+    [pool drain];
     
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(3*_gridWidth/4, 1*_gridHeight/7)];
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/6, 2*_gridHeight/4)];
