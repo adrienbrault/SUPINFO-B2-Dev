@@ -58,3 +58,5 @@
 - (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
 
 @end
+
+NSInteger indexForPosition(NSInteger x, NSInteger y, NSInteger width);

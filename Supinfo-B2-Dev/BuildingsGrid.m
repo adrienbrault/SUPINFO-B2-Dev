@@ -85,14 +85,14 @@
             ABPoint indexPosition = [self positionForIndex:index];
             
             NSInteger positionNextToCurrentIndex[8] = {
-                [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y - 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y - 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y - 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 0)],
-                [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y + 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 1)],
-                [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 0)]
+                indexForPosition(indexPosition.x - 1, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 0, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y + 0, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x + 0, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x - 1, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x - 1, indexPosition.y + 0, _width)
             };
             
             for (NSInteger i=0; i<8; i++) {
