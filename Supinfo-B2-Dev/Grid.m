@@ -9,20 +9,6 @@
 #import "Grid.h"
 
 
-@interface Grid (Private)
-
-- (BOOL)index:(NSInteger)index existsForItem:(GridItem *)item;
-- (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item;
-
-- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
-
-- (NSInteger)indexForItem:(GridItem *)item;
-
-@end
-
-
-
 @implementation Grid
 
 #pragma mark - Properties
@@ -83,33 +69,18 @@
         [_items replaceObjectAtIndex:index
                           withObject:[NSNull null]];
     } else {
-        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-        for (int i=0; i<[itemIndexes count]; i++) {
-            NSNumber *number = [itemIndexes objectAtIndex:i];
-            NSInteger positionIndex = [number integerValue];
-            
-            [_items replaceObjectAtIndex:positionIndex
+        [_items replaceObjectAtIndex:index
                               withObject:item];
             
-            if (i == 0) {
-                item.cachePosition = [self positionForIndex:positionIndex];
-            }
-        }
+        item.cachePosition = [self positionForIndex:index];
     }
 }
 
 - (void)removeItem:(GridItem *)item
 {
     NSInteger index = [self indexForItem:item];
-    if (index != NSNotFound) {
-        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-        for (NSNumber *number in itemIndexes) {
-            int positionIndex = [number intValue];
-            
-            [_items replaceObjectAtIndex:positionIndex
-                              withObject:[NSNull null]];
-        }
-    }
+    [_items replaceObjectAtIndex:index
+                      withObject:[NSNull null]];
 }
 
 
@@ -130,13 +101,10 @@
 
 - (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item
 {
-    NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-    for (NSNumber *number in itemIndexes) {
-        NSInteger itemIndex = [number intValue];
-        
-        if ([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex]
-            || ![self index:itemIndex existsForItem:item])
-            return NO;
+    if ([self index:index existsForItem:item] && [self itemAtIndex:index]
+        || ![self index:index existsForItem:item])
+    {
+        return NO;
     }
     return YES;
 }
@@ -152,13 +120,10 @@
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    NSArray *itemPositions = [self positionsForItem:item atPosition:position];
-    for (NSValue *value in itemPositions) {
-        ABPoint itemPosition = ABPointFromValue(value);
-        
-        if ([self position:itemPosition existsForItem:item] && [self itemAtPosition:itemPosition]
-            || ![self position:itemPosition existsForItem:item])
-            return NO;
+    if ([self position:position existsForItem:item] && [self itemAtPosition:position]
+        || ![self position:position existsForItem:item])
+    {
+        return NO;
     }
     return YES;
 }
@@ -169,14 +134,6 @@
     NSInteger itemMaxLine = position.y + GetGridItemTypeHeight(item.type) - 1;
     
     return itemMaxColumn <= _width && itemMaxLine <= _height;
-}
-
-
-#pragma mark -
-
-- (ABPoint)firstItemPosition:(GridItem *)item
-{
-    return [self positionForIndex:[self indexForItem:item]];
 }
 
 
@@ -197,42 +154,9 @@
                        ceil(index / _width));
 }
 
-- (int)indexForItem:(GridItem *)item
+- (NSInteger)indexForItem:(GridItem *)item
 {
     return (int)[_items indexOfObject:item];
-}
-
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(int)index
-{
-    return [self indexesForItem:item atPosition:[self positionForIndex:index]];
-}
-
-- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position
-{
-    NSMutableArray *array = [NSMutableArray array];
-    for (int i=0; i<(item.width * item.height); i++) {
-        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
-                                           ceil(i / item.height) + position.y);
-        
-        NSInteger itemIndex = [self indexForPosition:itemPosition];
-        
-        [array addObject:[NSNumber numberWithInteger:itemIndex]];
-    }
-    return array;
-}
-
-- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
-{
-    NSMutableArray *array = [NSMutableArray array];
-    for (int i=0; i<(item.width * item.height); i++) {
-        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
-                                           ceil(i / item.height) + position.y);
-        
-        // The best way to store a struct into a NSArray is to convert it to a NSValue.
-        NSValue *value = ABPointToValue(itemPosition);
-        [array addObject:value];
-    }
-    return array;
 }
 
 

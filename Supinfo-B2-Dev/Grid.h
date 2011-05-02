@@ -12,6 +12,7 @@
 #import "ABPoint.h"
 #import "GridItem.h"
 
+// This class only support GridItem with width==1 && height==1
 
 @interface Grid : NSObject {
     
@@ -35,14 +36,18 @@
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item;
 - (BOOL)position:(ABPoint)position existsForItem:(GridItem *)item;
 
-- (ABPoint)firstItemPosition:(GridItem *)item;
-- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
 
 - (GridItem *)itemAtIndex:(NSInteger)index;
 - (void)setItem:(GridItem *)item atIndex:(NSInteger)index;
 
 - (ABPoint)positionForIndex:(NSInteger)index;
 - (NSInteger)indexForPosition:(ABPoint)position;
+
+
+- (BOOL)index:(NSInteger)index existsForItem:(GridItem *)item;
+- (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item;
+
+- (NSInteger)indexForItem:(GridItem *)item;
 
 
 - (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus;
