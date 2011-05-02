@@ -7,11 +7,11 @@
 //
 
 typedef struct {
-    int x;
-    int y;
+    NSInteger x;
+    NSInteger y;
 } ABPoint;
 
-ABPoint ABPointMake(int x, int y);
+ABPoint ABPointMake(NSInteger x, NSInteger y);
 
 NSValue * ABPointToValue(ABPoint point);
 ABPoint ABPointFromValue(NSValue *value);

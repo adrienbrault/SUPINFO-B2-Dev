@@ -15,6 +15,6 @@ typedef enum {
     GridItemTower
 } GridItemType;
 
-int GetGridItemTypeWidth(GridItemType type);
-int GetGridItemTypeHeight(GridItemType type);
+NSInteger GetGridItemTypeWidth(GridItemType type);
+NSInteger GetGridItemTypeHeight(GridItemType type);
 NSString * GetGridItemTypeString(GridItemType type);

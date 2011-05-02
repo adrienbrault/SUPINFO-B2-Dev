@@ -360,7 +360,7 @@
         int index = [number intValue];
         ABPoint indexPosition = [_mapGrid positionForIndex:index];
         
-        int positionNextToCurrentIndex[8] = {
+        NSInteger positionNextToCurrentIndex[8] = {
             [_mapGrid indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y - 1)],
             [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y - 1)],
             [_mapGrid indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y - 1)],
@@ -372,11 +372,11 @@
         };
         
         for (int i=0; i<8; i++) {
-            int currentPossibleIndex = positionNextToCurrentIndex[i];
+            NSInteger currentPossibleIndex = positionNextToCurrentIndex[i];
             
             if (currentPossibleIndex > 0 && currentPossibleIndex < self.gridTotalIndex
                 && !_indexesDone[currentPossibleIndex]) {
-                [newIndexesToProcess addObject:[NSNumber numberWithInt:currentPossibleIndex]];
+                [newIndexesToProcess addObject:[NSNumber numberWithInteger:currentPossibleIndex]];
             }
         }
     }
