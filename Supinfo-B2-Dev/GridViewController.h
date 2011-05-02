@@ -11,6 +11,7 @@
 #import "Grid.h"
 #import "AdvancedGrid.h"
 #import "TerritoryGrid.h"
+#import "BuildingsGrid.h"
 
 #import "GridView.h"
 
@@ -22,18 +23,13 @@
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
-    AdvancedGrid *_buildingsGrid;
+    BuildingsGrid *_buildingsGrid;
     
     NSInteger _gridWidth;
     NSInteger _gridHeight;
     NSInteger _gridTotalIndex;
     
     NSTrackingArea *_trackingArea;
-    
-    // Algorithm part
-    char *_indexesStatus;
-    BOOL *_indexesDone;
-    NSMutableSet *_indexesToProcess;
 }
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;

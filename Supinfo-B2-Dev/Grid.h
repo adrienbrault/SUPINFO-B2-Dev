@@ -18,12 +18,14 @@
     
     NSInteger _width;
     NSInteger _height;
+    NSInteger _totalIndex;
     
     NSMutableArray *_items;
 }
 
 @property (nonatomic, readonly) NSInteger width;
 @property (nonatomic, readonly) NSInteger height;
+@property (nonatomic, readonly) NSInteger totalIndex;
 @property (nonatomic, readonly) NSArray *items;
 @property (nonatomic, readonly) NSSet *uniqueItems;
 

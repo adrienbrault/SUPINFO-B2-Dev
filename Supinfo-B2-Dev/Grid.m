@@ -15,6 +15,7 @@
 
 @synthesize height = _height;
 @synthesize width = _width;
+@synthesize totalIndex = _totalIndex;
 @synthesize items = _items;
 
 - (NSSet *)uniqueItems
@@ -38,6 +39,7 @@
         NSInteger capacity = width * height;
         _width = width;
         _height = height;
+        _totalIndex = _width * _height;
         
         _items = [[NSMutableArray alloc] initWithNullCapacity:capacity];
     }
@@ -151,7 +153,7 @@
 
 - (ABPoint)positionForIndex:(NSInteger)index
 {
-    if (index < 0 || index > (_width * _height)) {
+    if (index < 0 || index > self.totalIndex) {
         [NSException raise:@"GridError" format:@"Exception: Trying to get a non existing position."];
     }
     
