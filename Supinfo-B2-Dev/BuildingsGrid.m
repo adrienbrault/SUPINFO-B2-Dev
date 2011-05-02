@@ -14,7 +14,7 @@
 - (BOOL)checkIndexes;
 - (void)findNextIndexes;
 - (BOOL)isIndexAWall:(NSInteger)index;
-- (NSMutableSet *)borderIndexes;
+- (void)setBorderIndexes;
 
 @end
 
@@ -30,7 +30,7 @@
     _indexesDone = calloc(_totalIndex, sizeof(BOOL));
     
     // We start from borders.
-    _indexesToProcess = [self borderIndexes];
+    [self setBorderIndexes];
     
     BOOL anIndexIsCorrect = [self checkIndexes];
     
@@ -38,6 +38,7 @@
         [self findNextIndexes];
         anIndexIsCorrect = [self checkIndexes];
     }
+    free(_indexesToProcess);
     
     NSMutableArray *positionsStatus = [NSMutableArray arrayWithCapacity:_totalIndex];
     for (NSInteger i=0; i<_totalIndex; i++) {
@@ -55,14 +56,13 @@
 - (BOOL)checkIndexes
 {
     BOOL anIndexIsCorrect = NO;
-    NSMutableSet *numbersToRemove = [NSMutableSet set];
     
-    for (NSNumber *number in _indexesToProcess) {
-        NSInteger currentIndex = [number integerValue];
+    for (NSInteger i=0; i<_indexesToProcessSize; i++) {
+        NSInteger currentIndex = _indexesToProcess[i];
         
         if ([self isIndexAWall:currentIndex]) {
             _indexesStatus[currentIndex] = 2;
-            [numbersToRemove addObject:number];
+            _indexesToProcess[i] = NSIntegerMax;
         } else {
             _indexesStatus[currentIndex] = 1;
             anIndexIsCorrect = YES;
@@ -71,55 +71,60 @@
         _indexesDone[currentIndex] = YES;
     }
     
-    for (NSNumber *number in numbersToRemove) {
-        [_indexesToProcess removeObject:number];
-    }
-    
     return anIndexIsCorrect;
 }
 
 - (void)findNextIndexes
 {
-    NSMutableSet *newIndexesToProcess = [NSMutableSet set];
+    NSInteger *newIndexesToProcess = calloc((_width + _height - 2) * 2, sizeof(NSInteger));
+    NSInteger newIndexesToProcessI = 0;
     
-    for (NSNumber *number in _indexesToProcess) {
-        NSInteger index = [number integerValue];
-        ABPoint indexPosition = [self positionForIndex:index];
-        
-        NSInteger positionNextToCurrentIndex[8] = {
-            [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y - 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y - 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y - 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 0)],
-            [self indexForPosition:ABPointMake(indexPosition.x + 1, indexPosition.y + 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x + 0, indexPosition.y + 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 1)],
-            [self indexForPosition:ABPointMake(indexPosition.x - 1, indexPosition.y + 0)]
-        };
-        
-        for (NSInteger i=0; i<8; i++) {
-            NSInteger currentPossibleIndex = positionNextToCurrentIndex[i];
+    for (NSInteger i=0; i<_indexesToProcessSize; i++) {
+        NSInteger index = _indexesToProcess[i];
+        if (index != NSIntegerMax) {
+            ABPoint indexPosition = [self positionForIndex:index];
             
-            if (currentPossibleIndex > 0 && currentPossibleIndex < _totalIndex
-                && !_indexesDone[currentPossibleIndex]) {
-                [newIndexesToProcess addObject:[NSNumber numberWithInteger:currentPossibleIndex]];
+            NSInteger positionNextToCurrentIndex[8] = {
+                indexForPosition(indexPosition.x - 1, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 0, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y - 1, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y + 0, _width),
+                indexForPosition(indexPosition.x + 1, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x + 0, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x - 1, indexPosition.y + 1, _width),
+                indexForPosition(indexPosition.x - 1, indexPosition.y + 0, _width)
+            };
+            
+            for (NSInteger i=0; i<8; i++) {
+                NSInteger currentPossibleIndex = positionNextToCurrentIndex[i];
+                
+                if (currentPossibleIndex > 0 && currentPossibleIndex < _totalIndex
+                    && !_indexesDone[currentPossibleIndex]) {
+                    newIndexesToProcess[newIndexesToProcessI++] = currentPossibleIndex;
+                    _indexesDone[currentPossibleIndex] = YES;
+                }
             }
         }
     }
     
+    free(_indexesToProcess);
     _indexesToProcess = newIndexesToProcess;
+    _indexesToProcessSize = newIndexesToProcessI;
 }
 
-- (NSMutableSet *)borderIndexes
+- (void)setBorderIndexes
 {
-    NSMutableSet *borderIndexes = [NSMutableArray array];
+    _indexesToProcessSize = (_width + _height - 2) * 2;
+    _indexesToProcess = calloc(_indexesToProcessSize, sizeof(NSInteger));
+    
+    NSInteger indexesToProcessI = 0;
     
     // Top border.
     for (NSInteger i = 0;
          i<_width;
          i++)
     {
-        [borderIndexes addObject:[NSNumber numberWithInteger:i]];
+        _indexesToProcess[indexesToProcessI++] = i;
     }
     
     // Right border.
@@ -127,7 +132,7 @@
          (i + 1) % _width == 0 && i < _totalIndex;
          i += _width)
     {
-        [borderIndexes addObject:[NSNumber numberWithInteger:i]];
+        _indexesToProcess[indexesToProcessI++] = i;
     }
     
     // Left border.
@@ -135,18 +140,16 @@
          i % _width == 0 && i < _totalIndex;
          i += _width)
     {
-        [borderIndexes addObject:[NSNumber numberWithInteger:i]];
+        _indexesToProcess[indexesToProcessI++] = i;
     }
     
     // Bottom border.
-    for (NSInteger i = _totalIndex - _width;
+    for (NSInteger i = _totalIndex - _width + 1;
          i < _totalIndex - 1;
          i++)
     {
-        [borderIndexes addObject:[NSNumber numberWithInteger:i]];
+        _indexesToProcess[indexesToProcessI++] = i;
     }
-    
-    return borderIndexes;
 }
 
 - (BOOL)isIndexAWall:(NSInteger)index

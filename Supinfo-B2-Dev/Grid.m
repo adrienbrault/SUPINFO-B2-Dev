@@ -141,7 +141,7 @@
 
 - (NSInteger)indexForPosition:(ABPoint)position
 {
-    return position.y * _width + position.x;
+    return indexForPosition(position.x, position.y, _width);
 }
 
 - (ABPoint)positionForIndex:(NSInteger)index
@@ -196,3 +196,10 @@
 }
 
 @end
+
+#pragma mark - C Functions - Optimization purpose
+
+NSInteger indexForPosition(NSInteger x, NSInteger y, NSInteger width)
+{
+    return x + y * width;
+}

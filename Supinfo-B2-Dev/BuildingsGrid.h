@@ -14,7 +14,9 @@
     // Algorithm part
     char *_indexesStatus;
     BOOL *_indexesDone;
-    NSMutableSet *_indexesToProcess;
+    
+    NSInteger *_indexesToProcess;
+    NSInteger _indexesToProcessSize;
 }
 
 - (NSArray *)capturedTeritoryIndexes;
