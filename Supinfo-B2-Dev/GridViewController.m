@@ -130,11 +130,9 @@
                atPosition:position];
     }
     
-    /*
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(3*_gridWidth/4, 1*_gridHeight/7)];
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/6, 2*_gridHeight/4)];
     [self setItem:[GridItem itemWithType:GridItemCastel] atPosition:ABPointMake(_gridWidth/4, _gridHeight/4)];
-     */
     
     [_mapGridView setNeedsDisplay:YES];
     
@@ -215,7 +213,7 @@
     //NSLog(@"%@", theEvent);
     
     ABPoint position = [self positionAtEventMouseLocation:theEvent];
-    NSLog(@"%d %d", position.x, position.y);
+    
     [self setItem:[GridItem itemWithType:GridItemWall]
        atPosition:position];
     
