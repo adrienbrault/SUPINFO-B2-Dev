@@ -27,7 +27,6 @@
 @property (nonatomic, readonly) NSInteger height;
 @property (nonatomic, readonly) NSInteger totalIndex;
 @property (nonatomic, readonly) NSArray *items;
-@property (nonatomic, readonly) NSSet *uniqueItems;
 
 - (id)initWithWidth:(NSInteger)width height:(NSInteger)height;
 

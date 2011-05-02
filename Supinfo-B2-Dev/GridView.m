@@ -20,6 +20,8 @@
 - (CGPoint)itemFramePosition:(GridItem *)item;
 - (CGSize)borderSize;
 
+- (void)setDrawingColor:(NSColor *)color;
+
 @end
 
 
@@ -28,6 +30,7 @@
 #pragma mark - Properties
 
 @synthesize grid = _grid;
+@synthesize lastColor = _lastColor;
 
 - (void)setGrid:(Grid *)grid
 {
@@ -89,14 +92,14 @@
 {
     [self calculateItemSize];
     
+    self.lastColor = nil;
+    
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
     
-    NSSet *items = self.grid.uniqueItems;
-    
     // Dessin du contour noir des murs.
-    for (GridItem *item in items) {
-        if (item.type == GridItemWall) {
+    for (GridItem *item in self.grid.items) {
+        if ([item isKindOfClass:[GridItem class]] && item.type == GridItemWall) {
             CGSize borderSize = [self borderSize];
             
             [self drawInContext:context
@@ -108,10 +111,12 @@
     }
     
     // Dessin de tous les items.
-    for (GridItem *item in items) {
-        [self drawInContext:context
-                       item:item
-                 atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
+    for (GridItem *item in self.grid.items) {
+        if ([item isKindOfClass:[GridItem class]]) {
+            [self drawInContext:context
+                           item:item
+                     atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
+        }
     }
 }
 
@@ -130,14 +135,15 @@
                                  floor(position.y - extraSize.height / 2),
                                  ceil(item.width * _itemSize.width + extraSize.width),
                                  ceil(item.height * _itemSize.height + extraSize.height));
+    NSColor *colorToSet;
     
     switch (item.type) {
         case GridItemEarth:
-            [[NSColor greenColor] set];
+            colorToSet = [NSColor greenColor];
             break;
             
         case GridItemCastel:
-            [[NSColor blackColor] set];
+            [self setDrawingColor:[NSColor blackColor]];
             CGSize borderSize = [self borderSize];
             CGRect castelBackgroundRect = CGRectMake(itemRect.origin.x + borderSize.width * 2.0,
                                            itemRect.origin.y + borderSize.height * 2.0,
@@ -145,7 +151,7 @@
                                            itemRect.size.height - borderSize.height * 4.0);
             CGContextFillRect(context, castelBackgroundRect);
             
-            [[NSColor purpleColor] set];
+            [self setDrawingColor:[NSColor purpleColor]];
             CGRect castelRect = CGRectMake(itemRect.origin.x + borderSize.width * 3.0,
                                            itemRect.origin.y + borderSize.height * 3.0,
                                            itemRect.size.width - borderSize.width * 6.0,
@@ -156,25 +162,37 @@
             break;
             
         case GridItemWall:
-            [[NSColor grayColor] set];
+            colorToSet = [NSColor grayColor];
             break;
             
         case GridItemWater:
-            [[NSColor blueColor] set];
+            colorToSet = [NSColor blueColor];
             break;
         
         case GridItemAreaCaptured:
-            [[NSColor orangeColor] set];
+            colorToSet = [NSColor orangeColor];
             break;
             
         default:
-            [[NSColor blackColor] set];
+            colorToSet = [NSColor blackColor];
             break;
     }
     
-    [color set];
+    if (color) {
+        colorToSet = color;
+    }
+    
+    [self setDrawingColor:colorToSet];
     
     CGContextFillRect(context, itemRect);
+}
+
+- (void)setDrawingColor:(NSColor *)color
+{
+    if (color != _lastColor) {
+        [color set];
+        self.lastColor = color;
+    }
 }
 
 
