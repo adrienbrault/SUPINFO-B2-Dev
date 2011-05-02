@@ -73,7 +73,7 @@
 
 - (CGPoint)itemFramePosition:(GridItem *)item
 {
-    return [self screenPositionForItem:item atPosition:[self.grid firstItemPosition:item]];
+    return [self screenPositionForItem:item atPosition:item.cachePosition];
 }
 
 - (CGSize)borderSize

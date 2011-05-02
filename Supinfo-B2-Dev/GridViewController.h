@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 
 #import "Grid.h"
+#import "AdvancedGrid.h"
+#import "TerritoryGrid.h"
+#import "BuildingsGrid.h"
+
 #import "GridView.h"
 
 @interface GridViewController : NSViewController <NSWindowDelegate> {
@@ -18,29 +22,24 @@
     GridView *_buildingsGridView;
     
     Grid *_mapGrid;
-    Grid *_territoryGrid;
-    Grid *_buildingsGrid;
+    TerritoryGrid *_territoryGrid;
+    BuildingsGrid *_buildingsGrid;
     
-    int _gridWidth;
-    int _gridHeight;
-    int _gridTotalIndex;
+    NSInteger _gridWidth;
+    NSInteger _gridHeight;
+    NSInteger _gridTotalIndex;
     
     NSTrackingArea *_trackingArea;
-    
-    // Algorithm part
-    char *_indexesStatus;
-    BOOL *_indexesDone;
-    NSMutableSet *_indexesToProcess;
 }
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;
 @property (nonatomic, retain) IBOutlet GridView *territoryGridView;
 @property (nonatomic, retain) IBOutlet GridView *buildingsGridView;
 
-@property (nonatomic, readonly) int gridWidth;
-@property (nonatomic, readonly) int gridHeight;
-@property (nonatomic, readonly) int gridTotalIndex;
+@property (nonatomic, readonly) NSInteger gridWidth;
+@property (nonatomic, readonly) NSInteger gridHeight;
+@property (nonatomic, readonly) NSInteger gridTotalIndex;
 
-- (void)setWidth:(int)width height:(int)height;
+- (void)setWidth:(NSInteger)width height:(NSInteger)height;
 
 @end

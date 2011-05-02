@@ -9,26 +9,13 @@
 #import "Grid.h"
 
 
-@interface Grid (Private)
-
-- (BOOL)index:(NSInteger)index existsForItem:(GridItem *)item;
-- (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item;
-
-- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
-
-- (NSInteger)indexForItem:(GridItem *)item;
-
-@end
-
-
-
 @implementation Grid
 
 #pragma mark - Properties
 
 @synthesize height = _height;
 @synthesize width = _width;
+@synthesize totalIndex = _totalIndex;
 @synthesize items = _items;
 
 - (NSSet *)uniqueItems
@@ -52,6 +39,7 @@
         NSInteger capacity = width * height;
         _width = width;
         _height = height;
+        _totalIndex = _width * _height;
         
         _items = [[NSMutableArray alloc] initWithNullCapacity:capacity];
     }
@@ -83,33 +71,18 @@
         [_items replaceObjectAtIndex:index
                           withObject:[NSNull null]];
     } else {
-        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-        for (int i=0; i<[itemIndexes count]; i++) {
-            NSNumber *number = [itemIndexes objectAtIndex:i];
-            NSInteger positionIndex = [number integerValue];
-            
-            [_items replaceObjectAtIndex:positionIndex
+        [_items replaceObjectAtIndex:index
                               withObject:item];
             
-            if (i == 0) {
-                item.cachePosition = [self positionForIndex:positionIndex];
-            }
-        }
+        item.cachePosition = [self positionForIndex:index];
     }
 }
 
 - (void)removeItem:(GridItem *)item
 {
     NSInteger index = [self indexForItem:item];
-    if (index != NSNotFound) {
-        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-        for (NSNumber *number in itemIndexes) {
-            int positionIndex = [number intValue];
-            
-            [_items replaceObjectAtIndex:positionIndex
-                              withObject:[NSNull null]];
-        }
-    }
+    [_items replaceObjectAtIndex:index
+                      withObject:[NSNull null]];
 }
 
 
@@ -130,13 +103,10 @@
 
 - (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item
 {
-    NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
-    for (NSNumber *number in itemIndexes) {
-        NSInteger itemIndex = [number intValue];
-        
-        if ([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex]
-            || ![self index:itemIndex existsForItem:item])
-            return NO;
+    if ([self index:index existsForItem:item] && [self itemAtIndex:index]
+        || ![self index:index existsForItem:item])
+    {
+        return NO;
     }
     return YES;
 }
@@ -152,13 +122,10 @@
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    NSArray *itemPositions = [self positionsForItem:item atPosition:position];
-    for (NSValue *value in itemPositions) {
-        ABPoint itemPosition = ABPointFromValue(value);
-        
-        if ([self position:itemPosition existsForItem:item] && [self itemAtPosition:itemPosition]
-            || ![self position:itemPosition existsForItem:item])
-            return NO;
+    if ([self position:position existsForItem:item] && [self itemAtPosition:position]
+        || ![self position:position existsForItem:item])
+    {
+        return NO;
     }
     return YES;
 }
@@ -171,12 +138,9 @@
     return itemMaxColumn <= _width && itemMaxLine <= _height;
 }
 
-
-#pragma mark -
-
-- (ABPoint)firstItemPosition:(GridItem *)item
+- (BOOL)item:(GridItem *)item atPosition:(ABPoint)position isOnlyOnTopOf:(GridItemType)type
 {
-    return [self positionForIndex:[self indexForItem:item]];
+    return [self itemAtPosition:position].type == type;
 }
 
 
@@ -189,7 +153,7 @@
 
 - (ABPoint)positionForIndex:(NSInteger)index
 {
-    if (index < 0 || index > (_width * _height)) {
+    if (index < 0 || index > self.totalIndex) {
         [NSException raise:@"GridError" format:@"Exception: Trying to get a non existing position."];
     }
     
@@ -197,12 +161,15 @@
                        ceil(index / _width));
 }
 
-- (int)indexForItem:(GridItem *)item
+- (NSInteger)indexForItem:(GridItem *)item
 {
     return (int)[_items indexOfObject:item];
 }
 
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(int)index
+
+#pragma mark -
+
+- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index
 {
     return [self indexesForItem:item atPosition:[self positionForIndex:index]];
 }
@@ -233,28 +200,6 @@
         [array addObject:value];
     }
     return array;
-}
-
-
-#pragma mark - Territory grid
-
-- (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus
-{
-    for (int index = 0; index<[indexesStatus count]; index++) {
-        NSNumber *boolNumber = [indexesStatus objectAtIndex:index];
-        BOOL isOccupied = [boolNumber boolValue];
-        
-        id item;
-        
-        if (isOccupied) {
-            item = [GridItem itemWithType:GridItemAreaCaptured];
-            ((GridItem *)item).cachePosition = [self positionForIndex:index];
-        } else {
-            item = [NSNull null];
-        }
-        
-        [_items replaceObjectAtIndex:index withObject:item];
-    }
 }
 
 @end
