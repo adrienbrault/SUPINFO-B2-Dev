@@ -18,13 +18,6 @@
 @synthesize totalIndex = _totalIndex;
 @synthesize items = _items;
 
-- (NSSet *)uniqueItems
-{
-    NSMutableSet *set = [NSMutableSet setWithArray:self.items];
-    [set removeObject:[NSNull null]];
-    return set;
-}
-
 
 #pragma mark - Object lifecyle
 

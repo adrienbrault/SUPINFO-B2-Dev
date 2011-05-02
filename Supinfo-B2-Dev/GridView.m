@@ -92,11 +92,9 @@
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
     
-    NSSet *items = self.grid.uniqueItems;
-    
     // Dessin du contour noir des murs.
-    for (GridItem *item in items) {
-        if (item.type == GridItemWall) {
+    for (GridItem *item in self.grid.items) {
+        if ([item isKindOfClass:[GridItem class]] && item.type == GridItemWall) {
             CGSize borderSize = [self borderSize];
             
             [self drawInContext:context
@@ -108,10 +106,12 @@
     }
     
     // Dessin de tous les items.
-    for (GridItem *item in items) {
-        [self drawInContext:context
-                       item:item
-                 atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
+    for (GridItem *item in self.grid.items) {
+        if ([item isKindOfClass:[GridItem class]]) {
+            [self drawInContext:context
+                           item:item
+                     atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
+        }
     }
 }
 
