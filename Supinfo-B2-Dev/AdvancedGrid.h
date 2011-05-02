@@ -15,8 +15,4 @@
     
 }
 
-- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
-
 @end

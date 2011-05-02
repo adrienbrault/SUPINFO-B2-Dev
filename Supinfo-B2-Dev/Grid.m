@@ -160,6 +160,42 @@
 }
 
 
+#pragma mark -
+
+- (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index
+{
+    return [self indexesForItem:item atPosition:[self positionForIndex:index]];
+}
+
+- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<(item.width * item.height); i++) {
+        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
+                                           ceil(i / item.height) + position.y);
+        
+        NSInteger itemIndex = [self indexForPosition:itemPosition];
+        
+        [array addObject:[NSNumber numberWithInteger:itemIndex]];
+    }
+    return array;
+}
+
+- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<(item.width * item.height); i++) {
+        ABPoint itemPosition = ABPointMake(i % item.width + position.x,
+                                           ceil(i / item.height) + position.y);
+        
+        // The best way to store a struct into a NSArray is to convert it to a NSValue.
+        NSValue *value = ABPointToValue(itemPosition);
+        [array addObject:value];
+    }
+    return array;
+}
+
+
 #pragma mark - Territory grid
 
 - (void)setTerritoryIndexesStatus:(NSArray *)indexesStatus
