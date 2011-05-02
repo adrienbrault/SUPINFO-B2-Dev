@@ -173,7 +173,7 @@
         || item.type == GridItemCastel
         || item.type == GridItemAreaCaptured
         || item.type == GridItemTower) {
-        NSSet *positions = [_mapGrid positionsForItem:item atPosition:position];
+        NSArray *positions = [_mapGrid positionsForItem:item atPosition:position];
         for (NSValue *value in positions) {
             ABPoint position = ABPointFromValue(value);
             if ([_mapGrid itemAtPosition:position].type != GridItemEarth || [_buildingsGrid itemAtPosition:position]) {

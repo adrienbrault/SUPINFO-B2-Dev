@@ -14,8 +14,8 @@
 - (BOOL)index:(int)index existsForItem:(GridItem *)item;
 - (BOOL)index:(int)index availableForItem:(GridItem *)item;
 
-- (NSSet *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (NSSet *)indexesForItem:(GridItem *)item atIndex:(int)index;
+- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (NSArray *)indexesForItem:(GridItem *)item atIndex:(int)index;
 
 - (int)indexForItem:(GridItem *)item;
 
@@ -83,18 +83,18 @@
         [_items replaceObjectAtIndex:index
                           withObject:[NSNull null]];
     } else {
-        if ([self indexForItem:item] != (int)NSNotFound) {
-            [self removeItem:item];
-        }
-        
-        NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
-        for (NSNumber *number in itemIndexes) {
+        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
+        for (int i=0; i<[itemIndexes count]; i++) {
+            NSNumber *number = [itemIndexes objectAtIndex:i];
             int positionIndex = [number intValue];
             
             [_items replaceObjectAtIndex:positionIndex
                               withObject:item];
+            
+            if (i == 0) {
+                item.cachePosition = [self positionForIndex:positionIndex];
+            }
         }
-        item.cachePosition = [self firstItemPosition:item];
     }
 }
 
@@ -102,7 +102,7 @@
 {
     int index = [self indexForItem:item];
     if (index != NSNotFound) {
-        NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
+        NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
         for (NSNumber *number in itemIndexes) {
             int positionIndex = [number intValue];
             
@@ -130,7 +130,7 @@
 
 - (BOOL)index:(int)index availableForItem:(GridItem *)item
 {
-    NSSet *itemIndexes = [self indexesForItem:item atIndex:index];
+    NSArray *itemIndexes = [self indexesForItem:item atIndex:index];
     for (NSNumber *number in itemIndexes) {
         int itemIndex = [number intValue];
         
@@ -152,7 +152,7 @@
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    NSSet *itemPositions = [self positionsForItem:item atPosition:position];
+    NSArray *itemPositions = [self positionsForItem:item atPosition:position];
     for (NSValue *value in itemPositions) {
         ABPoint itemPosition = ABPointFromValue(value);
         
@@ -202,37 +202,37 @@
     return (int)[_items indexOfObject:item];
 }
 
-- (NSSet *)indexesForItem:(GridItem *)item atIndex:(int)index
+- (NSArray *)indexesForItem:(GridItem *)item atIndex:(int)index
 {
     return [self indexesForItem:item atPosition:[self positionForIndex:index]];
 }
 
-- (NSSet *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position
+- (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    NSMutableSet *set = [NSMutableSet set];
+    NSMutableArray *array = [NSMutableArray array];
     for (int i=0; i<(item.width * item.height); i++) {
         ABPoint itemPosition = ABPointMake(i % item.width + position.x,
                                            ceil(i / item.height) + position.y);
         
         int itemIndex = [self indexForPosition:itemPosition];
         
-        [set addObject:[NSNumber numberWithInt:itemIndex]];
+        [array addObject:[NSNumber numberWithInt:itemIndex]];
     }
-    return set;
+    return array;
 }
 
-- (NSSet *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
+- (NSArray *)positionsForItem:(GridItem *)item atPosition:(ABPoint)position
 {
-    NSMutableSet *set = [NSMutableSet set];
+    NSMutableArray *array = [NSMutableArray array];
     for (int i=0; i<(item.width * item.height); i++) {
         ABPoint itemPosition = ABPointMake(i % item.width + position.x,
                                            ceil(i / item.height) + position.y);
         
         // The best way to store a struct into a NSArray is to convert it to a NSValue.
         NSValue *value = ABPointToValue(itemPosition);
-        [set addObject:value];
+        [array addObject:value];
     }
-    return set;
+    return array;
 }
 
 
