@@ -62,7 +62,7 @@
         
         if ([self isIndexAWall:currentIndex]) {
             _indexesStatus[currentIndex] = 2;
-            _indexesToProcess[i] = -1;
+            _indexesToProcess[i] = NSIntegerMax;
         } else {
             _indexesStatus[currentIndex] = 1;
             anIndexIsCorrect = YES;
@@ -81,7 +81,7 @@
     
     for (NSInteger i=0; i<_indexesToProcessSize; i++) {
         NSInteger index = _indexesToProcess[i];
-        if (index > -1) {
+        if (index != NSIntegerMax) {
             ABPoint indexPosition = [self positionForIndex:index];
             
             NSInteger positionNextToCurrentIndex[8] = {
@@ -144,7 +144,7 @@
     }
     
     // Bottom border.
-    for (NSInteger i = _totalIndex - _width;
+    for (NSInteger i = _totalIndex - _width + 1;
          i < _totalIndex - 1;
          i++)
     {
