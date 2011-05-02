@@ -15,8 +15,14 @@
     Grid *_grid;
     
     CGSize _itemSize;
+    
+    NSColor *_lastColor;
 }
 
 @property (nonatomic, retain) Grid *grid;
+
+// Internal
+
+@property (nonatomic, retain) NSColor *lastColor;
 
 @end
