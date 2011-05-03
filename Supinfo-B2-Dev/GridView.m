@@ -195,10 +195,10 @@
 
 - (CGRect)rectFromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition
 {
-    return CGRectMake(fromPosition.x * _itemSize.width,
-                      fromPosition.y * _itemSize.height,
-                      (toPosition.x - fromPosition.x + 1) * _itemSize.width,
-                      (toPosition.y - fromPosition.y + 1) * _itemSize.height);
+    return CGRectMake(floor(fromPosition.x * _itemSize.width),
+                      floor(fromPosition.y * _itemSize.height),
+                      ceil((toPosition.x - fromPosition.x + 1) * _itemSize.width),
+                      ceil((toPosition.y - fromPosition.y + 1) * _itemSize.height));
 }
 
 
