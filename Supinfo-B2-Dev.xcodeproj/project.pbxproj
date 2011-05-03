@@ -24,6 +24,7 @@
 		9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E458136728C30053D07A /* NSMutableArray+Additions.m */; };
 		9581E45F1367411A0053D07A /* GridItemType.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E45E1367411A0053D07A /* GridItemType.m */; };
 		95ACB1B5136CDD4500106021 /* GridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95ACB1B4136CDD4500106021 /* GridViewController.xib */; };
+		95E0BFA31370A5AF005695A1 /* AdvancedGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,8 @@
 		9581E45D1367410F0053D07A /* GridItemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridItemType.h; sourceTree = "<group>"; };
 		9581E45E1367411A0053D07A /* GridItemType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridItemType.m; sourceTree = "<group>"; };
 		95ACB1B4136CDD4500106021 /* GridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridViewController.xib; sourceTree = "<group>"; };
+		95E0BFA11370A5AF005695A1 /* AdvancedGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedGridView.h; sourceTree = "<group>"; };
+		95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedGridView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +102,8 @@
 			children = (
 				95624F5E136C7C5A001B96F1 /* GridView.h */,
 				95624F5F136C7C5A001B96F1 /* GridView.m */,
+				95E0BFA11370A5AF005695A1 /* AdvancedGridView.h */,
+				95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				95815C50136F225900F9D793 /* AdvancedGrid.m in Sources */,
 				95815C56136F2E6700F9D793 /* TerritoryGrid.m in Sources */,
 				95815C59136F2F0500F9D793 /* BuildingsGrid.m in Sources */,
+				95E0BFA31370A5AF005695A1 /* AdvancedGridView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

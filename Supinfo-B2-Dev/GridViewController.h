@@ -14,12 +14,13 @@
 #import "BuildingsGrid.h"
 
 #import "GridView.h"
+#import "AdvancedGridView.h"
 
 @interface GridViewController : NSViewController <NSWindowDelegate> {
     
     GridView *_mapGridView;
     GridView *_territoryGridView;
-    GridView *_buildingsGridView;
+    AdvancedGridView *_buildingsGridView;
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
@@ -34,7 +35,7 @@
 
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;
 @property (nonatomic, retain) IBOutlet GridView *territoryGridView;
-@property (nonatomic, retain) IBOutlet GridView *buildingsGridView;
+@property (nonatomic, retain) IBOutlet AdvancedGridView *buildingsGridView;
 
 @property (nonatomic, readonly) NSInteger gridWidth;
 @property (nonatomic, readonly) NSInteger gridHeight;

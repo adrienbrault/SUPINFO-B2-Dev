@@ -48,7 +48,7 @@
 						<string key="NSFrameSize">{480, 272}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<string key="NSClassName">GridView</string>
+						<string key="NSClassName">AdvancedGridView</string>
 					</object>
 					<object class="NSCustomView" id="641553699">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -221,6 +221,14 @@
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
+					<string key="className">AdvancedGridView</string>
+					<string key="superclassName">GridView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AdvancedGridView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">GridView</string>
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -241,7 +249,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>GridView</string>
+							<string>AdvancedGridView</string>
 							<string>GridView</string>
 							<string>GridView</string>
 						</object>
@@ -258,7 +266,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">buildingsGridView</string>
-								<string key="candidateClassName">GridView</string>
+								<string key="candidateClassName">AdvancedGridView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">mapGridView</string>
