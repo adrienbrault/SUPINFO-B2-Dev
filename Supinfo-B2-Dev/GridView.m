@@ -8,19 +8,13 @@
 
 #import "GridView.h"
 
-#define BORDER_SIZE_SCALE 15.0
-
 
 @interface GridView (Private)
 
-- (void)calculateItemSize;
-- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
-- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position extraSize:(CGSize)extraSize color:(NSColor *)color;
-- (CGPoint)screenPositionForItem:(GridItem *)item atPosition:(ABPoint)position;
-- (CGPoint)itemFramePosition:(GridItem *)item;
-- (CGSize)borderSize;
+- (void)drawInContext:(CGContextRef)context itemType:(GridItemType)type fromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition;
+- (void)drawInContext:(CGContextRef)context itemType:(GridItemType)type inRect:(CGRect)rect;
 
-- (void)setDrawingColor:(NSColor *)color;
+- (CGRect)rectFromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition;
 
 @end
 
@@ -30,7 +24,6 @@
 #pragma mark - Properties
 
 @synthesize grid = _grid;
-@synthesize lastColor = _lastColor;
 
 - (void)setGrid:(Grid *)grid
 {
@@ -92,107 +85,120 @@
 {
     [self calculateItemSize];
     
-    self.lastColor = nil;
-    
     NSGraphicsContext *graphicContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicContext graphicsPort];
     
-    // Dessin du contour noir des murs.
-    for (GridItem *item in self.grid.items) {
-        if ([item isKindOfClass:[GridItem class]] && item.type == GridItemWall) {
-            CGSize borderSize = [self borderSize];
-            
-            [self drawInContext:context
-                           item:item
-                     atPosition:[self itemFramePosition:item]
-                      extraSize:CGSizeMake(borderSize.width * 2.0, borderSize.height * 2.0)
-                          color:[NSColor blackColor]];
-        }
-    }
+    GridItemType lastType = -1;
+    ABPoint lastTypeFirstPosition = ABPointMake(0, 0);
     
     // Dessin de tous les items.
-    for (GridItem *item in self.grid.items) {
+    for (NSInteger i=0; i<[self.grid.items count]; i++) {
+        GridItem *item = [self.grid.items objectAtIndex:i];
+        
         if ([item isKindOfClass:[GridItem class]]) {
-            [self drawInContext:context
-                           item:item
-                     atPosition:[self screenPositionForItem:item atPosition:item.cachePosition]];
+            if (item.type != lastType) {
+                // Draw last type
+                if (lastType != -1) {
+                    NSInteger toIndex = i - 1;
+                    ABPoint toPosition = [self.grid positionForIndex:toIndex];
+                    
+                    [self drawInContext:context
+                               itemType:lastType
+                           fromPosition:lastTypeFirstPosition
+                             toPosition:toPosition];
+                }
+                
+                // Set var for the next type
+                lastType = item.type;
+                lastTypeFirstPosition = item.cachePosition;
+            }
+        } else {
+            if (lastType != -1) {
+                NSInteger toIndex = i - 1;
+                ABPoint toPosition = [self.grid positionForIndex:toIndex];
+                
+                [self drawInContext:context
+                           itemType:lastType
+                       fromPosition:lastTypeFirstPosition
+                         toPosition:toPosition];
+            }
+            lastType = -1;
         }
+    }
+    
+    if (lastType != -1) {
+        [self drawInContext:context
+                   itemType:lastType
+               fromPosition:lastTypeFirstPosition
+                 toPosition:ABPointMake(self.grid.width - 1, self.grid.height - 1)];
+    }
+    
+}
+
+- (void)drawInContext:(CGContextRef)context itemType:(GridItemType)type fromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition
+{
+    NSInteger lines = toPosition.y - fromPosition.y;
+    
+    // First line
+    ABPoint firstLineLastPosition = ABPointMake((lines > 1) ? self.grid.width - 1 : toPosition.x,
+                                                fromPosition.y);
+    [self drawInContext:context
+               itemType:type
+                 inRect:[self rectFromPosition:fromPosition toPosition:firstLineLastPosition]];
+    
+    // Last line
+    if (lines >= 2) {
+        ABPoint lastLineFirstPosition = ABPointMake(0,
+                                                    toPosition.y);
+        [self drawInContext:context
+                   itemType:type
+                     inRect:[self rectFromPosition:lastLineFirstPosition toPosition:toPosition]];
+    }
+    
+    // Lines between first and last (should be a rect).
+    if (lines >= 3) {
+        ABPoint middleLinesFirstPosition = ABPointMake(0, fromPosition.y + 1);
+        ABPoint middleLinesLastPosition = ABPointMake(self.grid.width - 1, toPosition.y - 1);
+        
+        [self drawInContext:context
+                   itemType:type
+                     inRect:[self rectFromPosition:middleLinesFirstPosition toPosition:middleLinesLastPosition]];
     }
 }
 
-- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position;
+- (void)drawInContext:(CGContextRef)context itemType:(GridItemType)type inRect:(CGRect)rect
 {
-    [self drawInContext:context
-                   item:item
-             atPosition:position
-              extraSize:CGSizeMake(0.0, 0.0)
-                  color:nil];
-}
-
-- (void)drawInContext:(CGContextRef)context item:(GridItem *)item atPosition:(CGPoint)position extraSize:(CGSize)extraSize color:(NSColor *)color
-{
-    CGRect itemRect = CGRectMake(floor(position.x - extraSize.width / 2),
-                                 floor(position.y - extraSize.height / 2),
-                                 ceil(item.width * _itemSize.width + extraSize.width),
-                                 ceil(item.height * _itemSize.height + extraSize.height));
-    NSColor *colorToSet;
+    NSColor *color;
     
-    switch (item.type) {
+    switch (type) {
         case GridItemEarth:
-            colorToSet = [NSColor greenColor];
+            color = [NSColor greenColor];
             break;
-            
-        case GridItemCastel:
-            [self setDrawingColor:[NSColor blackColor]];
-            CGSize borderSize = [self borderSize];
-            CGRect castelBackgroundRect = CGRectMake(itemRect.origin.x + borderSize.width * 2.0,
-                                           itemRect.origin.y + borderSize.height * 2.0,
-                                           itemRect.size.width - borderSize.width * 4.0,
-                                           itemRect.size.height - borderSize.height * 4.0);
-            CGContextFillRect(context, castelBackgroundRect);
-            
-            [self setDrawingColor:[NSColor purpleColor]];
-            CGRect castelRect = CGRectMake(itemRect.origin.x + borderSize.width * 3.0,
-                                           itemRect.origin.y + borderSize.height * 3.0,
-                                           itemRect.size.width - borderSize.width * 6.0,
-                                           itemRect.size.height - borderSize.height * 6.0);
-            CGContextFillRect(context, castelRect);
-            
-            return;
-            break;
-            
-        case GridItemWall:
-            colorToSet = [NSColor grayColor];
-            break;
-            
+        
         case GridItemWater:
-            colorToSet = [NSColor blueColor];
+            color = [NSColor blueColor];
             break;
         
         case GridItemAreaCaptured:
-            colorToSet = [NSColor orangeColor];
+            color = [NSColor orangeColor];
             break;
             
         default:
-            colorToSet = [NSColor blackColor];
+            color = [NSColor brownColor];
             break;
     }
     
-    if (color) {
-        colorToSet = color;
-    }
+    [color set];
     
-    [self setDrawingColor:colorToSet];
-    
-    CGContextFillRect(context, itemRect);
+    CGContextFillRect(context, rect);
 }
 
-- (void)setDrawingColor:(NSColor *)color
+- (CGRect)rectFromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition
 {
-    if (color != _lastColor) {
-        [color set];
-        self.lastColor = color;
-    }
+    return CGRectMake(fromPosition.x * _itemSize.width,
+                      fromPosition.y * _itemSize.height,
+                      (toPosition.x - fromPosition.x + 1) * _itemSize.width,
+                      (toPosition.y - fromPosition.y + 1) * _itemSize.height);
 }
 
 

@@ -147,7 +147,7 @@
 - (ABPoint)positionForIndex:(NSInteger)index
 {
     if (index < 0 || index > self.totalIndex) {
-        [NSException raise:@"GridError" format:@"Exception: Trying to get a non existing position."];
+        [NSException raise:@"GridError" format:@"Exception: Trying to get a non existing position. Index: %d (Max: %d)", index, self.totalIndex];
     }
     
     return ABPointMake(index % _width,

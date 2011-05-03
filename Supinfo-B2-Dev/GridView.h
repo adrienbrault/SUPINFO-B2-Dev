@@ -10,19 +10,23 @@
 
 #import "Grid.h"
 
+#define BORDER_SIZE_SCALE 15.0
+
 @interface GridView : NSView {
     
     Grid *_grid;
     
     CGSize _itemSize;
-    
-    NSColor *_lastColor;
 }
 
 @property (nonatomic, retain) Grid *grid;
 
-// Internal
 
-@property (nonatomic, retain) NSColor *lastColor;
+// Internal - For inheritance
+
+- (void)calculateItemSize;
+- (CGPoint)screenPositionForItem:(GridItem *)item atPosition:(ABPoint)position;
+- (CGPoint)itemFramePosition:(GridItem *)item;
+- (CGSize)borderSize;
 
 @end
