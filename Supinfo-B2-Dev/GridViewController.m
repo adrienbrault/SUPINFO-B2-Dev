@@ -159,7 +159,7 @@
         switch (item.type) {
             case GridItemWall:
             case GridItemCastel:
-            case GridItemTower:
+            case GridItemGun:
                 [_buildingsGrid setItem:item atPosition:position];
                 [_buildingsGridView setNeedsDisplay:YES];
                 break;
@@ -183,7 +183,7 @@
     switch (item.type) {
         case GridItemWall:
         case GridItemCastel:
-        case GridItemTower:
+        case GridItemGun:
         {
             if (![_buildingsGrid position:position availableForItem:item]) {
                 return NO;
@@ -235,6 +235,17 @@
             
             [self refreshTerritoryMap];
         } break;
+        
+        case GameStateCanons:
+        {
+            ABPoint position = [self positionAtEventMouseLocation:theEvent];
+            GridItem *item = [_territoryGrid itemAtPosition:position];
+            
+            if (item && item.type == GridItemAreaCaptured) {
+                [self setItem:[GridItem itemWithType:GridItemGun]
+                   atPosition:position];
+            }
+        } break;
             
         default:
             break;
@@ -260,6 +271,17 @@
                atPosition:position];
             
             [self refreshTerritoryMap];
+        } break;
+        
+        case GameStateCanons:
+        {
+            ABPoint position = [self positionAtEventMouseLocation:theEvent];
+            GridItem *item = [_territoryGrid itemAtPosition:position];
+            
+            if (item && item.type == GridItemAreaCaptured) {
+                [self setItem:[GridItem itemWithType:GridItemGun]
+                   atPosition:position];
+            }
         } break;
             
         default:

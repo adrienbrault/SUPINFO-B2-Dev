@@ -12,7 +12,7 @@ typedef enum {
     GridItemWall,
     GridItemCastel,
     GridItemAreaCaptured,
-    GridItemTower
+    GridItemGun
 } GridItemType;
 
 NSInteger GetGridItemTypeWidth(GridItemType type);
