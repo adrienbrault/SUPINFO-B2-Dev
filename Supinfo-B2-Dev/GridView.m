@@ -137,7 +137,7 @@
 
 - (void)drawInContext:(CGContextRef)context itemType:(GridItemType)type fromPosition:(ABPoint)fromPosition toPosition:(ABPoint)toPosition
 {
-    NSInteger lines = toPosition.y - fromPosition.y;
+    NSInteger lines = toPosition.y - fromPosition.y + 1;
     
     // First line
     ABPoint firstLineLastPosition = ABPointMake((lines > 1) ? self.grid.width - 1 : toPosition.x,
