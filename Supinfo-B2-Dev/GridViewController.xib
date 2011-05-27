@@ -65,7 +65,6 @@
 								<string key="NSFrameSize">{480, 272}</string>
 								<reference key="NSSuperview" ref="829230382"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSClassName">AdvancedGridView</string>
 							</object>
 							<object class="NSCustomView" id="454355867">
@@ -143,6 +142,14 @@
 						<reference key="destination" ref="829230382"/>
 					</object>
 					<int key="connectionID">61</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">timeProgressView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="864433537"/>
+					</object>
+					<int key="connectionID">62</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -267,7 +274,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">61</int>
+			<int key="maxID">62</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -299,6 +306,7 @@
 							<string>mapGridView</string>
 							<string>mapView</string>
 							<string>territoryGridView</string>
+							<string>timeProgressView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -306,6 +314,7 @@
 							<string>GridView</string>
 							<string>NSView</string>
 							<string>GridView</string>
+							<string>NSProgressIndicator</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -316,6 +325,7 @@
 							<string>mapGridView</string>
 							<string>mapView</string>
 							<string>territoryGridView</string>
+							<string>timeProgressView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -334,6 +344,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">territoryGridView</string>
 								<string key="candidateClassName">GridView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">timeProgressView</string>
+								<string key="candidateClassName">NSProgressIndicator</string>
 							</object>
 						</object>
 					</object>

@@ -18,11 +18,18 @@
 
 
 typedef enum {
-    GameStateWallsStart,
+    GameStateWallsStart = 0,
     GameStateCanons,
     GameStateAssault,
     GameStateWallsRepair
 } GameStateType;
+
+static CGFloat const GameStateDuration[] = {
+    10.0,
+    10.0,
+    0.0,
+    10.0
+};
 
 
 @interface GridViewController : NSViewController <NSWindowDelegate> {
@@ -31,6 +38,7 @@ typedef enum {
     GridView *_territoryGridView;
     AdvancedGridView *_buildingsGridView;
     NSView *_mapView;
+    NSProgressIndicator *_timeProgressView;
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
@@ -43,6 +51,8 @@ typedef enum {
     NSTrackingArea *_trackingArea;
     
     GameStateType _gameState;
+    
+    NSTimer *_timeLeftTimer;
 }
 
 // Internal
@@ -51,6 +61,7 @@ typedef enum {
 @property (nonatomic, retain) IBOutlet GridView *territoryGridView;
 @property (nonatomic, retain) IBOutlet AdvancedGridView *buildingsGridView;
 @property (assign) IBOutlet NSView *mapView;
+@property (assign) IBOutlet NSProgressIndicator *timeProgressView;
 
 
 // Public

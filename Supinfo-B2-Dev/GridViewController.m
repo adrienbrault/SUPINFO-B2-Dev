@@ -9,6 +9,10 @@
 #import "GridViewController.h"
 
 
+#define TIMER_UPDATE_INTERVAL 0.033
+#define STATE_WALLS_DURATION 10.0
+
+
 @interface GridViewController ()
 
 - (void)loadDefaultMap;
@@ -23,6 +27,12 @@
 
 - (void)refreshTerritoryMap;
 
+- (void)startGameState:(GameStateType)state;
+- (void)gameStateTimeDidEnd;
+- (void)timeLeftTimerFire:(id)timer;
+
+@property (nonatomic, retain) NSTimer *timeLeftTimer;
+
 @end
 
 
@@ -34,10 +44,13 @@
 @synthesize territoryGridView = _territoryGridView;
 @synthesize buildingsGridView = _buildingsGridView;
 @synthesize mapView = _mapView;
+@synthesize timeProgressView = _timeProgressView;
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
 @synthesize gridTotalIndex = _gridTotalIndex;
+
+@synthesize timeLeftTimer = _timeLeftTimer;
 
 
 #pragma mark - Object lifecycle
@@ -45,7 +58,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        _gameState = GameStateWallsStart;
+        
     }
     return self;
 }
@@ -94,6 +107,8 @@
     [self.view setNextResponder:self];
     
     [self loadDefaultMap];
+    
+    [self startGameState:GameStateWallsStart];
 }
 
 - (void)loadDefaultMap
@@ -323,6 +338,56 @@
 {
     [_territoryGrid setTerritoryIndexesStatus:[_buildingsGrid capturedTeritoryIndexes]];
     [_territoryGridView setNeedsDisplay:YES];
+}
+
+
+#pragma mark -
+
+- (void)startGameState:(GameStateType)state
+{
+    _gameState = state;
+    
+    self.timeProgressView.doubleValue = self.timeProgressView.maxValue;
+    
+    [self.timeLeftTimer invalidate];
+    self.timeLeftTimer = nil;
+    if (GameStateDuration[_gameState] > 0.0) {
+        self.timeLeftTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_UPDATE_INTERVAL
+                                                              target:self
+                                                            selector:@selector(timeLeftTimerFire:)
+                                                            userInfo:nil
+                                                             repeats:YES];
+    }
+}
+
+- (void)gameStateTimeDidEnd
+{
+    switch (_gameState) {
+        case GameStateWallsStart:
+        case GameStateWallsRepair:
+        {
+            // TODO: Check to see if any castle is captured.
+            
+            [self startGameState:GameStateCanons];
+        } break;
+        
+        case GameStateCanons:
+        {
+            [self startGameState:GameStateAssault];
+        } break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)timeLeftTimerFire:(id)timer
+{
+    self.timeProgressView.doubleValue -= self.timeProgressView.maxValue / (GameStateDuration[_gameState] / TIMER_UPDATE_INTERVAL);
+    
+    if (self.timeProgressView.doubleValue <= 0.0) {
+        [self gameStateTimeDidEnd];
+    }
 }
 
 @end
