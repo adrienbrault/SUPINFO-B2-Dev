@@ -17,11 +17,20 @@
 #import "AdvancedGridView.h"
 
 
+typedef enum {
+    GameStateWallsStart,
+    GameStateCanons,
+    GameStateAssault,
+    GameStateWallsRepair
+} GameStateType;
+
+
 @interface GridViewController : NSViewController <NSWindowDelegate> {
     
     GridView *_mapGridView;
     GridView *_territoryGridView;
     AdvancedGridView *_buildingsGridView;
+    NSView *_mapView;
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
@@ -32,6 +41,8 @@
     NSInteger _gridTotalIndex;
     
     NSTrackingArea *_trackingArea;
+    
+    GameStateType _gameState;
 }
 
 // Internal
@@ -39,6 +50,7 @@
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;
 @property (nonatomic, retain) IBOutlet GridView *territoryGridView;
 @property (nonatomic, retain) IBOutlet AdvancedGridView *buildingsGridView;
+@property (assign) IBOutlet NSView *mapView;
 
 
 // Public

@@ -9,7 +9,7 @@
 #import "GridViewController.h"
 
 
-@interface GridViewController (Private)
+@interface GridViewController ()
 
 - (void)loadDefaultMap;
 
@@ -33,6 +33,7 @@
 @synthesize mapGridView = _mapGridView;
 @synthesize territoryGridView = _territoryGridView;
 @synthesize buildingsGridView = _buildingsGridView;
+@synthesize mapView = _mapView;
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
@@ -44,7 +45,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        
+        _gameState = GameStateWallsStart;
     }
     return self;
 }
@@ -196,32 +197,59 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    
-    //[self.nextResponder mouseMoved:theEvent];
+    [self.nextResponder mouseMoved:theEvent];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    ABPoint position = [self positionAtEventMouseLocation:theEvent];
-    
-    [self setItem:[GridItem itemWithType:GridItemWall]
-       atPosition:position];
-    
-    [self refreshTerritoryMap];
-    
     [self.nextResponder mouseDown:theEvent];
+    
+    CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
+    if (!CGRectContainsPoint(self.mapView.frame, mouseLocation)) {
+        return;
+    }
+    
+    switch (_gameState) {
+        case GameStateWallsStart:
+        case GameStateWallsRepair:
+        {
+            ABPoint position = [self positionAtEventMouseLocation:theEvent];
+            
+            [self setItem:[GridItem itemWithType:GridItemWall]
+               atPosition:position];
+            
+            [self refreshTerritoryMap];
+        } break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    ABPoint position = [self positionAtEventMouseLocation:theEvent];
+    [self.nextResponder mouseDragged:theEvent];
     
-    [self setItem:[GridItem itemWithType:GridItemWall]
-       atPosition:position];
+    CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
+    if (!CGRectContainsPoint(self.mapView.frame, mouseLocation)) {
+        return;
+    }
     
-    [self refreshTerritoryMap];
-    
-    [self.nextResponder mouseDown:theEvent];
+    switch (_gameState) {
+        case GameStateWallsStart:
+        case GameStateWallsRepair:
+        {
+            ABPoint position = [self positionAtEventMouseLocation:theEvent];
+            
+            [self setItem:[GridItem itemWithType:GridItemWall]
+               atPosition:position];
+            
+            [self refreshTerritoryMap];
+        } break;
+            
+        default:
+            break;
+    }
 }
 
 
@@ -229,8 +257,8 @@
 
 - (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation
 {
-    ABPoint position = ABPointMake(ceil((mouseLocation.x + 1.0) / (self.view.frame.size.width / _gridWidth)) - 1,
-                       ceil((self.view.frame.size.height - mouseLocation.y + 1.0) / (self.view.frame.size.height / _gridHeight)) - 1);
+    ABPoint position = ABPointMake(ceil((mouseLocation.x + 1.0) / (self.mapView.frame.size.width / _gridWidth)) - 1,
+                       ceil((self.mapView.frame.size.height - mouseLocation.y + 1.0) / (self.mapView.frame.size.height / _gridHeight)) - 1);
     
     // We make sure that the position is correct.
     if (position.x >= _gridWidth) {
@@ -253,7 +281,7 @@
 - (ABPoint)positionAtEventMouseLocation:(NSEvent *)theEvent
 {
     NSPoint mouseLocation = [theEvent locationInWindow];
-    mouseLocation = [self.view convertPoint:mouseLocation fromView:self.view];
+    mouseLocation = [self.mapView convertPoint:mouseLocation fromView:self.view];
     
     return [self positionAtMouseLocation:mouseLocation];
 }
@@ -267,7 +295,8 @@
     _trackingArea = [[NSTrackingArea alloc] initWithRect:self.view.frame
                                                  options:( NSTrackingMouseEnteredAndExited
                                                           | NSTrackingMouseMoved
-                                                          | NSTrackingActiveInKeyWindow )
+                                                          | NSTrackingActiveInKeyWindow
+                                                          | NSTrackingActiveAlways)
                                                    owner:self
                                                 userInfo:nil];
     

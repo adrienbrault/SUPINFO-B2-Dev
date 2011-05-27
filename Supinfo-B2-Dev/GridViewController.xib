@@ -13,6 +13,7 @@
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<string>NSCustomView</string>
+			<string>NSProgressIndicator</string>
 			<string>NSCustomObject</string>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -42,37 +43,61 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSCustomView" id="494716491">
+					<object class="NSProgressIndicator" id="864433537">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{480, 272}</string>
+						<int key="NSvFlags">1290</int>
+						<object class="NSPSMatrix" key="NSDrawMatrix"/>
+						<string key="NSFrame">{{-2, 266}, {484, 20}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<string key="NSClassName">AdvancedGridView</string>
+						<reference key="NSNextKeyView" ref="829230382"/>
+						<int key="NSpiFlags">16392</int>
+						<double key="NSMaxValue">100</double>
 					</object>
-					<object class="NSCustomView" id="641553699">
+					<object class="NSCustomView" id="829230382">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">274</int>
+						<object class="NSMutableArray" key="NSSubviews">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="NSCustomView" id="782785175">
+								<reference key="NSNextResponder" ref="829230382"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrameSize">{480, 272}</string>
+								<reference key="NSSuperview" ref="829230382"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSClassName">AdvancedGridView</string>
+							</object>
+							<object class="NSCustomView" id="454355867">
+								<reference key="NSNextResponder" ref="829230382"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrameSize">{480, 272}</string>
+								<reference key="NSSuperview" ref="829230382"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="782785175"/>
+								<string key="NSClassName">GridView</string>
+							</object>
+							<object class="NSCustomView" id="214553032">
+								<reference key="NSNextResponder" ref="829230382"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrameSize">{480, 272}</string>
+								<reference key="NSSuperview" ref="829230382"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="454355867"/>
+								<string key="NSClassName">GridView</string>
+							</object>
+						</object>
 						<string key="NSFrameSize">{480, 272}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="494716491"/>
-						<string key="NSClassName">GridView</string>
-					</object>
-					<object class="NSCustomView" id="341226727">
-						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{480, 272}</string>
-						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="641553699"/>
-						<string key="NSClassName">GridView</string>
+						<reference key="NSNextKeyView" ref="214553032"/>
+						<string key="NSClassName">NSView</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{480, 272}</string>
+				<string key="NSFrameSize">{480, 286}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="341226727"/>
+				<reference key="NSNextKeyView" ref="864433537"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</object>
@@ -89,27 +114,35 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">buildingsGridView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="782785175"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">mapGridView</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="341226727"/>
+						<reference key="destination" ref="214553032"/>
 					</object>
-					<int key="connectionID">6</int>
+					<int key="connectionID">57</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">territoryGridView</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="641553699"/>
+						<reference key="destination" ref="454355867"/>
 					</object>
-					<int key="connectionID">7</int>
+					<int key="connectionID">58</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">buildingsGridView</string>
+						<string key="label">mapView</string>
 						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="494716491"/>
+						<reference key="destination" ref="829230382"/>
 					</object>
-					<int key="connectionID">8</int>
+					<int key="connectionID">61</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -144,35 +177,46 @@
 						<reference key="object" ref="1005"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="341226727"/>
-							<reference ref="641553699"/>
-							<reference ref="494716491"/>
+							<reference ref="829230382"/>
+							<reference ref="864433537"/>
 						</object>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">Custom View</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">3</int>
-						<reference key="object" ref="341226727"/>
+						<int key="objectID">52</int>
+						<reference key="object" ref="829230382"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="214553032"/>
+							<reference ref="454355867"/>
+							<reference ref="782785175"/>
 						</object>
 						<reference key="parent" ref="1005"/>
+						<string key="objectName">MapView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="214553032"/>
+						<reference key="parent" ref="829230382"/>
 						<string key="objectName">mapGridView</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">4</int>
-						<reference key="object" ref="641553699"/>
-						<reference key="parent" ref="1005"/>
+						<int key="objectID">54</int>
+						<reference key="object" ref="454355867"/>
+						<reference key="parent" ref="829230382"/>
 						<string key="objectName">territoryGridView</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="494716491"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<reference key="parent" ref="1005"/>
+						<int key="objectID">53</int>
+						<reference key="object" ref="782785175"/>
+						<reference key="parent" ref="829230382"/>
 						<string key="objectName">buildingsGridView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">60</int>
+						<reference key="object" ref="864433537"/>
+						<reference key="parent" ref="1005"/>
 					</object>
 				</object>
 			</object>
@@ -186,9 +230,13 @@
 					<string>1.IBPluginDependency</string>
 					<string>1.WindowOrigin</string>
 					<string>1.editorWindowContentRectSynchronizationRect</string>
-					<string>3.IBPluginDependency</string>
-					<string>4.IBPluginDependency</string>
-					<string>5.IBPluginDependency</string>
+					<string>52.IBPluginDependency</string>
+					<string>52.WindowOrigin</string>
+					<string>52.editorWindowContentRectSynchronizationRect</string>
+					<string>53.IBPluginDependency</string>
+					<string>54.IBPluginDependency</string>
+					<string>55.IBPluginDependency</string>
+					<string>60.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -198,6 +246,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{357, 416}, {480, 272}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{628, 654}</string>
+					<string>{{357, 416}, {480, 272}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -215,7 +267,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">61</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -245,12 +297,14 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildingsGridView</string>
 							<string>mapGridView</string>
+							<string>mapView</string>
 							<string>territoryGridView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AdvancedGridView</string>
 							<string>GridView</string>
+							<string>NSView</string>
 							<string>GridView</string>
 						</object>
 					</object>
@@ -260,6 +314,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildingsGridView</string>
 							<string>mapGridView</string>
+							<string>mapView</string>
 							<string>territoryGridView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -271,6 +326,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mapGridView</string>
 								<string key="candidateClassName">GridView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">mapView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">territoryGridView</string>
