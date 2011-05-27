@@ -9,7 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "Grid.h"
 
-// This class supports GridItem with any height and width
+
+/*
+ *  This class supports GridItem with any height and width
+ */
 
 @interface AdvancedGrid : Grid {
     

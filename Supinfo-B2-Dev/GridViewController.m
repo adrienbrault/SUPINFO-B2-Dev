@@ -8,6 +8,7 @@
 
 #import "GridViewController.h"
 
+
 @interface GridViewController (Private)
 
 - (void)loadDefaultMap;
@@ -21,9 +22,6 @@
 - (void)setTrackingArea;
 
 - (void)refreshTerritoryMap;
-
-
-
 
 @end
 
@@ -301,8 +299,5 @@
     [_territoryGrid setTerritoryIndexesStatus:[_buildingsGrid capturedTeritoryIndexes]];
     [_territoryGridView setNeedsDisplay:YES];
 }
-
-
-
 
 @end

@@ -12,7 +12,10 @@
 #import "ABPoint.h"
 #import "GridItem.h"
 
-// This class only support GridItem with width==1 && height==1
+
+/*
+ *  This class only support GridItem with width==1 && height==1
+ */
 
 @interface Grid : NSObject {
     

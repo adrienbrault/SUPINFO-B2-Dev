@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "AdvancedGrid.h"
 
+
+/*
+ *  This class contains the algorithms to calculate the captured area.
+ */
+
 @interface BuildingsGrid : AdvancedGrid {
     
     // Algorithm part

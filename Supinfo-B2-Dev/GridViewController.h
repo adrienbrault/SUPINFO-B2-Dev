@@ -16,6 +16,7 @@
 #import "GridView.h"
 #import "AdvancedGridView.h"
 
+
 @interface GridViewController : NSViewController <NSWindowDelegate> {
     
     GridView *_mapGridView;
@@ -33,9 +34,14 @@
     NSTrackingArea *_trackingArea;
 }
 
+// Internal
+
 @property (nonatomic, retain) IBOutlet GridView *mapGridView;
 @property (nonatomic, retain) IBOutlet GridView *territoryGridView;
 @property (nonatomic, retain) IBOutlet AdvancedGridView *buildingsGridView;
+
+
+// Public
 
 @property (nonatomic, readonly) NSInteger gridWidth;
 @property (nonatomic, readonly) NSInteger gridHeight;
