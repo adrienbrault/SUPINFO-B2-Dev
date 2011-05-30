@@ -162,9 +162,6 @@
     [_mapGridView setNeedsDisplay:YES];
     
     NSLog(@"Default map loaded");
-    
-    [self createBoats:20];
-    [self startBoatsAnimations];
 }
 
 
@@ -396,6 +393,10 @@
 
 - (void)startGameState:(GameStateType)state
 {
+    if (_gameState == GameStateAssault) {
+        [self removeBoats];
+    }
+    
     _gameState = state;
     
     self.timeProgressView.doubleValue = self.timeProgressView.maxValue;
@@ -408,6 +409,11 @@
                                                             selector:@selector(timeLeftTimerFire:)
                                                             userInfo:nil
                                                              repeats:YES];
+    }
+    
+    if (_gameState == GameStateAssault) {
+        [self createBoats:20];
+        [self startBoatsAnimations];
     }
 }
 
@@ -491,7 +497,7 @@
     
     CGFloat distance = sqrt(pow(boatView.frame.origin.x - randomPosition.x, 2)
                             + pow(boatView.frame.origin.y - randomPosition.y, 2));
-    CGFloat speed = (arc4random() % 5) * 500; // In pixels/sec
+    CGFloat speed = (arc4random() % 5) * 10; // In pixels/sec
     CGFloat duration = distance / speed;
     
     NSMutableDictionary *viewDic = [NSMutableDictionary dictionary];
