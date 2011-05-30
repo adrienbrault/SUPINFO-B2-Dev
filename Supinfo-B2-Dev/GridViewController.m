@@ -115,6 +115,7 @@
 {
     NSLog(@"Loading default map");
     
+    // The NSAutoreleasePool is here for memory optimization.
     NSAutoreleasePool *pool = nil;
     
     NSInteger totalItems = _gridWidth * _gridHeight;
