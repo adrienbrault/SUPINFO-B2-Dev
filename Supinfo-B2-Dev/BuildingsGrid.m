@@ -21,6 +21,22 @@
 
 @implementation BuildingsGrid
 
+#pragma mark - Properties
+
+- (NSSet *)castels
+{
+    NSMutableSet *castelsSet = [NSMutableSet set];
+    
+    for (NSObject *item in self.items) {
+        if (item != [NSNull null] && ((GridItem *)item).type == GridItemCastel) {
+            [castelsSet addObject:item];
+        }
+    }
+    
+    return castelsSet;
+}
+
+
 #pragma mark - Algorithms
 
 - (NSArray *)capturedTeritoryIndexes

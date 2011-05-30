@@ -10,7 +10,6 @@
 
 
 #define TIMER_UPDATE_INTERVAL 0.033
-#define STATE_WALLS_DURATION 10.0
 
 
 @interface GridViewController ()
@@ -26,6 +25,7 @@
 - (void)setTrackingArea;
 
 - (void)refreshTerritoryMap;
+- (BOOL)isACastelCaptured;
 
 - (void)startGameState:(GameStateType)state;
 - (void)gameStateTimeDidEnd;
@@ -108,7 +108,7 @@
     
     [self loadDefaultMap];
     
-    [self startGameState:GameStateWallsStart];
+    [self startGameState:GameStateWallsRepair];
 }
 
 - (void)loadDefaultMap
@@ -226,7 +226,6 @@
     }
     
     switch (_gameState) {
-        case GameStateWallsStart:
         case GameStateWallsRepair:
         {
             ABPoint position = [self positionAtEventMouseLocation:theEvent];
@@ -263,7 +262,6 @@
     }
     
     switch (_gameState) {
-        case GameStateWallsStart:
         case GameStateWallsRepair:
         {
             ABPoint position = [self positionAtEventMouseLocation:theEvent];
@@ -363,6 +361,20 @@
     [_territoryGridView setNeedsDisplay:YES];
 }
 
+- (BOOL)isACastelCaptured
+{
+    NSSet *castelsSet = [_buildingsGrid castels];
+    
+    for (GridItem *item in castelsSet) {
+        GridItem *territoryItem = [_territoryGrid itemAtPosition:item.cachePosition];
+        if (territoryItem && territoryItem.type == GridItemAreaCaptured) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 
 #pragma mark - Game cycle
 
@@ -386,10 +398,12 @@
 - (void)gameStateTimeDidEnd
 {
     switch (_gameState) {
-        case GameStateWallsStart:
         case GameStateWallsRepair:
         {
-            // TODO: Check to see if any castle is captured.
+            if (![self isACastelCaptured]) {
+                NSLog(@"You lose.");
+                [NSApp terminate:nil];
+            }
             
             [self startGameState:GameStateCanons];
         } break;

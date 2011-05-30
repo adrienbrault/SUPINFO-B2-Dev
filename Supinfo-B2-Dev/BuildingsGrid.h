@@ -26,4 +26,6 @@
 
 - (NSArray *)capturedTeritoryIndexes;
 
+- (NSSet *)castels;
+
 @end

@@ -18,10 +18,9 @@
 
 
 typedef enum {
-    GameStateWallsStart = 0,
+    GameStateWallsRepair,
     GameStateCanons,
-    GameStateAssault,
-    GameStateWallsRepair
+    GameStateAssault
 } GameStateType;
 
 static CGFloat const GameStateDuration[] = {
