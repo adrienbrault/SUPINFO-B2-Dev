@@ -13,6 +13,8 @@
 #import "TerritoryGrid.h"
 #import "BuildingsGrid.h"
 
+#import "BoatView.h"
+
 #import "GridView.h"
 #import "AdvancedGridView.h"
 
@@ -31,7 +33,7 @@ static CGFloat const GameStateDuration[] = {
 };
 
 
-@interface GridViewController : NSViewController <NSWindowDelegate> {
+@interface GridViewController : NSViewController <NSWindowDelegate, NSAnimationDelegate> {
     
     GridView *_mapGridView;
     GridView *_territoryGridView;
@@ -52,6 +54,8 @@ static CGFloat const GameStateDuration[] = {
     GameStateType _gameState;
     
     NSTimer *_timeLeftTimer;
+    
+    NSArray *_boatViews;
 }
 
 // Internal

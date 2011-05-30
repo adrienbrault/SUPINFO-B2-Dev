@@ -33,6 +33,12 @@
 
 @property (nonatomic, retain) NSTimer *timeLeftTimer;
 
+- (void)createBoats:(NSInteger)number;
+- (void)removeBoats;
+- (void)startBoatsAnimations;
+- (void)animateBoatView:(BoatView *)boatView;
+- (CGPoint)randomBoatPosition;
+
 @end
 
 
@@ -73,7 +79,14 @@
     [_territoryGridView release];
     [_buildingsGridView release];
     
+    [_mapView release];
+    [_timeProgressView release];
+    
     [_trackingArea release];
+    
+    [_timeLeftTimer release];
+    
+    [_boatViews release];
     
     [super dealloc];
 }
@@ -149,6 +162,9 @@
     [_mapGridView setNeedsDisplay:YES];
     
     NSLog(@"Default map loaded");
+    
+    [self createBoats:20];
+    [self startBoatsAnimations];
 }
 
 
@@ -425,6 +441,96 @@
     if (self.timeProgressView.doubleValue <= 0.0) {
         [self gameStateTimeDidEnd];
     }
+}
+
+
+#pragma mark - Boat management
+
+- (void)createBoats:(NSInteger)number
+{
+    [self removeBoats];
+    
+    NSMutableArray *boatsViews = [[NSMutableArray alloc] init];
+    
+    CGSize imageSize = [BoatView boatImage].size;
+    
+    for (NSInteger i=0; i<number; i++) {
+        CGPoint randomPosition = [self randomBoatPosition];
+        BoatView *boatView = [[BoatView alloc] initWithFrame:CGRectMake(randomPosition.x,
+                                                                        randomPosition.y,
+                                                                        imageSize.width,
+                                                                        imageSize.height)];
+        [self.mapView addSubview:boatView];
+        [boatsViews addObject:boatView];
+    }
+    
+    _boatViews = boatsViews;
+}
+
+- (void)removeBoats
+{
+    for (BoatView *boatView in _boatViews) {
+        [boatView removeFromSuperview];
+    }
+    
+    [_boatViews release];
+    _boatViews = nil;
+}
+
+- (void)startBoatsAnimations
+{
+    for (BoatView *boatView in _boatViews) {
+        [self animateBoatView:boatView];
+    }
+}
+
+- (void)animateBoatView:(BoatView *)boatView
+{
+    CGPoint randomPosition = [self randomBoatPosition];
+    CGRect newFrame = CGRectMake(randomPosition.x, randomPosition.y, boatView.frame.size.width, boatView.frame.size.height);
+    
+    CGFloat distance = sqrt(pow(boatView.frame.origin.x - randomPosition.x, 2)
+                            + pow(boatView.frame.origin.y - randomPosition.y, 2));
+    CGFloat speed = (arc4random() % 5) * 500; // In pixels/sec
+    CGFloat duration = distance / speed;
+    
+    NSMutableDictionary *viewDic = [NSMutableDictionary dictionary];
+    
+    [viewDic setObject:boatView forKey:NSViewAnimationTargetKey];
+    [viewDic setObject:[NSValue valueWithRect:boatView.frame] forKey:NSViewAnimationStartFrameKey];
+    [viewDic setObject:[NSValue valueWithRect:newFrame] forKey:NSViewAnimationEndFrameKey];
+
+    NSViewAnimation *theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:viewDic]];
+    theAnim.duration = duration;
+    theAnim.animationCurve = NSAnimationLinear;
+    theAnim.delegate = self;
+    [theAnim startAnimation];
+    [theAnim release];
+}
+
+- (CGPoint)randomBoatPosition
+{
+    ABPoint randomPosition;
+    BOOL validPosition = NO;
+    
+    while (!validPosition) {
+        randomPosition = ABPointMake(arc4random() % _gridWidth, arc4random() % _gridHeight);
+        validPosition = [_mapGrid itemAtPosition:randomPosition].type == GridItemWater;
+    }
+    
+    CGSize cellSize = CGSizeMake(self.mapView.frame.size.width / _gridWidth, self.mapView.frame.size.height / _gridHeight);
+    return CGPointMake(randomPosition.x * cellSize.width, self.mapView.frame.size.height - randomPosition.y * cellSize.height);
+}
+
+- (BOOL)animationShouldStart:(NSAnimation *)animation
+{
+    return YES;
+}
+- (void)animationDidEnd:(NSAnimation *)animation
+{
+    NSViewAnimation* viewAnimation = (NSViewAnimation *)animation;
+    BoatView *boatView = [[[viewAnimation viewAnimations] lastObject] objectForKey:NSViewAnimationTargetKey];
+    [self animateBoatView:boatView];
 }
 
 @end

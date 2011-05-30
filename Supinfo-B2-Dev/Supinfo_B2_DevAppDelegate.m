@@ -20,7 +20,7 @@
     gridVC.view.frame = [self.window.contentView bounds];
     [self.window.contentView addSubview:gridVC.view];
     
-    [gridVC setWidth:100 height:100];
+    [gridVC setWidth:50 height:50];
 }
 
 @end
