@@ -79,7 +79,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Map management
 
 - (void)setWidth:(NSInteger)width height:(NSInteger)height
 {
@@ -152,7 +152,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Grid helpers
 
 - (void)setItem:(GridItem *)item atPosition:(ABPoint)position
 {
@@ -291,7 +291,7 @@
 }
 
 
-#pragma mark - Mouse stuff
+#pragma mark - Mouse helper
 
 - (ABPoint)positionAtMouseLocation:(NSPoint)mouseLocation
 {
@@ -364,7 +364,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Game cycle
 
 - (void)startGameState:(GameStateType)state
 {
