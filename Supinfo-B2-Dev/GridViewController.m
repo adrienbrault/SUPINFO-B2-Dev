@@ -512,7 +512,6 @@ static NSString *boatAnimationKey = @"boatPosition";
     }
     
     CGFloat duration = distance / speed;
-    CGRect newFrame = CGRectMake(randomPosition.x, randomPosition.y, boatView.frame.size.width, boatView.frame.size.height);
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
     animation.fromValue = [NSValue valueWithPoint:boatView.frame.origin];
@@ -523,7 +522,7 @@ static NSString *boatAnimationKey = @"boatPosition";
     animation.delegate = self;
     animation.removedOnCompletion = NO;
     
-    boatView.frame = newFrame;
+    [boatView setFrameOrigin:randomPosition];
     
     [boatView.layer addAnimation:animation forKey:boatAnimationKey];
 }
