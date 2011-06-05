@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		950A1978139BA931001830A0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950A1977139BA931001830A0 /* QuartzCore.framework */; };
 		950BF934136CB4B600D42E0C /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 950BF932136CB4B600D42E0C /* GridViewController.m */; };
 		95624F60136C7C5A001B96F1 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F5F136C7C5A001B96F1 /* GridView.m */; };
 		95624F64136C7F28001B96F1 /* ABPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F63136C7F28001B96F1 /* ABPoint.m */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		950A1977139BA931001830A0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		950BF931136CB4B600D42E0C /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
 		950BF932136CB4B600D42E0C /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
 		95624F5E136C7C5A001B96F1 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				950A1978139BA931001830A0 /* QuartzCore.framework in Frameworks */,
 				9581E43313671FB60053D07A /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,6 +169,7 @@
 		9581E43113671FB60053D07A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				950A1977139BA931001830A0 /* QuartzCore.framework */,
 				9581E43213671FB60053D07A /* Cocoa.framework */,
 				9581E43413671FB60053D07A /* Other Frameworks */,
 			);

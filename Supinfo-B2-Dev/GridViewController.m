@@ -7,9 +7,11 @@
 //
 
 #import "GridViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 #define TIMER_UPDATE_INTERVAL 0.033
+static NSString *boatAnimationKey = @"boatPosition";
 
 
 @interface GridViewController ()
@@ -466,6 +468,7 @@
                                                                         randomPosition.y,
                                                                         imageSize.width,
                                                                         imageSize.height)];
+        boatView.wantsLayer = YES;
         [self.mapView addSubview:boatView];
         [boatsViews addObject:boatView];
     }
@@ -476,6 +479,7 @@
 - (void)removeBoats
 {
     for (BoatView *boatView in _boatViews) {
+        [boatView.layer removeAllAnimations];
         [boatView removeFromSuperview];
     }
     
@@ -492,26 +496,49 @@
 
 - (void)animateBoatView:(BoatView *)boatView
 {
-    CGPoint randomPosition = [self randomBoatPosition];
+    CGFloat speed = (arc4random() % 3 + 1) * 20; // In pixels/sec
+    
+    CGFloat distance;
+    CGPoint randomPosition;
+    
+    CGFloat minimumDistance = _mapView.frame.size.width / 10.0;
+    
+    while (distance < minimumDistance) {
+        randomPosition = [self randomBoatPosition];
+        
+        distance = sqrt(pow(boatView.frame.origin.x - randomPosition.x, 2)
+                        + pow(boatView.frame.origin.y - randomPosition.y, 2));
+
+    }
+    
+    CGFloat duration = distance / speed;
     CGRect newFrame = CGRectMake(randomPosition.x, randomPosition.y, boatView.frame.size.width, boatView.frame.size.height);
     
-    CGFloat distance = sqrt(pow(boatView.frame.origin.x - randomPosition.x, 2)
-                            + pow(boatView.frame.origin.y - randomPosition.y, 2));
-    CGFloat speed = (arc4random() % 5) * 10; // In pixels/sec
-    CGFloat duration = distance / speed;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.fromValue = [NSValue valueWithPoint:boatView.frame.origin];
+    animation.toValue = [NSValue valueWithPoint:randomPosition];
+    animation.duration = duration;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
-    NSMutableDictionary *viewDic = [NSMutableDictionary dictionary];
+    animation.delegate = self;
+    animation.removedOnCompletion = NO;
     
-    [viewDic setObject:boatView forKey:NSViewAnimationTargetKey];
-    [viewDic setObject:[NSValue valueWithRect:boatView.frame] forKey:NSViewAnimationStartFrameKey];
-    [viewDic setObject:[NSValue valueWithRect:newFrame] forKey:NSViewAnimationEndFrameKey];
+    boatView.frame = newFrame;
+    
+    [boatView.layer addAnimation:animation forKey:boatAnimationKey];
+}
 
-    NSViewAnimation *theAnim = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:viewDic]];
-    theAnim.duration = duration;
-    theAnim.animationCurve = NSAnimationLinear;
-    theAnim.delegate = self;
-    [theAnim startAnimation];
-    [theAnim release];
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    if (flag) {
+        for (BoatView *boatView in _boatViews) {
+            if ([boatView.layer animationForKey:boatAnimationKey] == theAnimation) {
+                [boatView.layer removeAnimationForKey:boatAnimationKey];
+                [self animateBoatView:boatView];
+                return;
+            }
+        }
+    }
 }
 
 - (CGPoint)randomBoatPosition
@@ -526,17 +553,6 @@
     
     CGSize cellSize = CGSizeMake(self.mapView.frame.size.width / _gridWidth, self.mapView.frame.size.height / _gridHeight);
     return CGPointMake(randomPosition.x * cellSize.width, self.mapView.frame.size.height - randomPosition.y * cellSize.height);
-}
-
-- (BOOL)animationShouldStart:(NSAnimation *)animation
-{
-    return YES;
-}
-- (void)animationDidEnd:(NSAnimation *)animation
-{
-    NSViewAnimation* viewAnimation = (NSViewAnimation *)animation;
-    BoatView *boatView = [[[viewAnimation viewAnimations] lastObject] objectForKey:NSViewAnimationTargetKey];
-    [self animateBoatView:boatView];
 }
 
 @end

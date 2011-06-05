@@ -32,7 +32,7 @@ static CGFloat const GameStateDuration[] = {
 };
 
 
-@interface GridViewController : NSViewController <NSWindowDelegate, NSAnimationDelegate> {
+@interface GridViewController : NSViewController <NSWindowDelegate> {
     
     GridView *_mapGridView;
     GridView *_territoryGridView;
