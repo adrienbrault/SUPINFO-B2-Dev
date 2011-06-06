@@ -498,7 +498,7 @@ static NSString *boatAnimationKey = @"boatPosition";
 {
     CGFloat speed = (arc4random() % 3 + 1) * 20; // In pixels/sec
     
-    CGFloat distance;
+    CGFloat distance = 0;
     CGPoint randomPosition;
     
     CGFloat minimumDistance = _mapView.frame.size.width / 10.0;
