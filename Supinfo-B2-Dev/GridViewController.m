@@ -551,7 +551,7 @@ static NSString *boatAnimationKey = @"boatPosition";
     }
     
     CGSize cellSize = CGSizeMake(self.mapView.frame.size.width / _gridWidth, self.mapView.frame.size.height / _gridHeight);
-    return CGPointMake(randomPosition.x * cellSize.width, self.mapView.frame.size.height - randomPosition.y * cellSize.height);
+    return CGPointMake(randomPosition.x * cellSize.width, self.mapView.frame.size.height - (randomPosition.y + 1) * cellSize.height);
 }
 
 @end
