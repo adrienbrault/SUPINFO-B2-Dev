@@ -60,7 +60,7 @@
     for (NSNumber *number in itemIndexes) {
         NSInteger itemIndex = [number intValue];
         
-        if ([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex]
+        if (([self index:itemIndex existsForItem:item] && [self itemAtIndex:itemIndex])
             || ![self index:itemIndex existsForItem:item])
             return NO;
     }
@@ -73,7 +73,7 @@
     for (NSValue *value in itemPositions) {
         ABPoint itemPosition = ABPointFromValue(value);
         
-        if ([self position:itemPosition existsForItem:item] && [self itemAtPosition:itemPosition]
+        if (([self position:itemPosition existsForItem:item] && [self itemAtPosition:itemPosition])
             || ![self position:itemPosition existsForItem:item])
             return NO;
     }
