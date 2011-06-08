@@ -39,4 +39,9 @@
     [self.window setMinSize:CGSizeMake(300.0, 300.0)];
 }
 
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
+{
+    return YES;
+}
+
 @end
