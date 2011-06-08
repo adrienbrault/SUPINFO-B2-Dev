@@ -96,7 +96,7 @@
 
 - (BOOL)index:(NSInteger)index availableForItem:(GridItem *)item
 {
-    if ([self index:index existsForItem:item] && [self itemAtIndex:index]
+    if (([self index:index existsForItem:item] && [self itemAtIndex:index])
         || ![self index:index existsForItem:item])
     {
         return NO;
@@ -115,7 +115,7 @@
 
 - (BOOL)position:(ABPoint)position availableForItem:(GridItem *)item
 {
-    if ([self position:position existsForItem:item] && [self itemAtPosition:position]
+    if (([self position:position existsForItem:item] && [self itemAtPosition:position])
         || ![self position:position existsForItem:item])
     {
         return NO;
