@@ -74,4 +74,6 @@ static CGFloat const GameStateDuration[] = {
 
 - (void)setWidth:(NSInteger)width height:(NSInteger)height;
 
+- (void)setCorrectViewSize;
+
 @end

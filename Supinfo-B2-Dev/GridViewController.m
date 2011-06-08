@@ -11,6 +11,7 @@
 
 
 #define TIMER_UPDATE_INTERVAL 0.033
+#define CELL_SIZE 16
 static NSString *boatAnimationKey = @"boatPosition";
 
 
@@ -558,6 +559,15 @@ static NSString *boatAnimationKey = @"boatPosition";
     
     return CGPointMake(randomPosition.x * cellSize.width + xOffset,
                        self.mapView.frame.size.height - (randomPosition.y + 1) * cellSize.height + yOffset);
+}
+
+
+#pragma mark -
+
+- (void)setCorrectViewSize
+{
+    [self.view setFrameSize:CGSizeMake(CELL_SIZE * self.gridWidth,
+                                       CELL_SIZE * self.gridHeight + self.timeProgressView.frame.size.height)];
 }
 
 @end
