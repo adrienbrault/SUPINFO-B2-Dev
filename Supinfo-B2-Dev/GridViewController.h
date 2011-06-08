@@ -39,6 +39,7 @@ static CGFloat const GameStateDuration[] = {
     AdvancedGridView *_buildingsGridView;
     NSView *_mapView;
     NSProgressIndicator *_timeProgressView;
+    NSTextFieldCell *_timeLeftLabel;
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
@@ -59,11 +60,12 @@ static CGFloat const GameStateDuration[] = {
 
 // Internal
 
-@property (nonatomic, retain) IBOutlet GridView *mapGridView;
-@property (nonatomic, retain) IBOutlet GridView *territoryGridView;
-@property (nonatomic, retain) IBOutlet AdvancedGridView *buildingsGridView;
+@property (assign) IBOutlet GridView *mapGridView;
+@property (assign) IBOutlet GridView *territoryGridView;
+@property (assign) IBOutlet AdvancedGridView *buildingsGridView;
 @property (assign) IBOutlet NSView *mapView;
 @property (assign) IBOutlet NSProgressIndicator *timeProgressView;
+@property (assign) IBOutlet NSTextFieldCell *timeLeftLabel;
 
 
 // Public

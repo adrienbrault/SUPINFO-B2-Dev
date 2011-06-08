@@ -54,6 +54,7 @@ static NSString *boatAnimationKey = @"boatPosition";
 @synthesize buildingsGridView = _buildingsGridView;
 @synthesize mapView = _mapView;
 @synthesize timeProgressView = _timeProgressView;
+@synthesize timeLeftLabel = _timeLeftLabel;
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
@@ -77,13 +78,6 @@ static NSString *boatAnimationKey = @"boatPosition";
     [_mapGrid release];
     [_territoryGrid release];
     [_buildingsGrid release];
-    
-    [_mapGridView release];
-    [_territoryGridView release];
-    [_buildingsGridView release];
-    
-    [_mapView release];
-    [_timeProgressView release];
     
     [_trackingArea release];
     
@@ -446,6 +440,7 @@ static NSString *boatAnimationKey = @"boatPosition";
 - (void)timeLeftTimerFire:(id)timer
 {
     self.timeProgressView.doubleValue -= self.timeProgressView.maxValue / (GameStateDuration[_gameState] / TIMER_UPDATE_INTERVAL);
+    self.timeLeftLabel.title = [NSString stringWithFormat:@"%1.1f s", ((self.timeProgressView.doubleValue / self.timeProgressView.maxValue) * GameStateDuration[_gameState])];
     
     if (self.timeProgressView.doubleValue <= 0.0) {
         [self gameStateTimeDidEnd];
