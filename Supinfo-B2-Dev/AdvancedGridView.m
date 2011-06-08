@@ -108,11 +108,6 @@
     NSColor *colorToSet;
     
     switch (item.type) {
-        case GridItemEarth:
-        {
-            colorToSet = [NSColor greenColor];
-        } break;
-            
         case GridItemCastel:
         {
             [self setDrawingColor:[NSColor blackColor]];
@@ -123,7 +118,7 @@
                                                      itemRect.size.height - borderSize.height * 4.0);
             CGContextFillRect(context, castelBackgroundRect);
             
-            [self setDrawingColor:[NSColor purpleColor]];
+            [self setDrawingColor:[NSColor whiteColor]];
             CGRect castelRect = CGRectMake(itemRect.origin.x + borderSize.width * 3.0,
                                            itemRect.origin.y + borderSize.height * 3.0,
                                            itemRect.size.width - borderSize.width * 6.0,
@@ -133,17 +128,7 @@
             
         case GridItemWall:
         {
-            colorToSet = [NSColor grayColor];
-        } break;
-            
-        case GridItemWater:
-        {
-            colorToSet = [NSColor blueColor];
-        } break;
-            
-        case GridItemAreaCaptured:
-        {
-            colorToSet = [NSColor orangeColor];
+            colorToSet = [NSColor colorWithDeviceRed:187.0 / 255.0 green:187.0 / 255.0 blue:187.0 / 255.0 alpha:1.0];
         } break;
             
         case GridItemGun:
@@ -153,7 +138,7 @@
                                   itemRect.origin.y + 1,
                                   itemRect.size.width - 1,
                                   itemRect.size.height - 1);
-            [self setDrawingColor:[NSColor blackColor]];
+            [self setDrawingColor:[NSColor colorWithDeviceRed:230.0 / 255.0 green:163.0 / 255.0 blue:89.0 / 255.0 alpha:1.0]];
             CGContextFillEllipseInRect(context, itemRect);
         } return;
             

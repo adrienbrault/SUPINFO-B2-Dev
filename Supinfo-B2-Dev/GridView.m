@@ -172,15 +172,15 @@
     
     switch (type) {
         case GridItemEarth:
-            color = [NSColor greenColor];
+            color = [NSColor colorWithDeviceRed:0.0 green:1.0 blue:128.0 / 255.0 alpha:1.0];
             break;
         
         case GridItemWater:
-            color = [NSColor blueColor];
+            color = [NSColor colorWithDeviceRed:0.0 green:0.0 blue:1.0 alpha:1.0];
             break;
         
         case GridItemAreaCaptured:
-            color = [NSColor orangeColor];
+            color = [NSColor colorWithDeviceRed:51.0 / 255.0 green:51.0 / 255.0 blue:51.0 / 255.0 alpha:1.0];
             break;
             
         default:
