@@ -26,7 +26,7 @@ typedef enum {
 } GameStateType;
 
 static CGFloat const GameStateDuration[] = {
-    45.0,
+    25.0,
     10.0,
     25.0,
 };

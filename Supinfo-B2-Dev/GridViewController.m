@@ -520,19 +520,17 @@ static NSString *boatAnimationKey = @"boatPosition";
     
     [boatView setFrameOrigin:randomPosition];
     
+    [animation setValue:boatAnimationKey forKey:@"key"];
+    [animation setValue:boatView forKey:@"boatView"];
     [boatView.layer addAnimation:animation forKey:boatAnimationKey];
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    if (flag) {
-        for (BoatView *boatView in _boatViews) {
-            if ([boatView.layer animationForKey:boatAnimationKey] == theAnimation) {
-                [boatView.layer removeAnimationForKey:boatAnimationKey];
-                [self animateBoatView:boatView];
-                return;
-            }
-        }
+    if ([[theAnimation valueForKey:@"key"] isEqualTo:boatAnimationKey]) {
+        BoatView *boatView = [theAnimation valueForKey:@"boatView"];
+        [boatView.layer removeAnimationForKey:boatAnimationKey];
+        [self animateBoatView:boatView];
     }
 }
 
