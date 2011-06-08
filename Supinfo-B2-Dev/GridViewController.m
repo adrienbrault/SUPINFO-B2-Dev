@@ -496,7 +496,7 @@ static NSString *boatAnimationKey = @"boatPosition";
 
 - (void)animateBoatView:(BoatView *)boatView
 {
-    CGFloat speed = (arc4random() % 3 + 1) * 20; // In pixels/sec
+    CGFloat speed = (arc4random() % 3 + 1) * 10; // In pixels/sec
     
     CGFloat distance = 0;
     CGPoint randomPosition;
@@ -550,8 +550,14 @@ static NSString *boatAnimationKey = @"boatPosition";
         validPosition = [_mapGrid itemAtPosition:randomPosition].type == GridItemWater;
     }
     
-    CGSize cellSize = CGSizeMake(self.mapView.frame.size.width / _gridWidth, self.mapView.frame.size.height / _gridHeight);
-    return CGPointMake(randomPosition.x * cellSize.width, self.mapView.frame.size.height - (randomPosition.y + 1) * cellSize.height);
+    CGSize cellSize = CGSizeMake(self.mapView.frame.size.width / _gridWidth,
+                                 self.mapView.frame.size.height / _gridHeight);
+    
+    CGFloat xOffset = - ((arc4random() % 100) / 100.0) * cellSize.width;
+    CGFloat yOffset = + ((arc4random() % 100) / 100.0) * cellSize.height;
+    
+    return CGPointMake(randomPosition.x * cellSize.width + xOffset,
+                       self.mapView.frame.size.height - (randomPosition.y + 1) * cellSize.height + yOffset);
 }
 
 @end
