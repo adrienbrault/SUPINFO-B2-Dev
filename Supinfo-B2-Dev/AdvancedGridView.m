@@ -128,7 +128,10 @@
             
         case GridItemWall:
         {
-            colorToSet = [NSColor colorWithDeviceRed:187.0 / 255.0 green:187.0 / 255.0 blue:187.0 / 255.0 alpha:1.0];
+            colorToSet = [NSColor colorWithDeviceRed:(186.0 / 255.0)
+                                               green:(187.0 / 255.0)
+                                                blue:(187.0 / 255.0)
+                                               alpha:1.0];
         } break;
             
         case GridItemGun:
@@ -138,7 +141,10 @@
                                   itemRect.origin.y + 1,
                                   itemRect.size.width - 1,
                                   itemRect.size.height - 1);
-            [self setDrawingColor:[NSColor colorWithDeviceRed:230.0 / 255.0 green:163.0 / 255.0 blue:89.0 / 255.0 alpha:1.0]];
+            [self setDrawingColor:[NSColor colorWithDeviceRed:(230.0 / 255.0)
+                                                        green:(163.0 / 255.0)
+                                                         blue:(89.0 / 255.0)
+                                                        alpha:1.0]];
             CGContextFillEllipseInRect(context, itemRect);
         } return;
             
