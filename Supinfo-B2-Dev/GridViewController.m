@@ -123,6 +123,16 @@ static NSString *boatAnimationKey = @"boatPosition";
 
 - (void)loadDefaultMap
 {
+    // We make sure the mapViews are in the right order.
+    [self.mapGridView removeFromSuperview];
+    [self.territoryGridView removeFromSuperview];
+    [self.buildingsGridView removeFromSuperview];
+    
+    [self.mapView addSubview:self.mapGridView];
+    [self.mapView addSubview:self.territoryGridView];
+    [self.mapView addSubview:self.buildingsGridView];
+    
+    
     NSLog(@"Loading default map");
     
     // The NSAutoreleasePool is here for memory optimization.
