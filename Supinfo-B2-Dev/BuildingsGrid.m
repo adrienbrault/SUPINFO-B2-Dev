@@ -36,6 +36,20 @@
     return castelsSet;
 }
 
+- (NSArray *)walls
+{
+    NSMutableArray *walls = [NSMutableArray array];
+    
+    for (NSInteger i=0; i<self.totalIndex; i++) {
+        GridItem *item = [self itemAtIndex:i];
+        if (item && item.type == GridItemWall) {
+            [walls addObject:item];
+        }
+    }
+    
+    return walls;
+}
+
 
 #pragma mark - Algorithms
 

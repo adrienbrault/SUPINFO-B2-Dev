@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9506F54613A027EA000C1C7A /* CannonBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9506F54513A027EA000C1C7A /* CannonBallView.m */; };
 		950A1978139BA931001830A0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950A1977139BA931001830A0 /* QuartzCore.framework */; };
 		950BF934136CB4B600D42E0C /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 950BF932136CB4B600D42E0C /* GridViewController.m */; };
 		95624F60136C7C5A001B96F1 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F5F136C7C5A001B96F1 /* GridView.m */; };
@@ -31,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9506F54413A027EA000C1C7A /* CannonBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CannonBallView.h; sourceTree = "<group>"; };
+		9506F54513A027EA000C1C7A /* CannonBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CannonBallView.m; sourceTree = "<group>"; };
 		950A1977139BA931001830A0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		950BF931136CB4B600D42E0C /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
 		950BF932136CB4B600D42E0C /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
@@ -114,6 +117,8 @@
 				95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */,
 				95ECF038139397BC00D66A55 /* BoatView.h */,
 				95ECF039139397BC00D66A55 /* BoatView.m */,
+				9506F54413A027EA000C1C7A /* CannonBallView.h */,
+				9506F54513A027EA000C1C7A /* CannonBallView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 		9581E42513671FB60053D07A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Adrien Brault";
 			};
 			buildConfigurationList = 9581E42813671FB60053D07A /* Build configuration list for PBXProject "Supinfo-B2-Dev" */;
@@ -347,6 +353,7 @@
 				95815C59136F2F0500F9D793 /* BuildingsGrid.m in Sources */,
 				95E0BFA31370A5AF005695A1 /* AdvancedGridView.m in Sources */,
 				95ECF03A139397BC00D66A55 /* BoatView.m in Sources */,
+				9506F54613A027EA000C1C7A /* CannonBallView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +397,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -405,6 +413,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

@@ -13,6 +13,9 @@
 #define TIMER_UPDATE_INTERVAL 0.033
 #define CELL_SIZE 16
 static NSString *boatAnimationKey = @"boatPosition";
+static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
+
+#define BOATS_FIRE_INTERVAL 6.33
 
 
 @interface GridViewController ()
@@ -40,7 +43,19 @@ static NSString *boatAnimationKey = @"boatPosition";
 - (void)removeBoats;
 - (void)startBoatsAnimations;
 - (void)animateBoatView:(BoatView *)boatView;
+- (void)boatViewAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
 - (CGPoint)randomBoatPosition;
+
+@property (nonatomic, retain) NSMutableArray *boatsCanonBallView;
+@property (nonatomic, retain) NSTimer *boatsAssaultTimer;
+
+- (void)startBoatsAssault;
+- (void)fireBoatsCannonBalls;
+- (void)boatCannonBallAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
+- (void)fireCannonBallFromBoat:(BoatView *)boatView;
+- (void)removeAllBoatsCannonBalls;
+
+
 
 @end
 
@@ -62,13 +77,16 @@ static NSString *boatAnimationKey = @"boatPosition";
 
 @synthesize timeLeftTimer = _timeLeftTimer;
 
+@synthesize boatsCanonBallView = _boatsCanonBallView;
+@synthesize boatsAssaultTimer = _boatsAssaultTimer;
+
 
 #pragma mark - Object lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        
+        _boatsCanonBallView = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -81,9 +99,16 @@ static NSString *boatAnimationKey = @"boatPosition";
     
     [_trackingArea release];
     
+    [_timeLeftTimer invalidate];
     [_timeLeftTimer release];
     
     [_boatViews release];
+    
+    [_boatsCanonBallView release];
+    
+    [_wallsToDestroy release];
+    [_boatsAssaultTimer invalidate];
+    [_boatsAssaultTimer release];
     
     [super dealloc];
 }
@@ -266,6 +291,11 @@ static NSString *boatAnimationKey = @"boatPosition";
                    atPosition:position];
             }
         } break;
+        
+        case GameStateAssault:
+        {
+            
+        } break;
             
         default:
             break;
@@ -421,6 +451,11 @@ static NSString *boatAnimationKey = @"boatPosition";
     if (_gameState == GameStateAssault) {
         [self createBoats:20];
         [self startBoatsAnimations];
+        
+        [_wallsToDestroy release];
+        _wallsToDestroy = [[_buildingsGrid walls] mutableCopy];
+        
+        [self startBoatsAssault];
     }
 }
 
@@ -434,12 +469,24 @@ static NSString *boatAnimationKey = @"boatPosition";
                 [NSApp terminate:nil];
             }
             
+            // TODO: Check if all map is captured and tell the user that he won.
+            
             [self startGameState:GameStateCanons];
         } break;
         
         case GameStateCanons:
         {
             [self startGameState:GameStateAssault];
+        } break;
+        
+        case GameStateAssault:
+        {
+            [self.boatsAssaultTimer invalidate];
+            self.boatsAssaultTimer = nil;
+            
+            [self removeAllBoatsCannonBalls];
+            
+            [self startGameState:GameStateWallsRepair];
         } break;
             
         default:
@@ -535,13 +582,11 @@ static NSString *boatAnimationKey = @"boatPosition";
     [boatView.layer addAnimation:animation forKey:boatAnimationKey];
 }
 
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+- (void)boatViewAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    if ([[theAnimation valueForKey:@"key"] isEqualTo:boatAnimationKey]) {
-        BoatView *boatView = [theAnimation valueForKey:@"boatView"];
-        [boatView.layer removeAnimationForKey:boatAnimationKey];
-        [self animateBoatView:boatView];
-    }
+    BoatView *boatView = [theAnimation valueForKey:@"boatView"];
+    [boatView.layer removeAnimationForKey:boatAnimationKey];
+    [self animateBoatView:boatView];
 }
 
 - (CGPoint)randomBoatPosition
@@ -571,6 +616,106 @@ static NSString *boatAnimationKey = @"boatPosition";
 {
     [self.view setFrameSize:CGSizeMake(CELL_SIZE * self.gridWidth,
                                        CELL_SIZE * self.gridHeight + self.timeProgressView.frame.size.height)];
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    if ([theAnimation valueForKey:@"key"] == boatAnimationKey) {
+        [self boatViewAnimationDidStop:theAnimation finished:flag];
+    } else if ([theAnimation valueForKey:@"key"] == boatCannonBallAnimationKey) {
+        [self boatCannonBallAnimationDidStop:theAnimation finished:flag];
+    }
+}
+
+
+#pragma mark - Boat cannonBalls
+
+- (void)startBoatsAssault
+{
+    [self fireBoatsCannonBalls];
+    
+    self.boatsAssaultTimer = [NSTimer scheduledTimerWithTimeInterval:BOATS_FIRE_INTERVAL
+                                                     target:self
+                                                   selector:@selector(fireBoatsCannonBalls)
+                                                   userInfo:nil
+                                                    repeats:YES];
+}
+
+- (void)fireBoatsCannonBalls
+{
+    for (BoatView *boatView in _boatViews) {
+        [self fireCannonBallFromBoat:boatView];
+        if ([_wallsToDestroy count] < 1) {
+            break;
+        }
+    }
+}
+
+- (void)boatCannonBallAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    // Remove cannon ball
+    CannonBallView *ballView = [theAnimation valueForKey:@"cannonBallView"];
+    [_boatsCanonBallView removeObject:ballView];
+    [ballView removeFromSuperview];
+    [ballView.layer removeAnimationForKey:boatCannonBallAnimationKey];
+    
+    // Remove wall
+    [_buildingsGrid removeItem:[theAnimation valueForKey:@"wall"]];
+    [self.buildingsGridView setNeedsDisplay:YES];
+}
+
+- (void)fireCannonBallFromBoat:(BoatView *)boatView
+{
+    if ([_wallsToDestroy count] < 1) {
+        return;
+    }
+    
+    GridItem *wall = [_wallsToDestroy objectAtIndex:arc4random() % [_wallsToDestroy count]];
+    [_wallsToDestroy removeObject:wall];
+    
+    if (wall && [wall isKindOfClass:[GridItem class]] && wall.type == GridItemWall) {
+        CannonBallView *ballView = [[CannonBallView alloc] init];
+        ballView.wantsLayer = YES;
+        
+        [self.mapView addSubview:ballView];
+        [_boatsCanonBallView addObject:ballView];
+        
+        CGPoint destination = [self.buildingsGridView screenPositionForItem:wall atPosition:wall.cachePosition];
+        destination.y = self.mapView.frame.size.height - destination.y - CELL_SIZE / 2.0;
+        destination.x += CELL_SIZE / 2.0;
+        
+        CGPoint origin = boatView.frame.origin;
+        
+        CGFloat speed = 70.0;
+        CGFloat distance = sqrt(pow((destination.x - origin.x), 2) + pow((destination.y - origin.y), 2));
+        CGFloat duration = distance / speed;
+        
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+        animation.fromValue = [NSValue valueWithPoint:origin];
+        animation.toValue = [NSValue valueWithPoint:destination];
+        animation.duration = duration;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        animation.delegate = self;
+        animation.removedOnCompletion = NO;
+        
+        [ballView setFrameOrigin:destination];
+        
+        [animation setValue:boatCannonBallAnimationKey forKey:@"key"];
+        [animation setValue:ballView forKey:@"cannonBallView"];
+        [animation setValue:wall forKey:@"wall"];
+        [ballView.layer addAnimation:animation forKey:boatCannonBallAnimationKey];
+    }
+}
+
+- (void)removeAllBoatsCannonBalls
+{
+    for (CannonBallView *ball in _boatsCanonBallView) {
+        [ball.layer removeAllAnimations];
+        [ball removeFromSuperview];
+    }
+    
+    [_boatsCanonBallView removeAllObjects];
 }
 
 @end

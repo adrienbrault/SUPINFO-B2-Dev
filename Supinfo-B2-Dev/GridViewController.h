@@ -17,6 +17,7 @@
 
 #import "GridView.h"
 #import "AdvancedGridView.h"
+#import "CannonBallView.h"
 
 
 typedef enum {
@@ -56,6 +57,11 @@ static CGFloat const GameStateDuration[] = {
     NSTimer *_timeLeftTimer;
     
     NSArray *_boatViews;
+    
+    NSMutableArray *_boatsCanonBallView;
+    NSTimer *_boatsAssaultTimer;
+    
+    NSMutableArray *_wallsToDestroy;
 }
 
 // Internal
