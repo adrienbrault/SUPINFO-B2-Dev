@@ -209,6 +209,13 @@
     return items;
 }
 
+- (void)removeAll
+{
+    for (NSInteger i = 0; i < self.totalIndex; i++) {
+        [self setItem:nil atIndex:i];
+    }
+}
+
 @end
 
 

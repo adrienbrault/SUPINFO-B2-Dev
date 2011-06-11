@@ -62,6 +62,8 @@
 
 - (NSArray *)itemsOfType:(GridItemType)type;
 
+- (void)removeAll;
+
 @end
 
 NSInteger indexForPosition(NSInteger x, NSInteger y, NSInteger width);

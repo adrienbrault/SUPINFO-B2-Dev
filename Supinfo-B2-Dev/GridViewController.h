@@ -27,7 +27,7 @@ typedef enum {
 } GameStateType;
 
 static CGFloat const GameStateDuration[] = {
-    5.0,
+    25.0,
     10.0,
     15.0,
 };
@@ -38,6 +38,7 @@ static CGFloat const GameStateDuration[] = {
     GridView *_mapGridView;
     GridView *_territoryGridView;
     AdvancedGridView *_buildingsGridView;
+    AdvancedGridView *_previewGridView;
     NSView *_mapView;
     NSProgressIndicator *_timeProgressView;
     NSTextFieldCell *_timeLeftLabel;
@@ -46,6 +47,7 @@ static CGFloat const GameStateDuration[] = {
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
     BuildingsGrid *_buildingsGrid;
+    BuildingsGrid *_previewGrid;
     
     NSInteger _gridWidth;
     NSInteger _gridHeight;
@@ -73,6 +75,7 @@ static CGFloat const GameStateDuration[] = {
 @property (assign) IBOutlet GridView *mapGridView;
 @property (assign) IBOutlet GridView *territoryGridView;
 @property (assign) IBOutlet AdvancedGridView *buildingsGridView;
+@property (assign) IBOutlet AdvancedGridView *previewGridView;
 @property (assign) IBOutlet NSView *mapView;
 @property (assign) IBOutlet NSProgressIndicator *timeProgressView;
 @property (assign) IBOutlet NSTextFieldCell *timeLeftLabel;

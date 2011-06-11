@@ -78,6 +78,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 @synthesize mapGridView = _mapGridView;
 @synthesize territoryGridView = _territoryGridView;
 @synthesize buildingsGridView = _buildingsGridView;
+@synthesize previewGridView = _previewGridView;
 @synthesize mapView = _mapView;
 @synthesize timeProgressView = _timeProgressView;
 @synthesize timeLeftLabel = _timeLeftLabel;
@@ -118,10 +119,12 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     self.buildingsGridView.grid = nil;
     self.territoryGridView.grid = nil;
     self.buildingsGridView.grid = nil;
+    self.previewGridView.grid = nil;
     
     [_mapGrid release];
     [_territoryGrid release];
     [_buildingsGrid release];
+    [_previewGrid release];
     
     [self.view removeTrackingArea:_trackingArea];
     [_trackingArea release];
@@ -156,10 +159,12 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     _mapGrid = [[Grid alloc] initWithWidth:_gridWidth height:_gridHeight];
     _territoryGrid = [[TerritoryGrid alloc] initWithWidth:_gridWidth height:_gridHeight];
     _buildingsGrid = [[BuildingsGrid alloc] initWithWidth:_gridWidth height:_gridHeight];
+    _previewGrid = [[BuildingsGrid alloc] initWithWidth:_gridWidth height:_gridHeight];
     
     _mapGridView.grid = _mapGrid;
     _territoryGridView.grid = _territoryGrid;
     _buildingsGridView.grid = _buildingsGrid;
+    _previewGridView.grid = _previewGrid;
     
     self.view.window.delegate = self;
     [self setTrackingArea];
@@ -179,10 +184,12 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [self.mapGridView removeFromSuperview];
     [self.territoryGridView removeFromSuperview];
     [self.buildingsGridView removeFromSuperview];
+    [self.previewGridView removeFromSuperview];
     
     [self.mapView addSubview:self.mapGridView];
     [self.mapView addSubview:self.territoryGridView];
     [self.mapView addSubview:self.buildingsGridView];
+    [self.mapView addSubview:self.previewGridView];
     
     
     NSLog(@"Loading default map");
@@ -291,6 +298,44 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     [self.nextResponder mouseMoved:theEvent];
+    
+    [_previewGrid removeAll];
+    
+    ABPoint position = [self positionAtEventMouseLocation:theEvent];
+    
+    GridItem *mapItem = [_mapGrid itemAtPosition:position];
+    if (mapItem && mapItem.type == GridItemEarth) {
+        switch (_gameState) {
+            case GameStateWallsRepair:
+            {
+                GridItem *wallItem = [GridItem itemWithType:GridItemWall];
+                if ([self item:wallItem canBePositionedAt:position]) {
+                    [_previewGrid setItem:wallItem
+                               atPosition:position];
+                    
+                    [_previewGridView setNeedsDisplay:YES];
+                }
+            } break;
+                
+            case GameStateCanons:
+            {
+                GridItem *item = [_territoryGrid itemAtPosition:position];
+                
+                if (item && item.type == GridItemAreaCaptured) {
+                    GridItem *gunItem = [GridItem itemWithType:GridItemGun];
+                    if ([self item:gunItem canBePositionedAt:position]) {
+                        [_previewGrid setItem:gunItem
+                                   atPosition:position];
+                        
+                        [_previewGridView setNeedsDisplay:YES];
+                    }
+                }
+            } break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
