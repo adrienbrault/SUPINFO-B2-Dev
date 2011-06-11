@@ -68,6 +68,8 @@ static CGFloat const GameStateDuration[] = {
     NSMutableArray *_gunsReadyToFire;
     
     NSInteger _score;
+    
+    BOOL _wallShapes[9];
 }
 
 // Internal

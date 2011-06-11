@@ -26,6 +26,57 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 #define DISTANCE_TO_SINK_BOAT 30.0
 
 
+// Possibles shapes
+static int possiblesShapesSize = 9;
+static BOOL possiblesShapes[9][9] = {
+    {
+        0, 1, 0,
+        1, 1, 1,
+        0, 1, 0
+    },
+    {
+        0, 1, 0,
+        1, 1, 1,
+        0, 0, 0
+    },
+    {
+        1, 1, 1,
+        0, 1, 0,
+        0, 0, 0
+    },
+    {
+        1, 1, 1,
+        1, 0, 0,
+        0, 0, 0
+    },
+    {
+        1, 0, 0,
+        1, 1, 1,
+        0, 0, 0
+    },
+    {
+        1, 0, 0,
+        1, 1, 0,
+        1, 0, 0
+    },
+    {
+        1, 1, 1,
+        1, 0, 0,
+        1, 0, 0
+    },
+    {
+        1, 1, 0,
+        1, 0, 0,
+        1, 1, 0
+    },
+    {
+        0, 0, 1, 
+        0, 0, 1,
+        1, 1, 1
+    }
+};
+
+
 @interface GridViewController ()
 
 - (void)loadDefaultMap;
@@ -67,6 +118,10 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (void)fireCannonBallFromGun:(GridItem *)gun toPosition:(CGPoint)destination;
 
 @property (nonatomic, assign) NSInteger score;
+
+- (void)setNewShape;
+- (BOOL)shapesCanBePositionedAt:(ABPoint)position;
+- (void)setWallItemsFromShapeAtPosition:(ABPoint)position grid:(AdvancedGrid *)grid;
 
 @end
 
@@ -308,10 +363,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         switch (_gameState) {
             case GameStateWallsRepair:
             {
-                GridItem *wallItem = [GridItem itemWithType:GridItemWall];
-                if ([self item:wallItem canBePositionedAt:position]) {
-                    [_previewGrid setItem:wallItem
-                               atPosition:position];
+                if ([self shapesCanBePositionedAt:position]) {
+                    [self setWallItemsFromShapeAtPosition:position grid:_previewGrid];
                     
                     [_previewGridView setNeedsDisplay:YES];
                 }
@@ -352,8 +405,18 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         {
             ABPoint position = [self positionAtEventMouseLocation:theEvent];
             
-            [self setItem:[GridItem itemWithType:GridItemWall]
-               atPosition:position];
+            if ([self shapesCanBePositionedAt:position]) {
+                [self setWallItemsFromShapeAtPosition:position grid:_buildingsGrid];
+                
+                [_buildingsGridView setNeedsDisplay:YES];
+                
+                [self setNewShape];
+                
+                self.score += 5;
+                
+                [_previewGrid removeAll];
+                [_previewGridView setNeedsDisplay:YES];
+            }
             
             [self refreshTerritoryMap];
         } break;
@@ -385,32 +448,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     [self.nextResponder mouseDragged:theEvent];
-    
-    switch (_gameState) {
-        case GameStateWallsRepair:
-        {
-            ABPoint position = [self positionAtEventMouseLocation:theEvent];
-            
-            [self setItem:[GridItem itemWithType:GridItemWall]
-               atPosition:position];
-            
-            [self refreshTerritoryMap];
-        } break;
-        
-        case GameStateCanons:
-        {
-            ABPoint position = [self positionAtEventMouseLocation:theEvent];
-            GridItem *item = [_territoryGrid itemAtPosition:position];
-            
-            if (item && item.type == GridItemAreaCaptured) {
-                [self setItem:[GridItem itemWithType:GridItemGun]
-                   atPosition:position];
-            }
-        } break;
-            
-        default:
-            break;
-    }
 }
 
 
@@ -524,6 +561,10 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         [self removeBoats];
     }
     
+    if (_gameState == GameStateWallsRepair) {
+        [self setNewShape];
+    }
+    
     _gameState = state;
     
     self.timeProgressView.doubleValue = self.timeProgressView.maxValue;
@@ -550,6 +591,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         
         [self startBoatsAssault];
     }
+    
+    [self refreshTerritoryMap];
 }
 
 - (void)gameStateTimeDidEnd
@@ -928,6 +971,46 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [animation setValue:ballView forKey:@"cannonBallView"];
     [animation setValue:gun forKey:@"gun"];
     [ballView.layer addAnimation:animation forKey:gunCannonBallAnimationKey];
+}
+
+
+#pragma mark - Wall shapes
+
+- (void)setNewShape
+{
+    NSInteger randomIndex = arc4random() % possiblesShapesSize;
+    
+    for (NSInteger i=0; i<9; i++) {
+        _wallShapes[i] = possiblesShapes[randomIndex][i];
+    }
+}
+
+- (BOOL)shapesCanBePositionedAt:(ABPoint)position
+{
+    GridItem *wall = [GridItem itemWithType:GridItemWall];
+    
+    for (NSInteger i=0; i<9; i++) {
+        if (_wallShapes[i]) {
+            ABPoint currentPosition = ABPointMake(position.x + (i % 3), position.y + (i / 3));
+            
+            if (![self item:wall canBePositionedAt:currentPosition]) {
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
+- (void)setWallItemsFromShapeAtPosition:(ABPoint)position grid:(AdvancedGrid *)grid
+{
+    for (NSInteger i=0; i<9; i++) {
+        if (_wallShapes[i]) {
+            GridItem *wall = [GridItem itemWithType:GridItemWall];
+            ABPoint wallPosition = ABPointMake(position.x + (i % 3), position.y + (i / 3));
+            [grid setItem:wall atPosition:wallPosition];
+        }
+    }
 }
 
 @end
