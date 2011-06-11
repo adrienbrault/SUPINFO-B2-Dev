@@ -23,20 +23,6 @@
     
     // Setting window size.
     [gridVC setCorrectViewSize];
-    
-    CGRect windowFrame = CGRectMake(self.window.frame.origin.x,
-                                    self.window.frame.origin.y,
-                                    gridVC.view.frame.size.width,
-                                    gridVC.view.frame.size.height);
-    
-    [self.window setFrame:windowFrame
-                  display:YES];
-    
-    [gridVC.view setFrame:[self.window.contentView bounds]];
-    
-    // Locking window aspect ratio and setting minimum size.
-    [self.window setAspectRatio:self.window.frame.size];
-    [self.window setMinSize:CGSizeMake(300.0, 300.0)];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

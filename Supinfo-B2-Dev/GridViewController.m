@@ -654,6 +654,20 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 {
     [self.view setFrameSize:CGSizeMake(CELL_SIZE * self.gridWidth,
                                        CELL_SIZE * self.gridHeight + self.timeProgressView.frame.size.height)];
+    
+    CGRect windowFrame = CGRectMake(self.view.window.frame.origin.x,
+                                    self.view.window.frame.origin.y,
+                                    self.view.frame.size.width,
+                                    self.view.frame.size.height);
+    
+    [self.view.window setFrame:windowFrame
+                       display:YES];
+    
+    [self.view setFrame:[self.view.window.contentView bounds]];
+    
+    // Locking window aspect ratio and setting minimum size.
+    [self.view.window setAspectRatio:self.view.window.frame.size];
+    [self.view.window setMinSize:CGSizeMake(300.0, 300.0)];
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
