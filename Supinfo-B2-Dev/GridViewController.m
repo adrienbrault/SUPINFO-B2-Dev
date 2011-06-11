@@ -633,12 +633,6 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 - (void)startBoatsAssault
 {
     [self fireBoatsCannonBalls];
-    
-    self.boatsAssaultTimer = [NSTimer scheduledTimerWithTimeInterval:BOATS_FIRE_INTERVAL
-                                                     target:self
-                                                   selector:@selector(fireBoatsCannonBalls)
-                                                   userInfo:nil
-                                                    repeats:YES];
 }
 
 - (void)fireBoatsCannonBalls
@@ -662,6 +656,10 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
     // Remove wall
     [_buildingsGrid removeItem:[theAnimation valueForKey:@"wall"]];
     [self.buildingsGridView setNeedsDisplay:YES];
+    
+    // Fire again
+    [self fireCannonBallFromBoat:[theAnimation valueForKey:@"boat"]];
+    
 }
 
 - (void)fireCannonBallFromBoat:(BoatView *)boatView
@@ -704,6 +702,7 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         [animation setValue:boatCannonBallAnimationKey forKey:@"key"];
         [animation setValue:ballView forKey:@"cannonBallView"];
         [animation setValue:wall forKey:@"wall"];
+        [animation setValue:boatView forKey:@"boat"];
         [ballView.layer addAnimation:animation forKey:boatCannonBallAnimationKey];
     }
 }
