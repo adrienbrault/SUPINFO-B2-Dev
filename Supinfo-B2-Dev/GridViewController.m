@@ -438,6 +438,23 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     return NO;
 }
 
+- (BOOL)isAllMapCaptured
+{
+    for (NSInteger i=0; i<self.gridTotalIndex; i++) {
+        GridItem *mapItem = [_mapGrid itemAtIndex:i];
+        GridItem *territoryItem = [_territoryGrid itemAtIndex:i];
+        
+        if (mapItem && territoryItem
+            && mapItem.type == GridItemEarth) {
+            if (territoryItem.type != GridItemAreaCaptured) {
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
 
 #pragma mark - Game cycle
 
@@ -482,6 +499,11 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         {
             if (![self isACastelCaptured]) {
                 NSLog(@"You lose.");
+                [NSApp terminate:nil];
+            }
+            
+            if ([self isAllMapCaptured]) {
+                NSLog(@"You win.");
                 [NSApp terminate:nil];
             }
             
