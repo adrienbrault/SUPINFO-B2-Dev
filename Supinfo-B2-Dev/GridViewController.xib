@@ -46,10 +46,10 @@
 					<object class="NSTextField" id="1048877876">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{17, 274}, {446, 19}}</string>
+						<string key="NSFrame">{{17, 288}, {446, 19}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="829230382"/>
+						<reference key="NSNextKeyView"/>
 						<object class="NSShadow" key="NSViewShadow">
 							<double key="NSShadowBlurRadius">3</double>
 							<object class="NSColor" key="NSShadowColor" id="305035775">
@@ -70,7 +70,7 @@
 							</object>
 							<reference key="NSControlView" ref="1048877876"/>
 							<bool key="NSDrawsBackground">YES</bool>
-							<object class="NSColor" key="NSBackgroundColor">
+							<object class="NSColor" key="NSBackgroundColor" id="1035691521">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">controlColor</string>
@@ -89,55 +89,13 @@
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">1290</int>
 						<object class="NSPSMatrix" key="NSDrawMatrix"/>
-						<string key="NSFrame">{{-2, 272}, {484, 20}}</string>
+						<string key="NSFrame">{{-2, 286}, {484, 20}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1048877876"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<int key="NSpiFlags">16392</int>
 						<double key="NSMaxValue">100</double>
-					</object>
-					<object class="NSCustomView" id="829230382">
-						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
-						<object class="NSMutableArray" key="NSSubviews">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="NSCustomView" id="782785175">
-								<reference key="NSNextResponder" ref="829230382"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{480, 272}</string>
-								<reference key="NSSuperview" ref="829230382"/>
-								<reference key="NSWindow"/>
-								<int key="NSViewLayerContentsRedrawPolicy">2</int>
-								<string key="NSClassName">AdvancedGridView</string>
-							</object>
-							<object class="NSCustomView" id="454355867">
-								<reference key="NSNextResponder" ref="829230382"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{480, 272}</string>
-								<reference key="NSSuperview" ref="829230382"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="782785175"/>
-								<int key="NSViewLayerContentsRedrawPolicy">2</int>
-								<string key="NSClassName">GridView</string>
-							</object>
-							<object class="NSCustomView" id="214553032">
-								<reference key="NSNextResponder" ref="829230382"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{480, 272}</string>
-								<reference key="NSSuperview" ref="829230382"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="454355867"/>
-								<int key="NSViewLayerContentsRedrawPolicy">2</int>
-								<string key="NSClassName">GridView</string>
-							</object>
-						</object>
-						<string key="NSFrameSize">{480, 272}</string>
-						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="214553032"/>
-						<int key="NSViewLayerContentsRedrawPolicy">2</int>
-						<string key="NSClassName">NSView</string>
 					</object>
 					<object class="NSBox" id="74143064">
 						<reference key="NSNextResponder" ref="1005"/>
@@ -147,14 +105,102 @@
 							<object class="NSView" id="121459615">
 								<reference key="NSNextResponder" ref="74143064"/>
 								<int key="NSvFlags">274</int>
+								<object class="NSMutableArray" key="NSSubviews">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<object class="NSCustomView" id="829230382">
+										<reference key="NSNextResponder" ref="121459615"/>
+										<int key="NSvFlags">274</int>
+										<object class="NSMutableArray" key="NSSubviews">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSCustomView" id="782785175">
+												<reference key="NSNextResponder" ref="829230382"/>
+												<int key="NSvFlags">274</int>
+												<string key="NSFrameSize">{480, 272}</string>
+												<reference key="NSSuperview" ref="829230382"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="864433537"/>
+												<int key="NSViewLayerContentsRedrawPolicy">2</int>
+												<string key="NSClassName">AdvancedGridView</string>
+											</object>
+											<object class="NSCustomView" id="454355867">
+												<reference key="NSNextResponder" ref="829230382"/>
+												<int key="NSvFlags">274</int>
+												<string key="NSFrameSize">{480, 272}</string>
+												<reference key="NSSuperview" ref="829230382"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="782785175"/>
+												<int key="NSViewLayerContentsRedrawPolicy">2</int>
+												<string key="NSClassName">GridView</string>
+											</object>
+											<object class="NSCustomView" id="214553032">
+												<reference key="NSNextResponder" ref="829230382"/>
+												<int key="NSvFlags">274</int>
+												<string key="NSFrameSize">{480, 272}</string>
+												<reference key="NSSuperview" ref="829230382"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="454355867"/>
+												<int key="NSViewLayerContentsRedrawPolicy">2</int>
+												<string key="NSClassName">GridView</string>
+											</object>
+										</object>
+										<string key="NSFrame">{{51, 27}, {480, 272}}</string>
+										<reference key="NSSuperview" ref="121459615"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="214553032"/>
+										<int key="NSViewLayerContentsRedrawPolicy">2</int>
+										<string key="NSClassName">NSView</string>
+									</object>
+									<object class="NSTextField" id="41223091">
+										<reference key="NSNextResponder" ref="121459615"/>
+										<int key="NSvFlags">268</int>
+										<string key="NSFrame">{{53, 300}, {43, 17}}</string>
+										<reference key="NSSuperview" ref="121459615"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="243175068"/>
+										<int key="NSViewLayerContentsRedrawPolicy">2</int>
+										<bool key="NSEnabled">YES</bool>
+										<object class="NSTextFieldCell" key="NSCell" id="599313869">
+											<int key="NSCellFlags">68288064</int>
+											<int key="NSCellFlags2">272630784</int>
+											<string key="NSContents">Score:</string>
+											<object class="NSFont" key="NSSupport" id="971472614">
+												<string key="NSName">LucidaGrande-Bold</string>
+												<double key="NSSize">13</double>
+												<int key="NSfFlags">16</int>
+											</object>
+											<reference key="NSControlView" ref="41223091"/>
+											<reference key="NSBackgroundColor" ref="1035691521"/>
+											<reference key="NSTextColor" ref="29276764"/>
+										</object>
+									</object>
+									<object class="NSTextField" id="243175068">
+										<reference key="NSNextResponder" ref="121459615"/>
+										<int key="NSvFlags">268</int>
+										<string key="NSFrame">{{98, 300}, {433, 17}}</string>
+										<reference key="NSSuperview" ref="121459615"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="829230382"/>
+										<int key="NSViewLayerContentsRedrawPolicy">2</int>
+										<bool key="NSEnabled">YES</bool>
+										<object class="NSTextFieldCell" key="NSCell" id="413532820">
+											<int key="NSCellFlags">68288064</int>
+											<int key="NSCellFlags2">272630784</int>
+											<string key="NSContents">0</string>
+											<reference key="NSSupport" ref="971472614"/>
+											<reference key="NSControlView" ref="243175068"/>
+											<reference key="NSBackgroundColor" ref="1035691521"/>
+											<reference key="NSTextColor" ref="29276764"/>
+										</object>
+									</object>
+								</object>
 								<string key="NSFrame">{{1, 1}, {582, 377}}</string>
 								<reference key="NSSuperview" ref="74143064"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="864433537"/>
+								<reference key="NSNextKeyView" ref="41223091"/>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							</object>
 						</object>
-						<string key="NSFrame">{{-52, -44}, {584, 379}}</string>
+						<string key="NSFrame">{{-52, -30}, {584, 379}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="121459615"/>
@@ -188,7 +234,7 @@
 						<reference key="NSFillColor2" ref="305035775"/>
 					</object>
 				</object>
-				<string key="NSFrameSize">{480, 292}</string>
+				<string key="NSFrameSize">{480, 306}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="74143064"/>
@@ -256,6 +302,14 @@
 					</object>
 					<int key="connectionID">65</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">scoreLabel</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="243175068"/>
+					</object>
+					<int key="connectionID">73</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -293,7 +347,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="864433537"/>
 							<reference ref="1048877876"/>
-							<reference ref="829230382"/>
 							<reference ref="74143064"/>
 						</object>
 						<reference key="parent" ref="0"/>
@@ -319,15 +372,27 @@
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">67</int>
+						<reference key="object" ref="74143064"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="829230382"/>
+							<reference ref="41223091"/>
+							<reference ref="243175068"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+						<string key="objectName">background</string>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">52</int>
 						<reference key="object" ref="829230382"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="214553032"/>
-							<reference ref="454355867"/>
 							<reference ref="782785175"/>
+							<reference ref="454355867"/>
+							<reference ref="214553032"/>
 						</object>
-						<reference key="parent" ref="1005"/>
+						<reference key="parent" ref="74143064"/>
 						<string key="objectName">MapView</string>
 					</object>
 					<object class="IBObjectRecord">
@@ -349,10 +414,32 @@
 						<string key="objectName">mapGridView</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">67</int>
-						<reference key="object" ref="74143064"/>
-						<reference key="parent" ref="1005"/>
-						<string key="objectName">background</string>
+						<int key="objectID">68</int>
+						<reference key="object" ref="41223091"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="599313869"/>
+						</object>
+						<reference key="parent" ref="74143064"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">69</int>
+						<reference key="object" ref="599313869"/>
+						<reference key="parent" ref="41223091"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">70</int>
+						<reference key="object" ref="243175068"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="413532820"/>
+						</object>
+						<reference key="parent" ref="74143064"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">71</int>
+						<reference key="object" ref="413532820"/>
+						<reference key="parent" ref="243175068"/>
 					</object>
 				</object>
 			</object>
@@ -373,6 +460,10 @@
 					<string>63.IBViewIntegration.shadowBlurRadius</string>
 					<string>64.IBPluginDependency</string>
 					<string>67.IBPluginDependency</string>
+					<string>68.IBPluginDependency</string>
+					<string>69.IBPluginDependency</string>
+					<string>70.IBPluginDependency</string>
+					<string>71.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -389,6 +480,10 @@
 					<real value="3"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -403,7 +498,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">67</int>
+			<int key="maxID">73</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -434,6 +529,7 @@
 							<string>buildingsGridView</string>
 							<string>mapGridView</string>
 							<string>mapView</string>
+							<string>scoreLabel</string>
 							<string>territoryGridView</string>
 							<string>timeLeftLabel</string>
 							<string>timeProgressView</string>
@@ -443,6 +539,7 @@
 							<string>AdvancedGridView</string>
 							<string>GridView</string>
 							<string>NSView</string>
+							<string>NSTextField</string>
 							<string>GridView</string>
 							<string>NSTextFieldCell</string>
 							<string>NSProgressIndicator</string>
@@ -455,6 +552,7 @@
 							<string>buildingsGridView</string>
 							<string>mapGridView</string>
 							<string>mapView</string>
+							<string>scoreLabel</string>
 							<string>territoryGridView</string>
 							<string>timeLeftLabel</string>
 							<string>timeProgressView</string>
@@ -472,6 +570,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mapView</string>
 								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scoreLabel</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">territoryGridView</string>

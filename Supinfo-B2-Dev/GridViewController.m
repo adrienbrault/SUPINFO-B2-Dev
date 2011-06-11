@@ -13,7 +13,7 @@
 
 
 #define TIMER_UPDATE_INTERVAL 0.033
-#define CELL_SIZE 16
+#define CELL_SIZE 14
 static NSString *boatAnimationKey = @"boatPosition";
 static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
@@ -66,6 +66,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (void)fireAGunTo:(CGPoint)destination;
 - (void)fireCannonBallFromGun:(GridItem *)gun toPosition:(CGPoint)destination;
 
+@property (nonatomic, assign) NSInteger score;
+
 @end
 
 
@@ -79,6 +81,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 @synthesize mapView = _mapView;
 @synthesize timeProgressView = _timeProgressView;
 @synthesize timeLeftLabel = _timeLeftLabel;
+@synthesize scoreLabel = _scoreLabel;
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
@@ -87,6 +90,17 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 @synthesize timeLeftTimer = _timeLeftTimer;
 
 @synthesize boatsCanonBallView = _boatsCanonBallView;
+
+@synthesize score = _score;
+
+- (void)setScore:(NSInteger)score
+{
+    _score = score;
+    if (_score < 0) {
+        _score = 0;
+    }
+    self.scoreLabel.stringValue = [NSString stringWithFormat:@"%d", _score];
+}
 
 
 #pragma mark - Object lifecycle
@@ -217,6 +231,11 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     if ([self item:item canBePositionedAt:position]) {
         switch (item.type) {
             case GridItemWall:
+                [_buildingsGrid setItem:item atPosition:position];
+                [_buildingsGridView setNeedsDisplay:YES];
+                self.score += 1;
+                break;
+                
             case GridItemCastel:
             case GridItemGun:
                 [_buildingsGrid setItem:item atPosition:position];
@@ -321,11 +340,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     [self.nextResponder mouseDragged:theEvent];
-    
-    CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
-    if (!CGRectContainsPoint(NSRectToCGRect(self.mapView.frame), mouseLocation)) {
-        return;
-    }
     
     switch (_gameState) {
         case GameStateWallsRepair:
@@ -454,7 +468,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
             }
         }
     }
-    
+    NSLog(@"all map captured");
     return YES;
 }
 
@@ -678,6 +692,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     // Locking window aspect ratio and setting minimum size.
     [self.view.window setAspectRatio:self.view.window.frame.size];
     [self.view.window setMinSize:NSSizeFromCGSize(CGSizeMake(300.0, 300.0))];
+    
+    [self setTrackingArea];
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
@@ -724,6 +740,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     // Remove wall
     [_buildingsGrid removeItem:[theAnimation valueForKey:@"wall"]];
     [self.buildingsGridView setNeedsDisplay:YES];
+    
+    self.score -= 2;
     
     // Fire again
     [self fireCannonBallFromBoat:[theAnimation valueForKey:@"boat"]];
@@ -819,6 +837,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     
     for (BoatView *boatView in boatsToSink) {
         [_boatViews removeObject:boatView];
+        self.score += 5;
     }
     
     // Add the gun back to the pool.
