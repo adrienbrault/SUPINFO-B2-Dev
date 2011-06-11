@@ -632,7 +632,11 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 
 - (void)startBoatsAssault
 {
-    [self fireBoatsCannonBalls];
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(fireBoatsCannonBalls)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)fireBoatsCannonBalls
@@ -682,7 +686,8 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         destination.y = self.mapView.frame.size.height - destination.y - CELL_SIZE / 2.0;
         destination.x += CELL_SIZE / 2.0;
         
-        CGPoint origin = boatView.frame.origin;
+        CGPoint origin = ((CALayer*)boatView.layer.presentationLayer).position;
+        // The presentation layer has the current animation position of the layer.
         
         CGFloat speed = 70.0;
         CGFloat distance = sqrt(pow((destination.x - origin.x), 2) + pow((destination.y - origin.y), 2));
