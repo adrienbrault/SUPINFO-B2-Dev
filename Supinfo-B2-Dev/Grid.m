@@ -195,7 +195,7 @@
     return array;
 }
 
-- (NSMutableArray *)itemsOfType:(GridItemType)type
+- (NSArray *)itemsOfType:(GridItemType)type
 {
     NSMutableArray *items = [NSMutableArray array];
     

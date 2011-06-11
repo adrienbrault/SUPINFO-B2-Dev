@@ -60,7 +60,7 @@
 - (NSArray *)indexesForItem:(GridItem *)item atPosition:(ABPoint)position;
 - (NSArray *)indexesForItem:(GridItem *)item atIndex:(NSInteger)index;
 
-- (NSMutableArray *)itemsOfType:(GridItemType)type;
+- (NSArray *)itemsOfType:(GridItemType)type;
 
 @end
 
