@@ -52,7 +52,7 @@
 						<reference key="NSNextKeyView" ref="829230382"/>
 						<object class="NSShadow" key="NSViewShadow">
 							<double key="NSShadowBlurRadius">3</double>
-							<object class="NSColor" key="NSShadowColor">
+							<object class="NSColor" key="NSShadowColor" id="305035775">
 								<int key="NSColorSpace">3</int>
 								<bytes key="NSWhite">MAA</bytes>
 							</object>
@@ -108,7 +108,6 @@
 								<string key="NSFrameSize">{480, 272}</string>
 								<reference key="NSSuperview" ref="829230382"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<string key="NSClassName">AdvancedGridView</string>
 							</object>
@@ -186,10 +185,7 @@
 						<int key="NSBoxType">4</int>
 						<int key="NSTitlePosition">2</int>
 						<bool key="NSTransparent">NO</bool>
-						<object class="NSColor" key="NSFillColor2">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MAA</bytes>
-						</object>
+						<reference key="NSFillColor2" ref="305035775"/>
 					</object>
 				</object>
 				<string key="NSFrameSize">{480, 292}</string>
@@ -304,47 +300,6 @@
 						<string key="objectName">Custom View</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">52</int>
-						<reference key="object" ref="829230382"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="214553032"/>
-							<reference ref="454355867"/>
-							<reference ref="782785175"/>
-						</object>
-						<reference key="parent" ref="1005"/>
-						<string key="objectName">MapView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">55</int>
-						<reference key="object" ref="214553032"/>
-						<reference key="parent" ref="829230382"/>
-						<string key="objectName">mapGridView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">54</int>
-						<reference key="object" ref="454355867"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<reference key="parent" ref="829230382"/>
-						<string key="objectName">territoryGridView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">53</int>
-						<reference key="object" ref="782785175"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<reference key="parent" ref="829230382"/>
-						<string key="objectName">buildingsGridView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">60</int>
-						<reference key="object" ref="864433537"/>
-						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">63</int>
 						<reference key="object" ref="1048877876"/>
 						<object class="NSMutableArray" key="children">
@@ -357,6 +312,41 @@
 						<int key="objectID">64</int>
 						<reference key="object" ref="493031392"/>
 						<reference key="parent" ref="1048877876"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">60</int>
+						<reference key="object" ref="864433537"/>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">52</int>
+						<reference key="object" ref="829230382"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="214553032"/>
+							<reference ref="454355867"/>
+							<reference ref="782785175"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+						<string key="objectName">MapView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">53</int>
+						<reference key="object" ref="782785175"/>
+						<reference key="parent" ref="829230382"/>
+						<string key="objectName">buildingsGridView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">54</int>
+						<reference key="object" ref="454355867"/>
+						<reference key="parent" ref="829230382"/>
+						<string key="objectName">territoryGridView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="214553032"/>
+						<reference key="parent" ref="829230382"/>
+						<string key="objectName">mapGridView</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">67</int>

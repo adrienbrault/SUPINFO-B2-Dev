@@ -59,7 +59,6 @@ static CGFloat const GameStateDuration[] = {
     NSMutableArray *_boatViews;
     
     NSMutableArray *_boatsCanonBallView;
-    NSTimer *_boatsAssaultTimer;
     
     NSMutableArray *_wallsToDestroy;
     

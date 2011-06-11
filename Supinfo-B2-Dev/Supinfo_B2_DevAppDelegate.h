@@ -8,11 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MainMenuViewController;
+
 @interface Supinfo_B2_DevAppDelegate : NSObject <NSApplicationDelegate> {
 @private
     NSWindow *window;
+    
+    MainMenuViewController *_mainMenu;
 }
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property (nonatomic, retain) MainMenuViewController *mainMenu;
 
 @end

@@ -14,7 +14,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setFrameSize:CGSizeMake(5.0, 5.0)];
+        [self setFrameSize:NSSizeFromCGSize(CGSizeMake(5.0, 5.0))];
     }
     
     return self;

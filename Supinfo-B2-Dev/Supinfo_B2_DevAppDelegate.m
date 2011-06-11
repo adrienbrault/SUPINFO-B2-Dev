@@ -8,21 +8,19 @@
 
 #import "Supinfo_B2_DevAppDelegate.h"
 
-#import "GridViewController.h"
+#import "MainMenuViewController.h"
 
 @implementation Supinfo_B2_DevAppDelegate
 
-@synthesize window;
+@synthesize window, mainMenu = _mainMenu;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    GridViewController *gridVC = [[GridViewController alloc] init];
-    [self.window.contentView addSubview:gridVC.view];
+    _mainMenu = [[MainMenuViewController alloc] init];
     
-    [gridVC setWidth:46 height:34];
+    self.window.contentView = self.mainMenu.view;
     
-    // Setting window size.
-    [gridVC setCorrectViewSize];
+    [self.window setMinSize:NSSizeFromCGSize(CGSizeMake(300.0, 300.0))];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

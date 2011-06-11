@@ -26,6 +26,8 @@
 		9581E459136728C30053D07A /* NSMutableArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E458136728C30053D07A /* NSMutableArray+Additions.m */; };
 		9581E45F1367411A0053D07A /* GridItemType.m in Sources */ = {isa = PBXBuildFile; fileRef = 9581E45E1367411A0053D07A /* GridItemType.m */; };
 		95ACB1B5136CDD4500106021 /* GridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95ACB1B4136CDD4500106021 /* GridViewController.xib */; };
+		95C3E14413A397720052AA08 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 95C3E14213A397720052AA08 /* MainMenuViewController.m */; };
+		95C3E14513A397720052AA08 /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95C3E14313A397720052AA08 /* MainMenuViewController.xib */; };
 		95E0BFA31370A5AF005695A1 /* AdvancedGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */; };
 		95ECF02C1393947400D66A55 /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = 95ECF02B1393947300D66A55 /* boat.png */; };
 		95ECF03A139397BC00D66A55 /* BoatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95ECF039139397BC00D66A55 /* BoatView.m */; };
@@ -69,6 +71,9 @@
 		9581E45D1367410F0053D07A /* GridItemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridItemType.h; sourceTree = "<group>"; };
 		9581E45E1367411A0053D07A /* GridItemType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridItemType.m; sourceTree = "<group>"; };
 		95ACB1B4136CDD4500106021 /* GridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridViewController.xib; sourceTree = "<group>"; };
+		95C3E14113A397720052AA08 /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		95C3E14213A397720052AA08 /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		95C3E14313A397720052AA08 /* MainMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuViewController.xib; sourceTree = "<group>"; };
 		95E0BFA11370A5AF005695A1 /* AdvancedGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedGridView.h; sourceTree = "<group>"; };
 		95E0BFA21370A5AF005695A1 /* AdvancedGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedGridView.m; sourceTree = "<group>"; };
 		95ECF02B1393947300D66A55 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boat.png; sourceTree = "<group>"; };
@@ -104,6 +109,9 @@
 				950BF931136CB4B600D42E0C /* GridViewController.h */,
 				950BF932136CB4B600D42E0C /* GridViewController.m */,
 				95ACB1B4136CDD4500106021 /* GridViewController.xib */,
+				95C3E14113A397720052AA08 /* MainMenuViewController.h */,
+				95C3E14213A397720052AA08 /* MainMenuViewController.m */,
+				95C3E14313A397720052AA08 /* MainMenuViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -329,6 +337,7 @@
 				9581E44913671FB70053D07A /* MainMenu.xib in Resources */,
 				95ACB1B5136CDD4500106021 /* GridViewController.xib in Resources */,
 				95ECF02C1393947400D66A55 /* boat.png in Resources */,
+				95C3E14513A397720052AA08 /* MainMenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +363,7 @@
 				95E0BFA31370A5AF005695A1 /* AdvancedGridView.m in Sources */,
 				95ECF03A139397BC00D66A55 /* BoatView.m in Sources */,
 				9506F54613A027EA000C1C7A /* CannonBallView.m in Sources */,
+				95C3E14413A397720052AA08 /* MainMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

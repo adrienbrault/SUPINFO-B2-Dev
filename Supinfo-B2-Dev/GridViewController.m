@@ -8,6 +8,8 @@
 
 #import "GridViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Supinfo_B2_DevAppDelegate.h"
+#import "MainMenuViewController.h"
 
 
 #define TIMER_UPDATE_INTERVAL 0.033
@@ -53,7 +55,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 - (CGPoint)randomBoatPosition;
 
 @property (nonatomic, retain) NSMutableArray *boatsCanonBallView;
-@property (nonatomic, retain) NSTimer *boatsAssaultTimer;
 
 - (void)startBoatsAssault;
 - (void)fireBoatsCannonBalls;
@@ -86,7 +87,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 @synthesize timeLeftTimer = _timeLeftTimer;
 
 @synthesize boatsCanonBallView = _boatsCanonBallView;
-@synthesize boatsAssaultTimer = _boatsAssaultTimer;
 
 
 #pragma mark - Object lifecycle
@@ -101,10 +101,15 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 
 - (void)dealloc
 {
+    self.buildingsGridView.grid = nil;
+    self.territoryGridView.grid = nil;
+    self.buildingsGridView.grid = nil;
+    
     [_mapGrid release];
     [_territoryGrid release];
     [_buildingsGrid release];
     
+    [self.view removeTrackingArea:_trackingArea];
     [_trackingArea release];
     
     [_timeLeftTimer invalidate];
@@ -115,8 +120,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [_boatsCanonBallView release];
     
     [_wallsToDestroy release];
-    [_boatsAssaultTimer invalidate];
-    [_boatsAssaultTimer release];
     
     [_gunsReadyToFire release];
     
@@ -276,7 +279,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [self.nextResponder mouseDown:theEvent];
     
     CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
-    if (!CGRectContainsPoint(self.mapView.frame, mouseLocation)) {
+    if (!CGRectContainsPoint(NSRectToCGRect(self.mapView.frame), mouseLocation)) {
         return;
     }
     
@@ -304,8 +307,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         
         case GameStateAssault:
         {
-            CGPoint mouseLocation = [theEvent locationInWindow];
-            CGPoint destination = [self.mapView convertPoint:mouseLocation fromView:self.view];
+            NSPoint mouseLocation = [theEvent locationInWindow];
+            CGPoint destination = NSPointToCGPoint([self.mapView convertPoint:mouseLocation fromView:self.view]);
             
             [self fireAGunTo:destination];
         } break;
@@ -320,7 +323,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [self.nextResponder mouseDragged:theEvent];
     
     CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
-    if (!CGRectContainsPoint(self.mapView.frame, mouseLocation)) {
+    if (!CGRectContainsPoint(NSRectToCGRect(self.mapView.frame), mouseLocation)) {
         return;
     }
     
@@ -498,13 +501,23 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         case GameStateWallsRepair:
         {
             if (![self isACastelCaptured]) {
-                NSLog(@"You lose.");
-                [NSApp terminate:nil];
+                Supinfo_B2_DevAppDelegate *appDelegate = [NSApp delegate];
+                [appDelegate.mainMenu gameEndedWinning:NO];
+                
+                [self.timeLeftTimer invalidate];
+                self.timeLeftTimer = nil;
+                
+                return;
             }
             
             if ([self isAllMapCaptured]) {
-                NSLog(@"You win.");
-                [NSApp terminate:nil];
+                Supinfo_B2_DevAppDelegate *appDelegate = [NSApp delegate];
+                [appDelegate.mainMenu gameEndedWinning:YES];
+                
+                [self.timeLeftTimer invalidate];
+                self.timeLeftTimer = nil;
+                
+                return;
             }
             
             // TODO: Check if all map is captured and tell the user that he won.
@@ -519,9 +532,6 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         
         case GameStateAssault:
         {
-            [self.boatsAssaultTimer invalidate];
-            self.boatsAssaultTimer = nil;
-            
             [self removeAllBoatsCannonBalls];
             
             [self startGameState:GameStateWallsRepair];
@@ -551,14 +561,14 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     
     NSMutableArray *boatsViews = [[NSMutableArray alloc] init];
     
-    CGSize imageSize = [BoatView boatImage].size;
+    CGSize imageSize = NSSizeToCGSize([BoatView boatImage].size);
     
     for (NSInteger i=0; i<number; i++) {
         CGPoint randomPosition = [self randomBoatPosition];
-        BoatView *boatView = [[BoatView alloc] initWithFrame:CGRectMake(randomPosition.x,
-                                                                        randomPosition.y,
-                                                                        imageSize.width,
-                                                                        imageSize.height)];
+        BoatView *boatView = [[BoatView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(randomPosition.x,
+                                                                                         randomPosition.y,
+                                                                                         imageSize.width,
+                                                                                         imageSize.height))];
         boatView.wantsLayer = YES;
         [self.mapView addSubview:boatView];
         [boatsViews addObject:boatView];
@@ -606,14 +616,14 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
     animation.fromValue = [NSValue valueWithPoint:boatView.frame.origin];
-    animation.toValue = [NSValue valueWithPoint:randomPosition];
+    animation.toValue = [NSValue valueWithPoint:NSPointFromCGPoint(randomPosition)];
     animation.duration = duration;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
     animation.delegate = self;
     animation.removedOnCompletion = NO;
     
-    [boatView setFrameOrigin:randomPosition];
+    [boatView setFrameOrigin:NSPointFromCGPoint(randomPosition)];
     
     [animation setValue:boatAnimationKey forKey:@"key"];
     [animation setValue:boatView forKey:@"boatView"];
@@ -652,22 +662,22 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 
 - (void)setCorrectViewSize
 {
-    [self.view setFrameSize:CGSizeMake(CELL_SIZE * self.gridWidth,
-                                       CELL_SIZE * self.gridHeight + self.timeProgressView.frame.size.height)];
+    [self.view setFrameSize:NSSizeFromCGSize(CGSizeMake(CELL_SIZE * self.gridWidth,
+                                                        CELL_SIZE * self.gridHeight + self.timeProgressView.frame.size.height))];
     
     CGRect windowFrame = CGRectMake(self.view.window.frame.origin.x,
                                     self.view.window.frame.origin.y,
                                     self.view.frame.size.width,
                                     self.view.frame.size.height);
     
-    [self.view.window setFrame:windowFrame
+    [self.view.window setFrame:NSRectFromCGRect(windowFrame)
                        display:YES];
     
     [self.view setFrame:[self.view.window.contentView bounds]];
     
     // Locking window aspect ratio and setting minimum size.
     [self.view.window setAspectRatio:self.view.window.frame.size];
-    [self.view.window setMinSize:CGSizeMake(300.0, 300.0)];
+    [self.view.window setMinSize:NSSizeFromCGSize(CGSizeMake(300.0, 300.0))];
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
@@ -752,15 +762,15 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         CGFloat duration = distance / speed;
         
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-        animation.fromValue = [NSValue valueWithPoint:origin];
-        animation.toValue = [NSValue valueWithPoint:destination];
+        animation.fromValue = [NSValue valueWithPoint:NSPointFromCGPoint(origin)];
+        animation.toValue = [NSValue valueWithPoint:NSPointFromCGPoint(destination)];
         animation.duration = duration;
         animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
         
         animation.delegate = self;
         animation.removedOnCompletion = NO;
         
-        [ballView setFrameOrigin:destination];
+        [ballView setFrameOrigin:NSPointFromCGPoint(destination)];
         
         [animation setValue:boatCannonBallAnimationKey forKey:@"key"];
         [animation setValue:ballView forKey:@"cannonBallView"];
@@ -792,7 +802,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     
     // Sink boats.
     CABasicAnimation *basicAnimation = (CABasicAnimation *)theAnimation;
-    CGPoint destination = [basicAnimation.toValue pointValue];
+    CGPoint destination = NSPointToCGPoint([basicAnimation.toValue pointValue]);
     NSMutableArray *boatsToSink = [NSMutableArray array]; // We can't remove objects from an array while enumerating it.
     
     for (BoatView *boatView in _boatViews) {
@@ -844,8 +854,8 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     CGFloat duration = distance / speed;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.fromValue = [NSValue valueWithPoint:origin];
-    animation.toValue = [NSValue valueWithPoint:destination];
+    animation.fromValue = [NSValue valueWithPoint:NSPointFromCGPoint(origin)];
+    animation.toValue = [NSValue valueWithPoint:NSPointFromCGPoint(destination)];
     animation.duration = duration;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     
