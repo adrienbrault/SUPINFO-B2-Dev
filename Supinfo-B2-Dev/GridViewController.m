@@ -453,7 +453,7 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         [self startBoatsAnimations];
         
         [_wallsToDestroy release];
-        _wallsToDestroy = [[_buildingsGrid walls] mutableCopy];
+        _wallsToDestroy = [[_buildingsGrid itemsOfType:GridItemWall] mutableCopy];
         
         [self startBoatsAssault];
     }

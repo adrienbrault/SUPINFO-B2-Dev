@@ -27,27 +27,14 @@
 {
     NSMutableSet *castelsSet = [NSMutableSet set];
     
-    for (NSObject *item in self.items) {
-        if (item != [NSNull null] && ((GridItem *)item).type == GridItemCastel) {
+    for (NSInteger i=0; i<self.totalIndex; i++) {
+        GridItem *item = [self itemAtIndex:i];
+        if (item.type == GridItemCastel) {
             [castelsSet addObject:item];
         }
     }
     
     return castelsSet;
-}
-
-- (NSArray *)walls
-{
-    NSMutableArray *walls = [NSMutableArray array];
-    
-    for (NSInteger i=0; i<self.totalIndex; i++) {
-        GridItem *item = [self itemAtIndex:i];
-        if (item && item.type == GridItemWall) {
-            [walls addObject:item];
-        }
-    }
-    
-    return walls;
 }
 
 

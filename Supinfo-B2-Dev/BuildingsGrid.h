@@ -28,6 +28,4 @@
 
 - (NSSet *)castels;
 
-- (NSArray *)walls;
-
 @end
