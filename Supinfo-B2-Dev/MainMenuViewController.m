@@ -11,7 +11,7 @@
 
 @implementation MainMenuViewController
 @synthesize resultLabel = _resultLabel;
-@synthesize startGameButton = _startGameButton;
+@synthesize menuView = _menuView;
 
 - (id)init
 {
@@ -30,10 +30,10 @@
     // Setting window size.
     [_gridVC setCorrectViewSize];
     
-    self.startGameButton.hidden = YES;
+    self.menuView.hidden = YES;
 }
 
-- (void)gameEndedWinning:(BOOL)flag
+- (void)gameEndedWinning:(BOOL)flag score:(NSInteger)score
 {
     _gridVC.view.window.delegate = nil;
     [_gridVC.view removeFromSuperview];
@@ -42,9 +42,10 @@
     _gridVC = nil;
     
     NSString *resultText = flag ? @"Win" : @"Lose";
+    resultText = [NSString stringWithFormat:@"%@ - Score: %d", resultText, score];
     self.resultLabel.stringValue = resultText;
     
-    self.startGameButton.hidden = NO;
+    self.menuView.hidden = NO;
 }
 
 @end

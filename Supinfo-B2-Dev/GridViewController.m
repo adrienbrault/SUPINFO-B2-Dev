@@ -461,11 +461,9 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         GridItem *mapItem = [_mapGrid itemAtIndex:i];
         GridItem *territoryItem = [_territoryGrid itemAtIndex:i];
         
-        if (mapItem && territoryItem
-            && mapItem.type == GridItemEarth) {
-            if (territoryItem.type != GridItemAreaCaptured) {
-                return NO;
-            }
+        if (mapItem && mapItem.type == GridItemEarth
+            && !(territoryItem && territoryItem.type == GridItemAreaCaptured)) {
+            return NO;
         }
     }
     NSLog(@"all map captured");
@@ -516,7 +514,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
         {
             if (![self isACastelCaptured]) {
                 Supinfo_B2_DevAppDelegate *appDelegate = [NSApp delegate];
-                [appDelegate.mainMenu gameEndedWinning:NO];
+                [appDelegate.mainMenu gameEndedWinning:NO score:self.score];
                 
                 [self.timeLeftTimer invalidate];
                 self.timeLeftTimer = nil;
@@ -526,7 +524,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
             
             if ([self isAllMapCaptured]) {
                 Supinfo_B2_DevAppDelegate *appDelegate = [NSApp delegate];
-                [appDelegate.mainMenu gameEndedWinning:YES];
+                [appDelegate.mainMenu gameEndedWinning:YES score:self.score];
                 
                 [self.timeLeftTimer invalidate];
                 self.timeLeftTimer = nil;
@@ -741,7 +739,7 @@ static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
     [_buildingsGrid removeItem:[theAnimation valueForKey:@"wall"]];
     [self.buildingsGridView setNeedsDisplay:YES];
     
-    self.score -= 2;
+    self.score -= 1;
     
     // Fire again
     [self fireCannonBallFromBoat:[theAnimation valueForKey:@"boat"]];

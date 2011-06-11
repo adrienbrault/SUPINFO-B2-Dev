@@ -13,14 +13,14 @@
 @interface MainMenuViewController : NSViewController {
     GridViewController *_gridVC;
     NSTextField *_resultLabel;
-    NSButton *_startGameButton;
+    NSView *_menuView;
 }
 
 @property (assign) IBOutlet NSTextField *resultLabel;
-@property (assign) IBOutlet NSButton *startGameButton;
+@property (assign) IBOutlet NSView *menuView;
 
 - (IBAction)startNewGame:(id)sender;
 
-- (void)gameEndedWinning:(BOOL)flag;
+- (void)gameEndedWinning:(BOOL)flag score:(NSInteger)score;
 
 @end
