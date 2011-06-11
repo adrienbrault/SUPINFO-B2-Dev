@@ -365,8 +365,6 @@ static BOOL possiblesShapes[9][9] = {
             {
                 if ([self shapesCanBePositionedAt:position]) {
                     [self setWallItemsFromShapeAtPosition:position grid:_previewGrid];
-                    
-                    [_previewGridView setNeedsDisplay:YES];
                 }
             } break;
                 
@@ -379,8 +377,6 @@ static BOOL possiblesShapes[9][9] = {
                     if ([self item:gunItem canBePositionedAt:position]) {
                         [_previewGrid setItem:gunItem
                                    atPosition:position];
-                        
-                        [_previewGridView setNeedsDisplay:YES];
                     }
                 }
             } break;
@@ -389,6 +385,8 @@ static BOOL possiblesShapes[9][9] = {
                 break;
         }
     }
+    
+    [_previewGridView setNeedsDisplay:YES];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
