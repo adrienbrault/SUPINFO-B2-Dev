@@ -14,8 +14,14 @@
 #define CELL_SIZE 16
 static NSString *boatAnimationKey = @"boatPosition";
 static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
+static NSString *gunCannonBallAnimationKey = @"gunCannonBallPosition";
 
 #define BOATS_FIRE_INTERVAL 6.33
+
+#define BOATS_SPEED 10.0
+#define CANNON_BALL_SPEED 130.0
+
+#define DISTANCE_TO_SINK_BOAT 30.0
 
 
 @interface GridViewController ()
@@ -55,7 +61,9 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 - (void)fireCannonBallFromBoat:(BoatView *)boatView;
 - (void)removeAllBoatsCannonBalls;
 
-
+- (void)gunCannonBallAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
+- (void)fireAGunTo:(CGPoint)destination;
+- (void)fireCannonBallFromGun:(GridItem *)gun toPosition:(CGPoint)destination;
 
 @end
 
@@ -109,6 +117,8 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
     [_wallsToDestroy release];
     [_boatsAssaultTimer invalidate];
     [_boatsAssaultTimer release];
+    
+    [_gunsReadyToFire release];
     
     [super dealloc];
 }
@@ -294,7 +304,10 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         
         case GameStateAssault:
         {
+            CGPoint mouseLocation = [theEvent locationInWindow];
+            CGPoint destination = [self.mapView convertPoint:mouseLocation fromView:self.view];
             
+            [self fireAGunTo:destination];
         } break;
             
         default:
@@ -449,11 +462,14 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
     }
     
     if (_gameState == GameStateAssault) {
-        [self createBoats:20];
+        [self createBoats:10];
         [self startBoatsAnimations];
         
         [_wallsToDestroy release];
         _wallsToDestroy = [[_buildingsGrid itemsOfType:GridItemWall] mutableCopy];
+        
+        [_gunsReadyToFire release];
+        _gunsReadyToFire = [[_buildingsGrid itemsOfType:GridItemGun] mutableCopy];
         
         [self startBoatsAssault];
     }
@@ -549,7 +565,7 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 
 - (void)animateBoatView:(BoatView *)boatView
 {
-    CGFloat speed = (arc4random() % 3 + 1) * 10; // In pixels/sec
+    CGFloat speed = ((arc4random() % 30) / 10 + 1) * BOATS_SPEED; // In pixels/sec
     
     CGFloat distance = 0;
     CGPoint randomPosition;
@@ -624,6 +640,8 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         [self boatViewAnimationDidStop:theAnimation finished:flag];
     } else if ([theAnimation valueForKey:@"key"] == boatCannonBallAnimationKey) {
         [self boatCannonBallAnimationDidStop:theAnimation finished:flag];
+    } else if ([theAnimation valueForKey:@"key"] == gunCannonBallAnimationKey) {
+        [self gunCannonBallAnimationDidStop:theAnimation finished:flag];
     }
 }
 
@@ -668,7 +686,11 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
 
 - (void)fireCannonBallFromBoat:(BoatView *)boatView
 {
-    if ([_wallsToDestroy count] < 1) {
+    if (!([_wallsToDestroy count] > 0)) {
+        return;
+    }
+    
+    if (![_boatViews containsObject:boatView]) {
         return;
     }
     
@@ -689,7 +711,7 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
         CGPoint origin = ((CALayer*)boatView.layer.presentationLayer).position;
         // The presentation layer has the current animation position of the layer.
         
-        CGFloat speed = 70.0;
+        CGFloat speed = CANNON_BALL_SPEED;
         CGFloat distance = sqrt(pow((destination.x - origin.x), 2) + pow((destination.y - origin.y), 2));
         CGFloat duration = distance / speed;
         
@@ -720,6 +742,84 @@ static NSString *boatCannonBallAnimationKey = @"boatCannonBallPosition";
     }
     
     [_boatsCanonBallView removeAllObjects];
+}
+
+
+#pragma mark - Gun firing management
+
+- (void)gunCannonBallAnimationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    // Remove cannon ball from screen.
+    CannonBallView *ballView = [theAnimation valueForKey:@"cannonBallView"];
+    [ballView removeFromSuperview];
+    [ballView.layer removeAnimationForKey:gunCannonBallAnimationKey];
+    
+    // Sink boats.
+    CABasicAnimation *basicAnimation = (CABasicAnimation *)theAnimation;
+    CGPoint destination = [basicAnimation.toValue pointValue];
+    NSMutableArray *boatsToSink = [NSMutableArray array]; // We can't remove objects from an array while enumerating it.
+    
+    for (BoatView *boatView in _boatViews) {
+        CGPoint boatPosition = ((CALayer*)boatView.layer.presentationLayer).position;
+        CGFloat distance = sqrt(pow((destination.x - boatPosition.x), 2) + pow((destination.y - boatPosition.y), 2));
+        
+        if (distance <= DISTANCE_TO_SINK_BOAT) {
+            [boatView removeFromSuperview];
+            [boatView.layer removeAllAnimations];
+            
+            [boatsToSink addObject:boatView];
+        }
+    }
+    
+    for (BoatView *boatView in boatsToSink) {
+        [_boatViews removeObject:boatView];
+    }
+    
+    // Add the gun back to the pool.
+    GridItem *gun = [theAnimation valueForKey:@"gun"];
+    [_gunsReadyToFire addObject:gun];
+}
+
+- (void)fireAGunTo:(CGPoint)destination
+{
+    if ([_gunsReadyToFire count] > 0) {
+        NSInteger gunIndex = arc4random() % [_gunsReadyToFire count];
+        GridItem *gun = [_gunsReadyToFire objectAtIndex:gunIndex];
+        
+        [_gunsReadyToFire removeObject:gun];
+        
+        [self fireCannonBallFromGun:gun toPosition:destination];
+    }
+}
+
+- (void)fireCannonBallFromGun:(GridItem *)gun toPosition:(CGPoint)destination
+{
+    CannonBallView *ballView = [[CannonBallView alloc] init];
+    ballView.wantsLayer = YES;
+    
+    [self.mapView addSubview:ballView];
+    
+    CGPoint origin = [self.buildingsGridView screenPositionForItem:gun atPosition:gun.cachePosition];
+    origin.x += CELL_SIZE / 2.0;
+    origin.y = self.mapView.frame.size.height - origin.y - CELL_SIZE / 2.0;
+    
+    CGFloat speed = CANNON_BALL_SPEED;
+    CGFloat distance = sqrt(pow((destination.x - origin.x), 2) + pow((destination.y - origin.y), 2));
+    CGFloat duration = distance / speed;
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.fromValue = [NSValue valueWithPoint:origin];
+    animation.toValue = [NSValue valueWithPoint:destination];
+    animation.duration = duration;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    animation.delegate = self;
+    animation.removedOnCompletion = NO;
+    
+    [animation setValue:gunCannonBallAnimationKey forKey:@"key"];
+    [animation setValue:ballView forKey:@"cannonBallView"];
+    [animation setValue:gun forKey:@"gun"];
+    [ballView.layer addAnimation:animation forKey:gunCannonBallAnimationKey];
 }
 
 @end
