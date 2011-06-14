@@ -123,6 +123,9 @@ static BOOL possiblesShapes[9][9] = {
 - (BOOL)shapesCanBePositionedAt:(ABPoint)position;
 - (void)setWallItemsFromShapeAtPosition:(ABPoint)position grid:(AdvancedGrid *)grid;
 
+- (void)enableHandCursor;
+- (void)disableHandCursor;
+
 @end
 
 
@@ -356,6 +359,8 @@ static BOOL possiblesShapes[9][9] = {
     
     [_previewGrid removeAll];
     
+    [self disableHandCursor];
+    
     ABPoint position = [self positionAtEventMouseLocation:theEvent];
     
     GridItem *mapItem = [_mapGrid itemAtPosition:position];
@@ -363,8 +368,10 @@ static BOOL possiblesShapes[9][9] = {
         switch (_gameState) {
             case GameStateWallsRepair:
             {
+                [self setWallItemsFromShapeAtPosition:position grid:_previewGrid];
+                
                 if ([self shapesCanBePositionedAt:position]) {
-                    [self setWallItemsFromShapeAtPosition:position grid:_previewGrid];
+                    [self enableHandCursor];
                 }
             } break;
                 
@@ -377,6 +384,8 @@ static BOOL possiblesShapes[9][9] = {
                     if ([self item:gunItem canBePositionedAt:position]) {
                         [_previewGrid setItem:gunItem
                                    atPosition:position];
+                        
+                        [self enableHandCursor];
                     }
                 }
             } break;
@@ -441,6 +450,8 @@ static BOOL possiblesShapes[9][9] = {
         default:
             break;
     }
+    
+    [self disableHandCursor];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
@@ -1009,6 +1020,21 @@ static BOOL possiblesShapes[9][9] = {
             [grid setItem:wall atPosition:wallPosition];
         }
     }
+}
+
+
+#pragma mark - Cursor
+
+- (void)enableHandCursor
+{
+    [[self.mapView superview] addCursorRect:self.mapView.frame
+                                     cursor:[NSCursor pointingHandCursor]];
+}
+
+- (void)disableHandCursor
+{
+    [[self.mapView superview] removeCursorRect:self.mapView.frame
+                                        cursor:[NSCursor pointingHandCursor]];
 }
 
 @end
