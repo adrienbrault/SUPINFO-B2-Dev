@@ -137,10 +137,17 @@
         case GridItemGun:
         {
             // Reduce item size.
+            CGRect borderRect = CGRectMake(itemRect.origin.x,
+                                           itemRect.origin.y,
+                                           itemRect.size.width,
+                                           itemRect.size.height);
+            [self setDrawingColor:[NSColor blackColor]];
+            CGContextFillEllipseInRect(context, borderRect);
+            
             itemRect = CGRectMake(itemRect.origin.x + 1,
                                   itemRect.origin.y + 1,
-                                  itemRect.size.width - 1,
-                                  itemRect.size.height - 1);
+                                  itemRect.size.width - 2,
+                                  itemRect.size.height - 2);
             [self setDrawingColor:[NSColor colorWithDeviceRed:(230.0 / 255.0)
                                                         green:(163.0 / 255.0)
                                                          blue:(89.0 / 255.0)
