@@ -56,9 +56,10 @@
 									<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 									<string>NeXT TIFF v4.0 pasteboard type</string>
 								</set>
-								<string key="NSFrame">{{170, 72}, {128, 128}}</string>
+								<string key="NSFrame">{{170, 115}, {128, 128}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="541337824"/>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="969571931">
@@ -78,10 +79,17 @@
 							<object class="NSTextField" id="467206047">
 								<reference key="NSNextResponder" ref="291355448"/>
 								<int key="NSvFlags">266</int>
-								<string key="NSFrame">{{11, 193}, {446, 22}}</string>
+								<string key="NSFrame">{{11, 251}, {446, 22}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="541337824"/>
+								<reference key="NSNextKeyView" ref="814675776"/>
+								<object class="NSShadow" key="NSViewShadow">
+									<double key="NSShadowBlurRadius">3</double>
+									<object class="NSColor" key="NSShadowColor" id="756094925">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MAA</bytes>
+									</object>
+								</object>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="127988415">
@@ -104,20 +112,15 @@
 										</object>
 									</object>
 									<object class="NSColor" key="NSTextColor">
-										<int key="NSColorSpace">6</int>
-										<string key="NSCatalogName">System</string>
-										<string key="NSColorName">controlTextColor</string>
-										<object class="NSColor" key="NSColor" id="756094925">
-											<int key="NSColorSpace">3</int>
-											<bytes key="NSWhite">MAA</bytes>
-										</object>
+										<int key="NSColorSpace">1</int>
+										<bytes key="NSRGB">MSAxIDEAA</bytes>
 									</object>
 								</object>
 							</object>
 							<object class="NSButton" id="541337824">
 								<reference key="NSNextResponder" ref="291355448"/>
 								<int key="NSvFlags">269</int>
-								<string key="NSFrame">{{164, 12}, {149, 32}}</string>
+								<string key="NSFrame">{{160, 38}, {149, 32}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -144,10 +147,10 @@
 							<object class="NSTextField" id="265639769">
 								<reference key="NSNextResponder" ref="291355448"/>
 								<int key="NSvFlags">266</int>
-								<string key="NSFrame">{{17, 223}, {446, 29}}</string>
+								<string key="NSFrame">{{17, 281}, {446, 29}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="467206047"/>
 								<object class="NSShadow" key="NSViewShadow">
 									<double key="NSShadowBlurRadius">3</double>
 									<reference key="NSShadowColor" ref="756094925"/>
@@ -182,7 +185,7 @@
 									<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 									<string>NeXT TIFF v4.0 pasteboard type</string>
 								</set>
-								<string key="NSFrame">{{-10, -1717}, {2000, 2000}}</string>
+								<string key="NSFrame">{{-10, -1659}, {2000, 2000}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="265639769"/>
@@ -203,7 +206,7 @@
 								<bool key="NSEditable">YES</bool>
 							</object>
 						</array>
-						<string key="NSFrameSize">{480, 272}</string>
+						<string key="NSFrameSize">{480, 330}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="34346931"/>
@@ -212,7 +215,7 @@
 						<string key="NSClassName">NSView</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{480, 272}</string>
+				<string key="NSFrameSize">{480, 330}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="291355448"/>
@@ -294,8 +297,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="265639769"/>
 							<reference ref="467206047"/>
-							<reference ref="541337824"/>
 							<reference ref="34346931"/>
+							<reference ref="541337824"/>
 							<reference ref="814675776"/>
 						</array>
 						<reference key="parent" ref="1005"/>
@@ -384,6 +387,7 @@
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<real value="3" key="8.IBViewIntegration.shadowBlurRadius"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
