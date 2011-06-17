@@ -45,9 +45,9 @@
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="NSImageView" id="1032130717">
+							<object class="NSImageView" id="814675776">
 								<reference key="NSNextResponder" ref="291355448"/>
-								<int key="NSvFlags">266</int>
+								<int key="NSvFlags">269</int>
 								<set class="NSMutableSet" key="NSDragTypes">
 									<string>Apple PDF pasteboard type</string>
 									<string>Apple PICT pasteboard type</string>
@@ -56,11 +56,12 @@
 									<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 									<string>NeXT TIFF v4.0 pasteboard type</string>
 								</set>
-								<string key="NSFrame">{{20, 80}, {434, 128}}</string>
+								<string key="NSFrame">{{170, 72}, {128, 128}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
+								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
-								<object class="NSImageCell" key="NSCell" id="20090488">
+								<object class="NSImageCell" key="NSCell" id="969571931">
 									<int key="NSCellFlags">130560</int>
 									<int key="NSCellFlags2">33554432</int>
 									<object class="NSCustomResource" key="NSContents">
@@ -68,7 +69,7 @@
 										<string key="NSResourceName">castel_menu</string>
 									</object>
 									<int key="NSAlign">0</int>
-									<int key="NSScale">2</int>
+									<int key="NSScale">0</int>
 									<int key="NSStyle">0</int>
 									<bool key="NSAnimates">YES</bool>
 								</object>
@@ -81,6 +82,7 @@
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="541337824"/>
+								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="127988415">
 									<int key="NSCellFlags">68288064</int>
@@ -101,11 +103,11 @@
 											<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 										</object>
 									</object>
-									<object class="NSColor" key="NSTextColor" id="780168154">
+									<object class="NSColor" key="NSTextColor">
 										<int key="NSColorSpace">6</int>
 										<string key="NSCatalogName">System</string>
 										<string key="NSColorName">controlTextColor</string>
-										<object class="NSColor" key="NSColor">
+										<object class="NSColor" key="NSColor" id="756094925">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MAA</bytes>
 										</object>
@@ -119,6 +121,7 @@
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
+								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="938987687">
 									<int key="NSCellFlags">67239424</int>
@@ -144,27 +147,68 @@
 								<string key="NSFrame">{{17, 223}, {446, 29}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="467206047"/>
+								<reference key="NSNextKeyView"/>
+								<object class="NSShadow" key="NSViewShadow">
+									<double key="NSShadowBlurRadius">3</double>
+									<reference key="NSShadowColor" ref="756094925"/>
+								</object>
+								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="1049841775">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">138413056</int>
 									<string key="NSContents">Rampart</string>
 									<object class="NSFont" key="NSSupport">
-										<string key="NSName">LucidaGrande</string>
+										<string key="NSName">LucidaGrande-Bold</string>
 										<double key="NSSize">24</double>
 										<int key="NSfFlags">16</int>
 									</object>
 									<reference key="NSControlView" ref="265639769"/>
 									<reference key="NSBackgroundColor" ref="75337882"/>
-									<reference key="NSTextColor" ref="780168154"/>
+									<object class="NSColor" key="NSTextColor">
+										<int key="NSColorSpace">1</int>
+										<bytes key="NSRGB">MC44IDAuOCAwLjgAA</bytes>
+									</object>
 								</object>
+							</object>
+							<object class="NSImageView" id="34346931">
+								<reference key="NSNextResponder" ref="291355448"/>
+								<int key="NSvFlags">269</int>
+								<set class="NSMutableSet" key="NSDragTypes">
+									<string>Apple PDF pasteboard type</string>
+									<string>Apple PICT pasteboard type</string>
+									<string>Apple PNG pasteboard type</string>
+									<string>NSFilenamesPboardType</string>
+									<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+									<string>NeXT TIFF v4.0 pasteboard type</string>
+								</set>
+								<string key="NSFrame">{{-10, -1717}, {2000, 2000}}</string>
+								<reference key="NSSuperview" ref="291355448"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="265639769"/>
+								<int key="NSViewLayerContentsRedrawPolicy">2</int>
+								<bool key="NSEnabled">YES</bool>
+								<object class="NSImageCell" key="NSCell" id="720523407">
+									<int key="NSCellFlags">130560</int>
+									<int key="NSCellFlags2">33554432</int>
+									<object class="NSCustomResource" key="NSContents">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">menu_pattern</string>
+									</object>
+									<int key="NSAlign">0</int>
+									<int key="NSScale">0</int>
+									<int key="NSStyle">0</int>
+									<bool key="NSAnimates">YES</bool>
+								</object>
+								<bool key="NSEditable">YES</bool>
 							</object>
 						</array>
 						<string key="NSFrameSize">{480, 272}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="265639769"/>
+						<reference key="NSNextKeyView" ref="34346931"/>
+						<bool key="NSViewIsLayerTreeHost">YES</bool>
+						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<string key="NSClassName">NSView</string>
 					</object>
 				</array>
@@ -250,8 +294,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="265639769"/>
 							<reference ref="467206047"/>
-							<reference ref="1032130717"/>
 							<reference ref="541337824"/>
+							<reference ref="34346931"/>
+							<reference ref="814675776"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 						<string key="objectName">menuView</string>
@@ -296,17 +341,30 @@
 						<reference key="parent" ref="265639769"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="1032130717"/>
+						<int key="objectID">20</int>
+						<reference key="object" ref="34346931"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="20090488"/>
+							<reference ref="720523407"/>
 						</array>
 						<reference key="parent" ref="291355448"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">19</int>
-						<reference key="object" ref="20090488"/>
-						<reference key="parent" ref="1032130717"/>
+						<int key="objectID">21</int>
+						<reference key="object" ref="720523407"/>
+						<reference key="parent" ref="34346931"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">22</int>
+						<reference key="object" ref="814675776"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="969571931"/>
+						</array>
+						<reference key="parent" ref="291355448"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">23</int>
+						<reference key="object" ref="969571931"/>
+						<reference key="parent" ref="814675776"/>
 					</object>
 				</array>
 			</object>
@@ -316,9 +374,12 @@
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<real value="3" key="3.IBViewIntegration.shadowBlurRadius"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -329,7 +390,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -372,9 +433,9 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">castel_menu</string>
-			<string key="NS.object.0">{128, 128}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="castel_menu">{128, 128}</string>
+			<string key="menu_pattern">{2000, 2000}</string>
+		</dictionary>
 	</data>
 </archive>
