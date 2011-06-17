@@ -11,12 +11,14 @@
 			<string key="NS.object.0">1864</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>NSCustomView</string>
 			<string>NSTextField</string>
-			<string>NSTextFieldCell</string>
-			<string>NSButtonCell</string>
 			<string>NSCustomObject</string>
+			<string>NSCustomView</string>
+			<string>NSButtonCell</string>
+			<string>NSImageCell</string>
 			<string>NSButton</string>
+			<string>NSImageView</string>
+			<string>NSTextFieldCell</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -43,6 +45,35 @@
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
+							<object class="NSImageView" id="1032130717">
+								<reference key="NSNextResponder" ref="291355448"/>
+								<int key="NSvFlags">266</int>
+								<set class="NSMutableSet" key="NSDragTypes">
+									<string>Apple PDF pasteboard type</string>
+									<string>Apple PICT pasteboard type</string>
+									<string>Apple PNG pasteboard type</string>
+									<string>NSFilenamesPboardType</string>
+									<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+									<string>NeXT TIFF v4.0 pasteboard type</string>
+								</set>
+								<string key="NSFrame">{{20, 80}, {434, 128}}</string>
+								<reference key="NSSuperview" ref="291355448"/>
+								<reference key="NSWindow"/>
+								<bool key="NSEnabled">YES</bool>
+								<object class="NSImageCell" key="NSCell" id="20090488">
+									<int key="NSCellFlags">130560</int>
+									<int key="NSCellFlags2">33554432</int>
+									<object class="NSCustomResource" key="NSContents">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">castel_menu</string>
+									</object>
+									<int key="NSAlign">0</int>
+									<int key="NSScale">2</int>
+									<int key="NSStyle">0</int>
+									<bool key="NSAnimates">YES</bool>
+								</object>
+								<bool key="NSEditable">YES</bool>
+							</object>
 							<object class="NSTextField" id="467206047">
 								<reference key="NSNextResponder" ref="291355448"/>
 								<int key="NSvFlags">266</int>
@@ -84,7 +115,7 @@
 							<object class="NSButton" id="541337824">
 								<reference key="NSNextResponder" ref="291355448"/>
 								<int key="NSvFlags">269</int>
-								<string key="NSFrame">{{166, 118}, {149, 32}}</string>
+								<string key="NSFrame">{{164, 12}, {149, 32}}</string>
 								<reference key="NSSuperview" ref="291355448"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -219,6 +250,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="265639769"/>
 							<reference ref="467206047"/>
+							<reference ref="1032130717"/>
 							<reference ref="541337824"/>
 						</array>
 						<reference key="parent" ref="1005"/>
@@ -263,6 +295,19 @@
 						<reference key="object" ref="1049841775"/>
 						<reference key="parent" ref="265639769"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">18</int>
+						<reference key="object" ref="1032130717"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="20090488"/>
+						</array>
+						<reference key="parent" ref="291355448"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">19</int>
+						<reference key="object" ref="20090488"/>
+						<reference key="parent" ref="1032130717"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -271,6 +316,8 @@
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -282,7 +329,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">17</int>
+			<int key="maxID">19</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -325,5 +372,9 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">castel_menu</string>
+			<string key="NS.object.0">{128, 128}</string>
+		</object>
 	</data>
 </archive>

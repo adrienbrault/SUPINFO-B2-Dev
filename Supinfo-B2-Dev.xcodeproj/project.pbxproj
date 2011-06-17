@@ -10,6 +10,7 @@
 		9506F54613A027EA000C1C7A /* CannonBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9506F54513A027EA000C1C7A /* CannonBallView.m */; };
 		950A1978139BA931001830A0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950A1977139BA931001830A0 /* QuartzCore.framework */; };
 		950BF934136CB4B600D42E0C /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 950BF932136CB4B600D42E0C /* GridViewController.m */; };
+		952C0CA913AB98870080F73F /* castel_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 952C0CA813AB98870080F73F /* castel_menu.png */; };
 		95624F60136C7C5A001B96F1 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F5F136C7C5A001B96F1 /* GridView.m */; };
 		95624F64136C7F28001B96F1 /* ABPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 95624F63136C7F28001B96F1 /* ABPoint.m */; };
 		95815C50136F225900F9D793 /* AdvancedGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 95815C4F136F225900F9D793 /* AdvancedGrid.m */; };
@@ -39,6 +40,7 @@
 		950A1977139BA931001830A0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		950BF931136CB4B600D42E0C /* GridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
 		950BF932136CB4B600D42E0C /* GridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
+		952C0CA813AB98870080F73F /* castel_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = castel_menu.png; sourceTree = "<group>"; };
 		95624F5E136C7C5A001B96F1 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		95624F5F136C7C5A001B96F1 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		95624F63136C7F28001B96F1 /* ABPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPoint.m; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		95ECF02E1393947700D66A55 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				952C0CA813AB98870080F73F /* castel_menu.png */,
 				95ECF02B1393947300D66A55 /* boat.png */,
 			);
 			name = Images;
@@ -338,6 +341,7 @@
 				95ACB1B5136CDD4500106021 /* GridViewController.xib in Resources */,
 				95ECF02C1393947400D66A55 /* boat.png in Resources */,
 				95C3E14513A397720052AA08 /* MainMenuViewController.xib in Resources */,
+				952C0CA913AB98870080F73F /* castel_menu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
