@@ -141,6 +141,7 @@ static BOOL possiblesShapes[9][9] = {
 @synthesize timeProgressView = _timeProgressView;
 @synthesize timeLeftLabel = _timeLeftLabel;
 @synthesize scoreLabel = _scoreLabel;
+@synthesize instructionLabel = _instructionLabel;
 
 @synthesize gridWidth = _gridWidth;
 @synthesize gridHeight = _gridHeight;
@@ -602,6 +603,8 @@ static BOOL possiblesShapes[9][9] = {
     }
     
     [self refreshTerritoryMap];
+    
+    self.instructionLabel.stringValue = stateLabels[_gameState];
 }
 
 - (void)gameStateTimeDidEnd

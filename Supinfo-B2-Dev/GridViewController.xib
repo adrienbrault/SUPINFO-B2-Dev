@@ -49,7 +49,6 @@
 						<string key="NSFrame">{{17, 288}, {446, 19}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<object class="NSShadow" key="NSViewShadow">
 							<double key="NSShadowBlurRadius">3</double>
 							<object class="NSColor" key="NSShadowColor" id="305035775">
@@ -190,7 +189,7 @@
 										<string key="NSFrame">{{98, 300}, {433, 17}}</string>
 										<reference key="NSSuperview" ref="121459615"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="829230382"/>
+										<reference key="NSNextKeyView" ref="48970699"/>
 										<int key="NSViewLayerContentsRedrawPolicy">2</int>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="413532820">
@@ -201,6 +200,32 @@
 											<reference key="NSControlView" ref="243175068"/>
 											<reference key="NSBackgroundColor" ref="1035691521"/>
 											<reference key="NSTextColor" ref="29276764"/>
+										</object>
+									</object>
+									<object class="NSTextField" id="48970699">
+										<reference key="NSNextResponder" ref="121459615"/>
+										<int key="NSvFlags">266</int>
+										<string key="NSFrame">{{118, 300}, {413, 17}}</string>
+										<reference key="NSSuperview" ref="121459615"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="829230382"/>
+										<int key="NSViewLayerContentsRedrawPolicy">2</int>
+										<bool key="NSEnabled">YES</bool>
+										<object class="NSTextFieldCell" key="NSCell" id="769276621">
+											<int key="NSCellFlags">68288064</int>
+											<int key="NSCellFlags2">71304192</int>
+											<string key="NSContents"/>
+											<object class="NSFont" key="NSSupport">
+												<string key="NSName">LucidaGrande</string>
+												<double key="NSSize">13</double>
+												<int key="NSfFlags">1044</int>
+											</object>
+											<reference key="NSControlView" ref="48970699"/>
+											<reference key="NSBackgroundColor" ref="1035691521"/>
+											<object class="NSColor" key="NSTextColor">
+												<int key="NSColorSpace">1</int>
+												<bytes key="NSRGB">MSAxIDEAA</bytes>
+											</object>
 										</object>
 									</object>
 								</object>
@@ -329,6 +354,14 @@
 					</object>
 					<int key="connectionID">75</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">instructionLabel</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="48970699"/>
+					</object>
+					<int key="connectionID">78</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -398,6 +431,7 @@
 							<reference ref="829230382"/>
 							<reference ref="41223091"/>
 							<reference ref="243175068"/>
+							<reference ref="48970699"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 						<string key="objectName">background</string>
@@ -467,6 +501,21 @@
 						<reference key="parent" ref="829230382"/>
 						<string key="objectName">previewGridView</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">76</int>
+						<reference key="object" ref="48970699"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="769276621"/>
+						</object>
+						<reference key="parent" ref="74143064"/>
+						<string key="objectName">instructionLabel</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">77</int>
+						<reference key="object" ref="769276621"/>
+						<reference key="parent" ref="48970699"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -491,6 +540,8 @@
 					<string>70.IBPluginDependency</string>
 					<string>71.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
+					<string>76.IBPluginDependency</string>
+					<string>77.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -512,6 +563,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -526,7 +579,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">75</int>
+			<int key="maxID">78</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -555,6 +608,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildingsGridView</string>
+							<string>instructionLabel</string>
 							<string>mapGridView</string>
 							<string>mapView</string>
 							<string>previewGridView</string>
@@ -566,6 +620,7 @@
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AdvancedGridView</string>
+							<string>NSTextField</string>
 							<string>GridView</string>
 							<string>NSView</string>
 							<string>AdvancedGridView</string>
@@ -580,6 +635,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildingsGridView</string>
+							<string>instructionLabel</string>
 							<string>mapGridView</string>
 							<string>mapView</string>
 							<string>previewGridView</string>
@@ -593,6 +649,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">buildingsGridView</string>
 								<string key="candidateClassName">AdvancedGridView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">instructionLabel</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">mapGridView</string>

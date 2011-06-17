@@ -21,10 +21,16 @@
 
 
 typedef enum {
-    GameStateWallsRepair,
+    GameStateWallsRepair = 0,
     GameStateCanons,
     GameStateAssault
 } GameStateType;
+
+static NSString *const stateLabels[] = {
+    @"Place walls to protect your Castels!",
+    @"Place guns in your captured area!",
+    @"Shoot at the boats to protect your walls!"
+};
 
 static CGFloat const GameStateDuration[] = {
     25.0,
@@ -43,6 +49,7 @@ static CGFloat const GameStateDuration[] = {
     NSProgressIndicator *_timeProgressView;
     NSTextFieldCell *_timeLeftLabel;
     NSTextField *_scoreLabel;
+    NSTextField *_instructionLabel;
     
     Grid *_mapGrid;
     TerritoryGrid *_territoryGrid;
@@ -82,6 +89,7 @@ static CGFloat const GameStateDuration[] = {
 @property (assign) IBOutlet NSProgressIndicator *timeProgressView;
 @property (assign) IBOutlet NSTextFieldCell *timeLeftLabel;
 @property (assign) IBOutlet NSTextField *scoreLabel;
+@property (assign) IBOutlet NSTextField *instructionLabel;
 
 
 // Public
