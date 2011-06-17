@@ -403,11 +403,6 @@ static BOOL possiblesShapes[9][9] = {
 {
     [self.nextResponder mouseDown:theEvent];
     
-    CGPoint mouseLocation = NSPointToCGPoint([theEvent locationInWindow]);
-    if (!CGRectContainsPoint(NSRectToCGRect(self.mapView.frame), mouseLocation)) {
-        return;
-    }
-    
     switch (_gameState) {
         case GameStateWallsRepair:
         {
